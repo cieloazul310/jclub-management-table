@@ -1,0 +1,2 @@
+(self.webpackChunkgatsby_financial_report=self.webpackChunkgatsby_financial_report||[]).push([[696],{7288:function(e,a,t){"use strict";t.r(a);var n=t(7294),l=t(4941);a.default=function(e){var a=e.data,t=e.pageContext,i=a.clubsYaml;return n.createElement(l.Z,{mode:"club",title:(null==i?void 0:i.name)+"の経営情報",headerTitle:""+(null==i?void 0:i.name),description:(null==i?void 0:i.fullname)+"の年度別経営情報一覧。損益計算書・貸借対照表・営業収入・営業費用・入場者数を項目ごとに時系列表示。",data:a,pageContext:t})}}}]);
+//# sourceMappingURL=component---src-templates-club-tsx-5e9cc0d62a8fff768ac6.js.map

@@ -1,0 +1,2 @@
+(self.webpackChunkgatsby_financial_report=self.webpackChunkgatsby_financial_report||[]).push([[354],{3082:function(e,a,t){"use strict";t.r(a);var n=t(7294),r=t(4941);a.default=function(e){var a=e.data,t=e.pageContext,i=a.yearsYaml;return n.createElement(r.Z,{mode:"year",title:(null==i?void 0:i.year)+"年Jクラブ経営情報",description:(null==i?void 0:i.year)+"年のJクラブ経営情報一覧。各Jクラブの損益計算書・貸借対照表・営業収入・営業費用・入場者数を項目ごとに表示。",data:a,pageContext:t})}}}]);
+//# sourceMappingURL=component---src-templates-year-tsx-4c84f9351c55659a1f17.js.map

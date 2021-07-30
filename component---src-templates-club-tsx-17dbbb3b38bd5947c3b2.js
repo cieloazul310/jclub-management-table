@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{"3rkW":function(e,n,a){"use strict";a.r(n);var l=a("q1tI"),t=a("rwWQ");n.default=function(e){var n=e.data.clubsYaml;return l.createElement(t.a,Object.assign({mode:"club",title:(null==n?void 0:n.name)+"の経営情報",headerTitle:""+(null==n?void 0:n.name),description:(null==n?void 0:n.fullname)+"の年度別経営情報一覧。損益計算書・貸借対照表・営業収入・営業費用・入場者数を項目ごとに時系列表示。"},e))}}}]);
-//# sourceMappingURL=component---src-templates-club-tsx-17dbbb3b38bd5947c3b2.js.map
