@@ -15,7 +15,8 @@ const HeadComponents = [
     key="1-http-ads"
     data-ad-client="ca-pub-7323207940463794"
     async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    crossOrigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7323207940463794"
   />,
 ];
 
