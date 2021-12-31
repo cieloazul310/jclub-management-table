@@ -2,7 +2,7 @@ module.exports = {
   globals: {
     __PATH_PREFIX__: true,
   },
-  extends: ['airbnb-typescript', 'airbnb/hooks', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
+  extends: ['airbnb-typescript', 'react-app', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
   plugins: ['react', '@typescript-eslint'],
   parser: `@typescript-eslint/parser`,
   parserOptions: {
