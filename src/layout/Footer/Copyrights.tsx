@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import MuiLink from '@mui/material/Link';
-import { AppLink } from '../../components/AppLink';
-import { useSiteMetadata } from '../../utils/graphql-hooks';
+import { AppLink, useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
 
 function Copyrights() {
   const { title } = useSiteMetadata();

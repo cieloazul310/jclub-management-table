@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { AppLink } from '../../components/AppLink';
+import { AppLink } from '@cieloazul310/gatsby-theme-aoi';
 import { useJ1Clubs, useJ2Clubs, useJ3Clubs, useAllYears, Clubs } from '../../utils/graphql-hooks';
 
 type CategoryLinksProps = {

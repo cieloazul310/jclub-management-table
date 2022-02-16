@@ -1,10 +1,35 @@
 import * as React from 'react';
-import { Layout, Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+import Typography from '@mui/material/Typography';
+import { Jumbotron, Section, SectionDivider, Article, Paragraph, AppLinkButton, useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
+import Layout from '../layout';
 
 function IndexPage() {
+  const { title, description } = useSiteMetadata();
   return (
-    <Layout title="Jクラブ経営情報ポータル">
-      <Jumbotron />
+    <Layout title={title}>
+      <Jumbotron maxWidth="md">
+        <Typography variant="h5" component="h2" gutterBottom>
+          {title}
+        </Typography>
+        <Paragraph>{description}</Paragraph>
+        <span>
+          <AppLinkButton to="/" variant="contained" color="primary">
+            最新の経営情報を見る
+          </AppLinkButton>
+        </span>
+      </Jumbotron>
+      <SectionDivider />
+      <Section>
+        <Article maxWidth="md">
+          <Paragraph>{description}</Paragraph>
+        </Article>
+      </Section>
+      <SectionDivider />
+      <Section>
+        <Article maxWidth="md">
+          <Paragraph>{description}</Paragraph>
+        </Article>
+      </Section>
     </Layout>
   );
 }

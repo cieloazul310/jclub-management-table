@@ -6,15 +6,15 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { useTwitterShare, useFacebookShare } from '../../utils/useSocialShare';
+import { useSocialShare } from '@cieloazul310/gatsby-theme-aoi';
 
 interface Props {
   title?: string;
 }
 
 function DrawerShare({ title }: Props) {
-  const twitterUrl = useTwitterShare(title);
-  const fbUrl = useFacebookShare();
+  const twitterUrl = useSocialShare('twitter', title);
+  const fbUrl = useSocialShare('facebook');
   return (
     <List subheader={<ListSubheader>共有</ListSubheader>}>
       <ListItem component="a" button href={twitterUrl} target="_blank" rel="noopener noreferrer">

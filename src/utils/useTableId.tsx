@@ -1,5 +1,5 @@
 import { useLocation } from '@reach/router';
-import { Tab } from '../types';
+import { Tab } from '../../types';
 
 export default function useTableId(tab: Tab): string {
   const { pathname } = useLocation();

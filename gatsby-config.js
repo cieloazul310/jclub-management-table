@@ -66,9 +66,6 @@ module.exports = {
       resolve: 'gatsby-plugin-eslint',
       // v3.0.0 has an error for options
       options: {
-        stages: ['develop'],
-        extensions: ['js', 'jsx', 'ts', 'tsx'],
-        exclude: ['node_modules', '.cache', 'public'],
         // Any eslint-webpack-plugin options below
         failOnError: false,
       },

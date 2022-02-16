@@ -80,8 +80,8 @@ function TemplateLayout({ mode, title, headerTitle, description, data, pageConte
       key={isClient}
       sx={{
         flexGrow: 1,
-        paddingTop: { xs: 56, sm: 64 },
-        paddingBottom: { xs: 56, sm: undefined },
+        paddingTop: { xs: '56px', sm: '64px' },
+        paddingBottom: { xs: '56px', sm: undefined },
       }}
     >
       <SEO title={title} description={description} />
@@ -95,7 +95,7 @@ function TemplateLayout({ mode, title, headerTitle, description, data, pageConte
           component="nav"
           sx={{
             position: 'sticky',
-            top: trigger ? 0 : { xs: 56, sm: 64 },
+            top: trigger ? 0 : { xs: '56px', sm: '64px' },
             bgcolor: 'background.paper',
             zIndex: (theme) => theme.zIndex.appBar - 1,
             boxShadow: 1,

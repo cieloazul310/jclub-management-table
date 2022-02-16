@@ -4,4 +4,3 @@ export { default as useJ2Clubs } from './useJ2Clubs';
 export { default as useJ3Clubs } from './useJ3Clubs';
 export { default as useAllYears } from './useAllYears';
 export { default as useDictionary } from './useDictionary';
-export { default as useSiteMetadata } from './useSiteMetadata';

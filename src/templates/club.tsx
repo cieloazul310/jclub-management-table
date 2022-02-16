@@ -3,7 +3,7 @@ import { graphql, PageProps } from 'gatsby';
 import { ClubTemplateQuery, SitePageContext } from '../../graphql-types';
 import TemplateLayout from '../layout/TemplateLayout';
 
-function ClubTemplate({ data, pageContext }: PageProps<ClubTemplateQuery, SitePageContext>): JSX.Element {
+function ClubTemplate({ data, pageContext }: PageProps<ClubTemplateQuery, SitePageContext>) {
   const { clubsYaml } = data;
   return (
     <TemplateLayout

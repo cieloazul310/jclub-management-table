@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Layout, Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+import { Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+import Layout from '../layout';
 
 function SeriesPage() {
   return (

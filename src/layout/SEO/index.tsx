@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from '@reach/router';
-import { useSiteMetadata } from '../../utils/graphql-hooks';
+import { useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
 import ogImage from '../../images/og_image.png';
 import ogTwitter from '../../images/og_twitter.png';
 

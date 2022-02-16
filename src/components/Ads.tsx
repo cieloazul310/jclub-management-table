@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
 import * as React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
 import { useLocation } from '@reach/router';
 
 declare global {
@@ -9,17 +9,7 @@ declare global {
   }
 }
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      padding: theme.spacing(2, 1),
-      overflow: 'hidden',
-    },
-  })
-);
-
-export function AdInArticle(): JSX.Element {
-  const classes = useStyles();
+export function AdInArticle() {
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -28,7 +18,7 @@ export function AdInArticle(): JSX.Element {
     }
   }, [pathname]);
   return (
-    <div className={classes.root} key={pathname}>
+    <Box py={2} px={1} overflow="hidden" key={pathname}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
@@ -39,12 +29,11 @@ export function AdInArticle(): JSX.Element {
           data-ad-slot="9174058264"
         />
       ) : null}
-    </div>
+    </Box>
   );
 }
 
-export function AdInFooter(): JSX.Element {
-  const classes = useStyles();
+export function AdInFooter() {
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -53,7 +42,7 @@ export function AdInFooter(): JSX.Element {
     }
   }, [pathname]);
   return (
-    <div className={classes.root} key={pathname}>
+    <Box py={2} px={1} overflow="hidden" key={pathname}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
@@ -64,12 +53,11 @@ export function AdInFooter(): JSX.Element {
           data-full-width-responsive="true"
         />
       ) : null}
-    </div>
+    </Box>
   );
 }
 
-export function AdInListFooter(): JSX.Element {
-  const classes = useStyles();
+export function AdInListFooter() {
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -79,7 +67,7 @@ export function AdInListFooter(): JSX.Element {
   }, [pathname]);
 
   return (
-    <div className={classes.root} key={pathname}>
+    <Box py={2} px={1} overflow="hidden" key={pathname}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
@@ -90,6 +78,6 @@ export function AdInListFooter(): JSX.Element {
           data-full-width-responsive="true"
         />
       ) : null}
-    </div>
+    </Box>
   );
 }

@@ -1,10 +1,10 @@
-import { SortKey } from './AppState';
-import { useAppState } from './AppStateContext';
+import { useAppState } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import { useDictionary } from './graphql-hooks';
+import { SortableKeys } from '../../types';
 
 interface SortStateString {
   field: string | null | undefined;
-  sortKey: SortKey;
+  sortKey: SortableKeys;
   sortType: string;
 }
 

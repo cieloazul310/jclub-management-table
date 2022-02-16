@@ -1,3 +1,5 @@
+import { Categories, SortableKeys } from '../../../../types';
+/*
 export type SortKey =
   | 'rank'
   | 'revenue'
@@ -31,11 +33,11 @@ export type SortKey =
   | 'average_attd'
   | 'unit_price'
   | 'all_attd';
-
-export type FilterCategory = 'J1' | 'J2' | 'J3' | 'others';
+*/
+export type FilterCategory = Categories | 'others';
 
 export interface AppState {
-  sortKey: SortKey;
+  sortKey: SortableKeys;
   sortAsc: boolean;
   filterCategories: FilterCategory[];
   displayFullAttd: boolean;
@@ -59,7 +61,7 @@ export function useInitialAppState(isMobile: boolean): AppState {
 
 export type Action =
   | { type: 'TOGGLE_FULL_ATTD' }
-  | { type: 'CHANGE_SORTKEY'; sortKey: SortKey }
+  | { type: 'CHANGE_SORTKEY'; sortKey: SortableKeys }
   | { type: 'TOGGLE_SORTASC' }
   | { type: 'TOGGLE_FILTERCATEGORY'; category: FilterCategory }
   | { type: 'TOGGLE_LISTMODE' }

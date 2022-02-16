@@ -5,15 +5,14 @@ import MuiLink from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
-import Hidden from '@mui/material/Hidden';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useSiteMetadata, Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
 import DrawerNavigation from './DrawerNavigation';
 import DrawerMenu from './DrawerMenu';
-import DrawerLinks from './DrawerLinks';
+// import DrawerLinks from './DrawerLinks';
 import StateHandler from './StateHandler';
 import ThemeHandler from './ThemeHandler';
 import DrawerShare from './DrawerShare';
-import { useSiteMetadata } from '../../utils/graphql-hooks';
 import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
 type DrawerInnerProps = {
@@ -49,13 +48,15 @@ function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }
         {drawerContents}
         {drawerContents ? <Divider /> : null}
         <Divider />
+        {/*
         <DrawerLinks />
+        */}
         <DrawerMenu />
-        <Hidden only="xs">
+        <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
           <Divider />
           <StateHandler />
           <ThemeHandler />
-        </Hidden>
+        </Box>
         <DrawerShare title={title} />
         <Box sx={{ py: 8, px: 2, color: 'text.secondary', fontSize: 'caption' }}>
           <footer>

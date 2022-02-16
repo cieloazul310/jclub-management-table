@@ -36,7 +36,7 @@ function AppBarInner({
           flexGrow: 1,
           px: 1,
           py: 0,
-          justifyContent: { xs: 'center', sm: undefined },
+          justifyContent: { xs: 'center', sm: 'normal' },
         }}
         variant="h6"
         component="h1"

@@ -34,7 +34,8 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-swipeable-views": "^0.14.0",
-    "rehype-react": "^7.0.4"
+    "rehype-react": "^7.0.4",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.18",
@@ -44,7 +45,6 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -54,15 +54,15 @@
     "eslint-webpack-plugin": "^3.1.1",
     "gh-pages": "^3.2.3",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5",
-    "yaml": "^1.10.2"
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
   "scripts": {
-    "build": "gatsby clean && gatsby build --prefix-paths",
+    "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop -o -H 0.0.0.0",
     "serve": "gatsby serve -o -H 0.0.0.0 --prefix-paths",
     "deploy": "gh-pages -d public",

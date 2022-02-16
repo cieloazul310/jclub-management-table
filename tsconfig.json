@@ -16,5 +16,13 @@
     "emitDecoratorMetadata": true,
     "noEmit": true,
     "skipLibCheck": true
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "esnext",
+    }
   }
 }

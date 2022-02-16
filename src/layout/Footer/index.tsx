@@ -1,15 +1,16 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import FooterLinks from './FooterLinks';
+// import FooterLinks from './FooterLinks';
 import Copyrights from './Copyrights';
-import { ContentBasis } from '../../components/Basis';
-import { AdInFooter } from '../../components/Ads';
+// import { ContentBasis } from '../../components/Basis';
+// import { AdInFooter } from '../../components/Ads';
 
 function Footer() {
   return (
-    <Box sx={{ py: 4, bgcolor: 'grey.400', color: 'grey.200' }}>
+    <Box sx={{ py: 4, bgcolor: 'grey.900', color: 'grey.200' }}>
       <Container maxWidth="lg">
+        {/*
         <ContentBasis>
           <FooterLinks />
         </ContentBasis>
@@ -17,8 +18,11 @@ function Footer() {
           <AdInFooter />
         </ContentBasis>
         <ContentBasis>
-          <Copyrights />
+        */}
+        <Copyrights />
+        {/*
         </ContentBasis>
+        */}
       </Container>
     </Box>
   );

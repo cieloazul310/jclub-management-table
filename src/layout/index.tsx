@@ -42,7 +42,7 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
       </Slide>
       <Box
         sx={{
-          paddingTop: { xs: 56, sm: 64 },
+          paddingTop: { xs: '56px', sm: '64px' },
         }}
       >
         <main>{children}</main>

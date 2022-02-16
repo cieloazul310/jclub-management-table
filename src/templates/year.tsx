@@ -3,7 +3,7 @@ import { graphql, PageProps } from 'gatsby';
 import { YearTemplateQuery, SitePageContext } from '../../graphql-types';
 import TemplateLayout from '../layout/TemplateLayout';
 
-function YearTemplate({ data, pageContext }: PageProps<YearTemplateQuery, SitePageContext>): JSX.Element {
+function YearTemplate({ data, pageContext }: PageProps<YearTemplateQuery, SitePageContext>) {
   const { yearsYaml } = data;
 
   return (
