@@ -26,13 +26,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: 'frames',
-        path: `./data/frames`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         name: 'dataset',
         path: `./data/dataset`,
       },
@@ -40,13 +33,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-yaml`,
       options: {
-        typeName: ({ node }) => {
-          if (node.sourceInstanceName === 'dataset') return 'dataset';
-          if (node.relativePath === 'clubs.yml') return 'clubsYaml';
-          if (node.relativePath === 'years.yml') return 'yearsYaml';
-          if (node.relativePath === 'dict.yml') return 'dictYaml';
-          return 'yaml';
-        },
+        typeName: `Data`,
       },
     },
     {

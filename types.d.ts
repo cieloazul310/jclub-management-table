@@ -8,6 +8,7 @@ export type Categories = 'J1' | 'J2' | 'J3';
 export type Club = {
   id: string;
   slug: string;
+  href: string;
   name: string;
   fullname: string;
   short_name: string;
@@ -16,13 +17,14 @@ export type Club = {
   hometown: string;
   area: string;
   settlement: string | null;
-  relatedCompanies?: string[];
+  relatedCompanies: string[] | null;
 };
 export type ClubNode = Node & Club;
 
 export type Year = {
   id: string;
   year: number;
+  href: string;
   categories: Categories[];
 };
 export type YearNode = Node & Year;
@@ -30,6 +32,7 @@ export type YearNode = Node & Year;
 export type General = {
   id: string;
   name: string;
+  slug: string;
   fullname: string;
   year: number;
   category: string;
@@ -79,7 +82,7 @@ export type Revenue = {
   related_revenue: number | null;
 };
 export type Expense = {
-  expense: number | null;
+  expense: number;
   salary: number | null;
   manage_exp: number | null;
   general_exp: number | null;

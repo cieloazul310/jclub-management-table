@@ -11,7 +11,6 @@ function IndexPage() {
         <Typography variant="h5" component="h2" gutterBottom>
           {title}
         </Typography>
-        <Paragraph>{description}</Paragraph>
         <span>
           <AppLinkButton to="/" variant="contained" color="primary">
             最新の経営情報を見る

@@ -1,45 +1,42 @@
 import * as React from 'react';
-import { Link as GatsbyLink } from 'gatsby';
-import Button from '@material-ui/core/Button';
-
-import { useJ1Clubs, useJ2Clubs, useJ3Clubs, Clubs } from '../../utils/graphql-hooks';
+import { AppLinkButton } from '@cieloazul310/gatsby-theme-aoi';
+import { useClubsByCategory } from '../../utils/graphql-hooks';
+import { ClubNode } from '../../../types';
 
 interface CategoryLinkCoreProps {
-  clubs: Clubs;
+  clubs: {
+    node: Pick<ClubNode, 'id' | 'short_name' | 'href'>;
+  }[];
 }
 
-export function CategoryLinkCore({ clubs }: CategoryLinkCoreProps): JSX.Element {
+export function CategoryLinkCore({ clubs }: CategoryLinkCoreProps) {
   return (
     <>
       {clubs.map(({ node }, index) => (
-        <Button key={node.id ?? index} component={GatsbyLink} to={`/club/${node.slug}/`}>
+        <AppLinkButton key={node.id ?? index} to={node.href}>
           {node.short_name}
-        </Button>
+        </AppLinkButton>
       ))}
     </>
   );
 }
 
-export function J1Link(): JSX.Element {
-  const clubs = useJ1Clubs();
-  return <CategoryLinkCore clubs={clubs} />;
+export function J1Link() {
+  const { j1 } = useClubsByCategory();
+  return <CategoryLinkCore clubs={j1.edges} />;
 }
 
-export function J2Link(): JSX.Element {
-  const clubs = useJ2Clubs();
-  return <CategoryLinkCore clubs={clubs} />;
+export function J2Link() {
+  const { j2 } = useClubsByCategory();
+  return <CategoryLinkCore clubs={j2.edges} />;
 }
 
-export function J3Link(): JSX.Element {
-  const clubs = useJ3Clubs();
-  return <CategoryLinkCore clubs={clubs} />;
+export function J3Link() {
+  const { j3 } = useClubsByCategory();
+  return <CategoryLinkCore clubs={j3.edges} />;
 }
 
-interface Props {
-  category: string;
-}
-
-export function CategoryLink({ category }: Props): JSX.Element | null {
+export function CategoryLink({ category }: { category: string }) {
   if (category === 'J1') return <J1Link />;
   if (category === 'J2') return <J2Link />;
   if (category === 'J3') return <J3Link />;
