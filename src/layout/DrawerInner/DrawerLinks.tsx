@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { useJ1Clubs, useJ2Clubs, useJ3Clubs, useAllYears, Clubs } from '../../utils/graphql-hooks';
 
-interface CategoryLinksProps {
+type CategoryLinksProps = {
   title: string;
   clubs: Clubs;
-}
+};
 
-export function CategoryLinks({ title, clubs }: CategoryLinksProps): JSX.Element {
+export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
   const storaged = typeof window === 'object' ? sessionStorage.getItem(`${title}Open`) : null;
   const initialOpen = storaged ? (JSON.parse(storaged) as boolean) : false;
   const [open, setOpen] = React.useState(initialOpen);
@@ -45,7 +45,7 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps): JSX.Element
   );
 }
 
-export function YearsLinks(): JSX.Element {
+export function YearsLinks() {
   const years = useAllYears();
   const storaged = typeof window === 'object' ? sessionStorage.getItem('yearsOpen') : null;
   const initialOpen = storaged ? (JSON.parse(storaged) as boolean) : false;
@@ -76,7 +76,7 @@ export function YearsLinks(): JSX.Element {
   );
 }
 
-function DrawerLinks(): JSX.Element {
+function DrawerLinks() {
   const j1clubs = useJ1Clubs();
   const j2clubs = useJ2Clubs();
   const j3clubs = useJ3Clubs();

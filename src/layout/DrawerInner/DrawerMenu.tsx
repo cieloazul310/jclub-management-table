@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import { HomeIcon, SeriesIcon, DownloadIcon } from '../../icons';
 
-function DrawerMenu(): JSX.Element {
+function DrawerMenu() {
   return (
     <List subheader={<ListSubheader>コンテンツ</ListSubheader>}>
       <ListItem button component={GatsbyLink} to="/">

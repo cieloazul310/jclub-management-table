@@ -1,12 +1,12 @@
 import * as React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Fab from '@material-ui/core/Fab';
-import Slide from '@material-ui/core/Slide';
-import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import MenuIcon from '@material-ui/icons/Menu';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Fab from '@mui/material/Fab';
+import Slide from '@mui/material/Slide';
+import Tooltip from '@mui/material/Tooltip';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import MenuIcon from '@mui/icons-material/Menu';
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
@@ -14,36 +14,15 @@ import Footer from './Footer';
 
 const iOS = typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    appbar: {
-      background: theme.palette.type === 'dark' ? theme.palette.common.black : undefined,
-      color: theme.palette.type === 'dark' ? theme.palette.common.white : undefined,
-    },
-    content: {
-      paddingTop: 64,
-      [theme.breakpoints.only('xs')]: {
-        paddingTop: 56,
-      },
-    },
-    fab: {
-      position: 'fixed',
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
-  })
-);
-
-interface Props {
+type Props = {
   children: React.ReactNode;
   drawerContents?: React.ReactNode;
   title?: string;
   description?: string;
   headerTitle?: string;
-}
+};
 
-function Layout({ children, drawerContents, title, description, headerTitle }: Props): JSX.Element {
-  const classes = useStyles();
+function Layout({ children, drawerContents, title, description, headerTitle }: Props) {
   const trigger = useScrollTrigger();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const setDrawer = (open: boolean) => () => {
@@ -57,13 +36,17 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
     <div>
       <SEO title={title} description={description} />
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar className={classes.appbar}>
+        <AppBar>
           <AppBarInner title={headerTitle || title} onLeftButtonClick={toggleDrawer} />
         </AppBar>
       </Slide>
-      <div className={classes.content}>
+      <Box
+        sx={{
+          paddingTop: { xs: 56, sm: 64 },
+        }}
+      >
         <main>{children}</main>
-      </div>
+      </Box>
       <Footer />
       <SwipeableDrawer
         open={drawerOpen}
@@ -74,13 +57,19 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
       >
         <DrawerInner onCloseIconClick={setDrawer(false)} drawerContents={drawerContents} />
       </SwipeableDrawer>
-      <div className={classes.fab}>
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: (theme) => theme.spacing(2),
+          right: (theme) => theme.spacing(2),
+        }}
+      >
         <Tooltip title="メニュー">
           <Fab color="secondary" onClick={toggleDrawer}>
             <MenuIcon />
           </Fab>
         </Tooltip>
-      </div>
+      </Box>
     </div>
   );
 }

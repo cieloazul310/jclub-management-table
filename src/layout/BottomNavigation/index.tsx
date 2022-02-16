@@ -1,15 +1,15 @@
 import * as React from 'react';
-import MuiBottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import MuiBottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { SummaryIcon, SettingsIcon, FigureIcon, ArticleIcon } from '../../icons';
 import { MobileTab } from '../../types';
 
-interface Props {
+type BottomNavigationProps = {
   value: MobileTab;
   onChange: (event: React.ChangeEvent<unknown>, newValue: string) => void;
-}
+};
 
-function BottomNavigation({ value, onChange }: Props): JSX.Element {
+function BottomNavigation({ value, onChange }: BottomNavigationProps) {
   return (
     <MuiBottomNavigation value={value} onChange={onChange} showLabels>
       <BottomNavigationAction label="概要" value="summary" icon={<SummaryIcon />} />

@@ -1,27 +1,27 @@
 const path = require('path');
-const blue = require('@material-ui/core/colors/blue').default;
 
 const baseUrl = 'https://cieloazul310.github.io';
 const pathPrefix = '/jclub-financial-table';
-const siteUrl = path.join(baseUrl, pathPrefix);
+// const siteUrl = path.join(baseUrl, pathPrefix);
 
 module.exports = {
   siteMetadata: {
     title: `Jクラブ経営情報ポータル`,
     description: `Jリーグが毎年公開している「Jクラブ個別経営情報開示資料」のデータをクラブ別、年度別に表示したページ。損益計算書、貸借対照表、営業収入、営業費用、入場者数の項目別に表と解説を掲載。`,
-    siteUrl,
     baseUrl,
+    siteUrl: 'https://cieloazul310.github.io/jclub-financial-table',
+    author: `@cieloazul310`,
+    keywords: ['Gatsby', 'TypeScript', 'MUI'],
+    lang: 'ja',
   },
   pathPrefix,
   plugins: [
     {
-      resolve: 'gatsby-plugin-top-layout',
+      resolve: `@cieloazul310/gatsby-theme-aoi`,
       options: {
-        siteId: 'jclub-financial-report',
+        siteUrl: pathPrefix,
       },
     },
-    `gatsby-plugin-material-ui`,
-    `gatsby-plugin-graphql-codegen`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -62,7 +62,6 @@ module.exports = {
         trackingId: 'UA-74683419-3',
       },
     },
-    /*
     {
       resolve: 'gatsby-plugin-eslint',
       // v3.0.0 has an error for options
@@ -74,19 +73,19 @@ module.exports = {
         failOnError: false,
       },
     },
-    */
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Jクラブ経営情報ポータル`,
         short_name: `Jクラブ経営情報`,
         start_url: `/`,
-        background_color: blue[600],
-        theme_color: blue[600],
+        background_color: '#1e88e5',
+        theme_color: '#1e88e5',
         display: `minimal-ui`,
         icon: `src/images/og_twitter.png`, // This path is relative to the root of the site.
       },
     },
+    /*
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
@@ -110,5 +109,6 @@ module.exports = {
         },
       },
     },
+    */
   ],
 };

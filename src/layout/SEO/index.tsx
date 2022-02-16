@@ -5,12 +5,12 @@ import { useSiteMetadata } from '../../utils/graphql-hooks';
 import ogImage from '../../images/og_image.png';
 import ogTwitter from '../../images/og_twitter.png';
 
-interface Props {
+type SeoProps = {
   title?: string;
   description?: string;
-}
+};
 
-function Seo({ title, description }: Props): JSX.Element {
+function Seo({ title, description }: SeoProps) {
   const siteMetadata = useSiteMetadata();
   const { href } = useLocation();
   return (

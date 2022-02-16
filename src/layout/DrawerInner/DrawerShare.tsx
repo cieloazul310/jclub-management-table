@@ -1,18 +1,18 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import { useTwitterShare, useFacebookShare } from '../../utils/useSocialShare';
 
 interface Props {
   title?: string;
 }
 
-function DrawerShare({ title }: Props): JSX.Element {
+function DrawerShare({ title }: Props) {
   const twitterUrl = useTwitterShare(title);
   const fbUrl = useFacebookShare();
   return (

@@ -1,26 +1,14 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import FooterLinks from './FooterLinks';
 import Copyrights from './Copyrights';
 import { ContentBasis } from '../../components/Basis';
 import { AdInFooter } from '../../components/Ads';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      padding: theme.spacing(4, 0),
-      background: theme.palette.grey[900],
-      color: theme.palette.grey[200],
-    },
-  })
-);
-
-function Footer(): JSX.Element {
-  const classes = useStyles();
-
+function Footer() {
   return (
-    <div className={classes.root}>
+    <Box sx={{ py: 4, bgcolor: 'grey.400', color: 'grey.200' }}>
       <Container maxWidth="lg">
         <ContentBasis>
           <FooterLinks />
@@ -32,7 +20,7 @@ function Footer(): JSX.Element {
           <Copyrights />
         </ContentBasis>
       </Container>
-    </div>
+    </Box>
   );
 }
 

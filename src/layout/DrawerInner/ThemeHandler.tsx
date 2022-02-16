@@ -1,22 +1,18 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Switch from '@material-ui/core/Switch';
-import { useTheme } from '@material-ui/core/styles';
-import Brightness2Icon from '@material-ui/icons/Brightness2';
-import Brightness5Icon from '@material-ui/icons/Brightness5';
-import {
-  useThemeContextState,
-  useToggleDark,
-  useToggleUseSystem,
-} from '../../../plugins/gatsby-plugin-top-layout/components/ThemeStateContext';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import Switch from '@mui/material/Switch';
+import { useTheme } from '@mui/material/styles';
+import Brightness2Icon from '@mui/icons-material/Brightness2';
+import Brightness5Icon from '@mui/icons-material/Brightness5';
+import { useThemeContextState, useToggleDark, useToggleUseSystem } from '@cieloazul310/gatsby-theme-aoi';
 
-function ThemeHandler(): JSX.Element {
-  const { type } = useTheme().palette;
+function ThemeHandler() {
+  const { mode } = useTheme().palette;
   const { darkMode, useSystemTheme } = useThemeContextState();
   const toggleDark = useToggleDark();
   const toggleUseSystem = useToggleUseSystem();
@@ -32,7 +28,7 @@ function ThemeHandler(): JSX.Element {
       </ListItem>
       <ListItem>
         <ListItemIcon>
-          {type === 'dark' ? (
+          {mode === 'dark' ? (
             <Brightness2Icon color={useSystemTheme ? 'inherit' : 'disabled'} />
           ) : (
             <Brightness5Icon color={useSystemTheme ? 'inherit' : 'disabled'} />

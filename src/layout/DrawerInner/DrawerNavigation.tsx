@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import useNeighbor from '../../utils/useNeighbor';
 import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
-interface Props {
+type DrawerNavigationProps = {
   next?: SitePageContextNext | null;
   previous?: SitePageContextPrevious | null;
-}
+};
 
-function DrawerNavigation({ next, previous }: Props): JSX.Element | null {
+function DrawerNavigation({ next, previous }: DrawerNavigationProps) {
   const nxt = useNeighbor(next);
   const prev = useNeighbor(previous);
   return next || previous ? (

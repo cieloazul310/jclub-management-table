@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import MuiLink from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
-import Tooltip from '@material-ui/core/Tooltip';
-import Hidden from '@material-ui/core/Hidden';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import ClearIcon from '@material-ui/icons/Clear';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import MuiLink from '@mui/material/Link';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import Hidden from '@mui/material/Hidden';
+import ClearIcon from '@mui/icons-material/Clear';
 import DrawerNavigation from './DrawerNavigation';
 import DrawerMenu from './DrawerMenu';
 import DrawerLinks from './DrawerLinks';
@@ -16,66 +16,36 @@ import DrawerShare from './DrawerShare';
 import { useSiteMetadata } from '../../utils/graphql-hooks';
 import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      width: 280,
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'auto',
-    },
-    titleContainer: {
-      padding: theme.spacing(2),
-    },
-    toolbar: {
-      ...theme.mixins.toolbar,
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 2),
-    },
-    items: {
-      flexGrow: 1,
-      overflowY: 'auto',
-    },
-    footer: {
-      padding: theme.spacing(8, 2),
-      color: theme.palette.text.secondary,
-      fontSize: theme.typography.caption.fontSize,
-    },
-  })
-);
-
-interface Props {
+type DrawerInnerProps = {
   title?: string;
   next?: SitePageContextNext | null;
   previous?: SitePageContextPrevious | null;
   drawerContents?: React.ReactNode;
   onCloseIconClick: () => void;
-}
+};
 
-function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }: Props): JSX.Element {
-  const classes = useStyles();
+function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }: DrawerInnerProps) {
   const siteTitle = useSiteMetadata().title;
   return (
-    <div className={classes.root}>
+    <Box sx={{ width: 280, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
       <div>
-        <div className={classes.toolbar}>
+        <Box sx={{ display: 'flex', alignItems: 'center', px: 2, py: 0, minHeight: (theme) => theme.mixins.toolbar.minHeight }}>
           <Tooltip title="閉じる">
             <IconButton edge="start" onClick={onCloseIconClick}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
-        </div>
+        </Box>
         <Divider />
-        <div className={classes.titleContainer}>
+        <Box p={2}>
           <Typography variant="body1">
             <strong>{title ?? siteTitle}</strong>
           </Typography>
-        </div>
+        </Box>
         <DrawerNavigation next={next} previous={previous} />
         <Divider />
       </div>
-      <div className={classes.items}>
+      <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
         {drawerContents}
         {drawerContents ? <Divider /> : null}
         <Divider />
@@ -87,7 +57,7 @@ function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }
           <ThemeHandler />
         </Hidden>
         <DrawerShare title={title} />
-        <div className={classes.footer}>
+        <Box sx={{ py: 8, px: 2, color: 'text.secondary', fontSize: 'caption' }}>
           <footer>
             <strong>Jクラブ経営情報2005-2019</strong>
             <p>
@@ -98,9 +68,9 @@ function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }
               </MuiLink>
             </p>
           </footer>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

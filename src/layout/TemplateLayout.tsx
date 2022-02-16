@@ -1,16 +1,14 @@
 import * as React from 'react';
-import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import MuiTab from '@material-ui/core/Tab';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Fab from '@material-ui/core/Fab';
-import Tooltip from '@material-ui/core/Tooltip';
-import Hidden from '@material-ui/core/Hidden';
-import Slide from '@material-ui/core/Slide';
-import useScrollTriger from '@material-ui/core/useScrollTrigger';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import MuiTab from '@mui/material/Tab';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Fab from '@mui/material/Fab';
+import Tooltip from '@mui/material/Tooltip';
+import Slide from '@mui/material/Slide';
+import useScrollTriger from '@mui/material/useScrollTrigger';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
@@ -27,78 +25,14 @@ import useUpdateOnClient from '../utils/useUpdateOnClient';
 import { Mode, MobileTab, Tab, tabs } from '../types';
 import { ClubTemplateQuery, YearTemplateQuery, SitePageContext } from '../../graphql-types';
 
-const useStyles = makeStyles<Theme>((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      paddingTop: 64,
-      [theme.breakpoints.only('xs')]: {
-        paddingTop: 56,
-        paddingBottom: 56,
-      },
-    },
-    appBar: {
-      background: theme.palette.type === 'dark' ? theme.palette.background.default : undefined,
-      color: theme.palette.type === 'dark' ? theme.palette.text.primary : undefined,
-    },
-    tabs: {
-      position: 'sticky',
-      top: 64,
-      background: theme.palette.background.paper,
-      zIndex: theme.zIndex.appBar - 1,
-      boxShadow: theme.shadows[1],
-      transition: theme.transitions.create('top', { delay: 100 }),
-      [theme.breakpoints.only('xs')]: {
-        top: 56,
-      },
-    },
-    tabsTriggered: {
-      top: 0,
-      [theme.breakpoints.only('xs')]: {
-        top: 0,
-      },
-    },
-    mobileTabContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 1,
-    },
-    bottomNavigation: {
-      position: 'fixed',
-      width: '100%',
-      bottom: 0,
-      zIndex: theme.zIndex.appBar,
-      borderTop: `1px solid ${theme.palette.divider}`,
-    },
-    fab: {
-      position: 'fixed',
-      right: theme.spacing(2),
-      bottom: theme.spacing(2),
-      zIndex: theme.zIndex.appBar - 1,
-      [theme.breakpoints.only('xs')]: {
-        bottom: theme.spacing(2) + 56,
-      },
-    },
-    drawerInner: {
-      width: 280,
-    },
-    drawerToolbar: {
-      ...theme.mixins.toolbar,
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 2),
-    },
-  })
-);
-
-interface Props {
+type Props = {
   mode: Mode;
   title: string;
   headerTitle?: string;
   description?: string;
   data: ClubTemplateQuery | YearTemplateQuery;
   pageContext: SitePageContext;
-}
+};
 
 function TemplateLayout({ mode, title, headerTitle, description, data, pageContext }: Props): JSX.Element {
   const isClient = useUpdateOnClient();
@@ -110,7 +44,7 @@ function TemplateLayout({ mode, title, headerTitle, description, data, pageConte
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [mobileTab, setMobileTab] = React.useState<MobileTab>(initialTabs.mobileTab ?? 'figure');
   const [tab, setTab] = React.useState<Tab>(initialTabs.tab ?? 'pl');
-  const classes = useStyles();
+  // const classes = useStyles();
   const { previous, next } = pageContext;
 
   React.useEffect(() => {
@@ -142,15 +76,32 @@ function TemplateLayout({ mode, title, headerTitle, description, data, pageConte
   };
 
   return (
-    <div key={isClient} className={classes.root}>
+    <Box
+      key={isClient}
+      sx={{
+        flexGrow: 1,
+        paddingTop: { xs: 56, sm: 64 },
+        paddingBottom: { xs: 56, sm: undefined },
+      }}
+    >
       <SEO title={title} description={description} />
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar className={classes.appBar}>
+        <AppBar>
           <AppBarInner title={headerTitle ?? title} onLeftButtonClick={handleDrawer()} previous={previous} next={next} />
         </AppBar>
       </Slide>
       <Slide appear={false} direction="down" in={!isMobile || mobileTab === 'figure' || mobileTab === 'article'}>
-        <nav className={clsx(classes.tabs, { [classes.tabsTriggered]: trigger })}>
+        <Box
+          component="nav"
+          sx={{
+            position: 'sticky',
+            top: trigger ? 0 : { xs: 56, sm: 64 },
+            bgcolor: 'background.paper',
+            zIndex: (theme) => theme.zIndex.appBar - 1,
+            boxShadow: 1,
+            transition: (theme) => theme.transitions.create('top', { delay: 100 }),
+          }}
+        >
           <Tabs value={tab} variant="scrollable" indicatorColor="secondary" textColor="secondary" onChange={handleTab}>
             <MuiTab label="損益計算書" value="pl" wrapped />
             <MuiTab label="貸借対照表" value="bs" wrapped />
@@ -158,35 +109,50 @@ function TemplateLayout({ mode, title, headerTitle, description, data, pageConte
             <MuiTab label="営業費用" value="expense" wrapped />
             <MuiTab label="入場者数" value="attd" wrapped />
           </Tabs>
-        </nav>
+        </Box>
       </Slide>
       <main>
-        <div className={classes.mobileTabContainer}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <FigureTabPane mobileTab={mobileTab} data={data} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
           <SummaryTabPane mobileTab={mobileTab} mode={mode} data={data} previous={previous} next={next} />
           <ArticleTabPane data={data} mobileTab={mobileTab} tab={tab} mode={mode} onChangeTabIndex={onChangeTabIndex} />
           <SettingsTabPane mobileTab={mobileTab} />
-        </div>
+        </Box>
       </main>
-      <Hidden only="xs">
+      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         <Footer />
-      </Hidden>
-      <Hidden smUp implementation="css">
-        <nav className={classes.bottomNavigation}>
-          <BottomNavigation value={mobileTab} onChange={handleMobileTab} />
-        </nav>
-      </Hidden>
-      <div className={classes.fab}>
+      </Box>
+      <Box
+        component="nav"
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          position: 'fixed',
+          width: '100%',
+          bottom: 0,
+          zIndex: 'appBar',
+          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
+      >
+        <BottomNavigation value={mobileTab} onChange={handleMobileTab} />
+      </Box>
+      <Box
+        sx={{
+          position: 'fixed',
+          right: (theme) => theme.spacing(2),
+          bottom: (theme) => ({ xs: `calc(${theme.spacing(2)} + 56px)`, sm: theme.spacing(2) }),
+          zIndex: (theme) => theme.zIndex.appBar - 1,
+        }}
+      >
         <Tooltip title="メニュー">
           <Fab color="secondary" onClick={handleDrawer()}>
             <MenuIcon />
           </Fab>
         </Tooltip>
-      </div>
+      </Box>
       <SwipeableDrawer open={drawerOpen} onClose={handleDrawer(false)} onOpen={handleDrawer(true)}>
         <DrawerInner title={headerTitle ?? title} previous={previous} next={next} onCloseIconClick={handleDrawer(false)} />
       </SwipeableDrawer>
-    </div>
+    </Box>
   );
 }
 

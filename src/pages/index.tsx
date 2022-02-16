@@ -1,7 +1,18 @@
 import * as React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import { Layout, Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+
+function IndexPage() {
+  return (
+    <Layout title="Jクラブ経営情報ポータル">
+      <Jumbotron />
+    </Layout>
+  );
+}
+export default IndexPage;
+/*
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import Layout from '../layout';
 import { AppLink } from '../components/AppLink';
@@ -11,7 +22,7 @@ import { AttributionDoc } from '../components/docs';
 import { AdInArticle } from '../components/Ads';
 import { useSiteMetadata } from '../utils/graphql-hooks';
 
-function IndexPage(): JSX.Element {
+function IndexPage() {
   const { title, description } = useSiteMetadata();
 
   return (
@@ -95,3 +106,4 @@ function IndexPage(): JSX.Element {
   );
 }
 export default IndexPage;
+*/

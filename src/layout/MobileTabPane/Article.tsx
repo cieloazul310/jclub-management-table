@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
+import Container from '@mui/material/Container';
 import SwipeableViews from 'react-swipeable-views';
 import MobileTabPane, { MobileTabPaneProps } from './index';
 import { ContentBasisLarge, ContentBasis } from '../../components/Basis';
 import { PLDoc, BSDoc, RevenueDoc, ExpenseDoc, AttdDoc, AttributionDoc } from '../../components/docs';
 import { AdInArticle } from '../../components/Ads';
 import { Tab, tabs } from '../../types';
-// import { ClubTemplateQuery, YearTemplateQuery } from '../../../graphql-types';
 
 function docTab(tab: Tab) {
   if (tab === 'pl') return <PLDoc />;
@@ -16,14 +15,12 @@ function docTab(tab: Tab) {
   return <AttdDoc />;
 }
 
-type Props = {
+type MainTabProps = {
   tab: Tab;
-  // data: ClubTemplateQuery | YearTemplateQuery;
-  // mode: Mode;
   onChangeTabIndex: (index: number) => void;
 } & Omit<MobileTabPaneProps, 'children' | 'value'>;
 
-function MainTab({ tab, onChangeTabIndex, mobileOnly, mobileTab }: Props): JSX.Element {
+function MainTab({ tab, onChangeTabIndex, mobileOnly, mobileTab }: MainTabProps) {
   return (
     <MobileTabPane value="article" mobileOnly={mobileOnly} mobileTab={mobileTab}>
       <ContentBasisLarge>

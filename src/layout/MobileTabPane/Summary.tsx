@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import MobileTabPane, { MobileTabPaneProps } from './index';
 import { ContentBasisLarge, ContentBasis } from '../../components/Basis';
 import ClubInfo from '../../components/ClubInfo';
@@ -15,14 +15,14 @@ function isClubData(data: ClubTemplateQuery | YearTemplateQuery): data is ClubTe
   return 'clubsYaml' in data;
 }
 
-type Props = {
+type SummaryTabProps = {
   mode: Mode;
   data: ClubTemplateQuery | YearTemplateQuery;
   previous?: SitePageContextPrevious | null;
   next?: SitePageContextNext | null;
 } & Omit<MobileTabPaneProps, 'children' | 'value'>;
 
-function SummaryTabPane({ mode, data, previous, next, mobileOnly, mobileTab }: Props): JSX.Element {
+function SummaryTabPane({ mode, data, previous, next, mobileOnly, mobileTab }: SummaryTabProps) {
   return (
     <MobileTabPane value="summary" mobileOnly={mobileOnly} mobileTab={mobileTab}>
       <ContentBasisLarge>

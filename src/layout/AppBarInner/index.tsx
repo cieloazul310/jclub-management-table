@@ -1,42 +1,19 @@
 import * as React from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
-import Hidden from '@material-ui/core/Hidden';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import MenuIcon from '@mui/icons-material/Menu';
 import AppBarNavigation from './AppBarNavigation';
 import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    title: {
-      display: 'flex',
-      flexGrow: 1,
-      padding: theme.spacing(0, 1),
-      [theme.breakpoints.only('xs')]: {
-        justifyContent: 'center',
-      },
-    },
-    dummyIconOuter: {
-      padding: theme.spacing(1.5),
-      marginRight: theme.spacing(-1.5),
-    },
-    dummyIconInner: {
-      width: '1em',
-      height: '1em',
-      fontSize: '1.5rem',
-    },
-  })
-);
-
-interface Props {
+type AppBarInnerProps = {
   title?: string;
   previous?: SitePageContextPrevious | null;
   next?: SitePageContextNext | null;
   onLeftButtonClick?: () => void;
-}
+};
 
 function AppBarInner({
   title,
@@ -45,8 +22,7 @@ function AppBarInner({
   onLeftButtonClick = () => {
     // do nothing
   },
-}: Props): JSX.Element {
-  const classes = useStyles();
+}: AppBarInnerProps) {
   return (
     <Toolbar>
       <Tooltip title="メニュー">
@@ -54,17 +30,31 @@ function AppBarInner({
           <MenuIcon />
         </IconButton>
       </Tooltip>
-      <Typography className={classes.title} variant="h6" component="h1">
+      <Typography
+        sx={{
+          display: 'flex',
+          flexGrow: 1,
+          px: 1,
+          py: 0,
+          justifyContent: { xs: 'center', sm: undefined },
+        }}
+        variant="h6"
+        component="h1"
+      >
         {title ?? 'Title'}
       </Typography>
-      <Hidden smUp implementation="css">
-        <div className={classes.dummyIconOuter}>
-          <div className={classes.dummyIconInner} />
-        </div>
-      </Hidden>
-      <Hidden xsDown implementation="css">
+      <Box p={1.5} mr={-1.5} display={{ xs: 'block', sm: 'none' }}>
+        <Box
+          sx={{
+            width: '1em',
+            height: '1em',
+            fontSize: '1.5rem',
+          }}
+        />
+      </Box>
+      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         <AppBarNavigation previous={previous} next={next} />
-      </Hidden>
+      </Box>
     </Toolbar>
   );
 }

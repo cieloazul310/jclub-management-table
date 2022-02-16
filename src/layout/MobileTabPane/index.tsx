@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+// import { makeStyles, createStyles } from '@material-ui/core/styles';
 import useIsMobile from '../../utils/useIsMobile';
 import { MobileTab } from '../../types';
-
+/*
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -13,21 +14,21 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-export interface MobileTabPaneProps {
+*/
+export type MobileTabPaneProps = {
   mobileOnly?: boolean;
   value: MobileTab;
   mobileTab: MobileTab;
   children: React.ReactNode;
-}
+};
 
-function MobileTabPane({ value, mobileTab, children, mobileOnly = false }: MobileTabPaneProps): JSX.Element | null {
-  const classes = useStyles();
+function MobileTabPane({ value, mobileTab, children, mobileOnly = false }: MobileTabPaneProps) {
+  // const classes = useStyles();
   const isMobile = useIsMobile();
   return !mobileOnly || isMobile ? (
-    <div className={classes.root} role="tabpanel" hidden={isMobile && value !== mobileTab}>
+    <Box sx={{ flexGrow: 1, pb: { xs: 86, sm: undefined } }} role="tabpanel" hidden={isMobile && value !== mobileTab}>
       <section>{!isMobile || value === mobileTab ? children : null}</section>
-    </div>
+    </Box>
   ) : null;
 }
 

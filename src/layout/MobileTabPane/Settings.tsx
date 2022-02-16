@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import MobileTabPane, { MobileTabPaneProps } from './index';
 import { ContentBasis, ContentBasisLarge } from '../../components/Basis';
 import StateHandler from '../DrawerInner/StateHandler';
 import ThemeHandler from '../DrawerInner/ThemeHandler';
 
-function SettingsTabPane({ mobileTab }: Omit<MobileTabPaneProps, 'children' | 'value' | 'mobileOnly'>): JSX.Element {
+function SettingsTabPane({ mobileTab }: Omit<MobileTabPaneProps, 'children' | 'value' | 'mobileOnly'>) {
   return (
     <MobileTabPane value="settings" mobileOnly mobileTab={mobileTab}>
       <ContentBasisLarge>

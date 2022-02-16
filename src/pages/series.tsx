@@ -1,4 +1,15 @@
 import * as React from 'react';
+import { Layout, Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+
+function SeriesPage() {
+  return (
+    <Layout title="Jクラブ経営情報ポータル">
+      <Jumbotron />
+    </Layout>
+  );
+}
+export default SeriesPage;
+/*
 import { graphql, PageProps } from 'gatsby';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -390,3 +401,4 @@ export const query = graphql`
     }
   }
 `;
+*/
