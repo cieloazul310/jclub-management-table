@@ -4,13 +4,8 @@ import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import { TableBodyLabel } from './TableLabel';
 import { CategoryLabel } from '../CategoryAvatar';
 import { useAppState } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import val from '../../utils/val';
 import { Tab, Mode, DatumBrowser, General, PL, BS, Revenue, Expense, AttdBrowser } from '../../../types';
-
-function val(value: number | null, separator: boolean) {
-  if (typeof value !== 'number') return '-';
-  if (!separator) return value.toString();
-  return value.toLocaleString('en-US');
-}
 
 type DataTableCellProps = {
   value: number | null;
@@ -214,14 +209,14 @@ function TableBodyRow({ tab, index, mode, edge, selected = false }: TableBodyRow
   };
 
   return (
-    <TableRow selected={selected}>
+    <TableRow selected={selected} hover>
       <TableBodyLabel mode={mode} edge={edge} index={index} />
       <TableCell sx={{ fontSize: 'body2.fontSize', color: 'text.secondary', width: 80 }} align="center" padding="none">
         <CategoryLabel category={edge.node.category ?? ''} />
       </TableCell>
       <TableCell
         sx={{
-          fontWeight: 'bold',
+          fontWeight: edge.node.elevation ? 'bold' : undefined,
           width: 80,
           borderRight: (theme) => `1px solid ${theme.palette.divider}`,
           color: ({ palette }) => {

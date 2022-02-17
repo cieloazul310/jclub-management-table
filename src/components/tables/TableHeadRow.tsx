@@ -5,14 +5,12 @@ import TableHeadCell from './TableHeadCell';
 import { useAppState } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import { Tab, Mode } from '../../../types';
 
-interface Props {
+type TableHeadRowProps = {
   tab: Tab;
   mode: Mode;
-}
+};
 
-type TableHeadRowProps = Pick<Props, 'mode'>;
-
-export function PLTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
+export function PLTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="revenue">
@@ -51,7 +49,7 @@ export function PLTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
   );
 }
 
-export function BSTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
+export function BSTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="assets">
@@ -79,7 +77,7 @@ export function BSTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
   );
 }
 
-export function RevenueTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
+export function RevenueTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="revenue">
@@ -110,7 +108,7 @@ export function RevenueTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
   );
 }
 
-export function ExpenseTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
+export function ExpenseTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="expense">
@@ -140,7 +138,7 @@ export function ExpenseTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
   );
 }
 
-export function AttdTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
+export function AttdTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   const { displayFullAttd } = useAppState();
   return (
     <>
@@ -173,7 +171,7 @@ export function AttdTableHeadRow({ mode }: TableHeadRowProps): JSX.Element {
   );
 }
 
-function TableHeadRow({ mode, tab }: Props): JSX.Element {
+function TableHeadRow({ mode, tab }: TableHeadRowProps) {
   const tableHeadLabels = (currentTab: Tab) => {
     if (currentTab === 'pl') return <PLTableHeadRow mode={mode} />;
     if (currentTab === 'bs') return <BSTableHeadRow mode={mode} />;

@@ -1,18 +1,18 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Snackbar from '@material-ui/core/Snackbar';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import useTableId from '../../utils/useTableId';
-import { Tab } from '../../types';
+import { Tab } from '../../../types';
 
-interface Props {
+type CopyButtonProps = {
   tab: Tab;
   disabled: boolean;
-}
+};
 
-function CopyButton({ tab, disabled }: Props): JSX.Element {
+function CopyButton({ tab, disabled }: CopyButtonProps) {
   const tableId = useTableId(tab);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -34,9 +34,13 @@ function CopyButton({ tab, disabled }: Props): JSX.Element {
         selection?.addRange(range);
       }
 
-      document.execCommand('copy');
+      const string = selection?.toString();
+      if (string) {
+        navigator.clipboard.writeText(string).then(() => {
+          setOpen(true);
+        });
+      }
       selection?.removeAllRanges();
-      setOpen(true);
     }
   };
 

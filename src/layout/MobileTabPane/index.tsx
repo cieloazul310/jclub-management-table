@@ -26,7 +26,7 @@ function MobileTabPane({ value, mobileTab, children, mobileOnly = false }: Mobil
   // const classes = useStyles();
   const isMobile = useIsMobile();
   return !mobileOnly || isMobile ? (
-    <Box sx={{ flexGrow: 1, pb: { xs: 86, sm: undefined } }} role="tabpanel" hidden={isMobile && value !== mobileTab}>
+    <Box sx={{ flexGrow: 1, pb: { xs: '86px', sm: undefined } }} role="tabpanel" hidden={isMobile && value !== mobileTab}>
       <section>{!isMobile || value === mobileTab ? children : null}</section>
     </Box>
   ) : null;

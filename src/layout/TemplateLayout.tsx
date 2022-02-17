@@ -13,15 +13,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
-import FinancialTable from '../components/tables';
 // import SummaryTabPane from './MobileTabPane/Summary';
-// import FigureTabPane from './MobileTabPane/Figure';
+import FigureTabPane from './MobileTabPane/Figure';
 // import ArticleTabPane from './MobileTabPane/Article';
 // import SettingsTabPane from './MobileTabPane/Settings';
 import Footer from './Footer';
 import BottomNavigation from './BottomNavigation';
 
 import useIsMobile from '../utils/useIsMobile';
+import tabs from '../utils/tabs';
 import { Mode, Tab, MobileTab, YearBrowser, ClubBrowser, DatumBrowser } from '../../types';
 
 export type YearPageData = {
@@ -57,8 +57,6 @@ type TemplateLayoutProps<T extends Mode> = {
   data: T extends 'club' ? ClubPageData : YearPageData;
   pageContext: T extends 'club' ? ClubPageContext : YearPageContext;
 };
-
-const tabs: Tab[] = ['pl', 'bs', 'revenue', 'expense', 'attd'];
 
 function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description, data, pageContext }: TemplateLayoutProps<T>) {
   const storaged = typeof window === 'object' ? sessionStorage.getItem('jclubTab-experimental') : null;
@@ -104,7 +102,7 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
       sx={{
         flexGrow: 1,
         paddingTop: { xs: '56px', sm: '64px' },
-        paddingBottom: { xs: '56px', sm: undefined },
+        paddingBottom: { xs: '56px', sm: 0 },
       }}
     >
       <SEO title={title} description={description} />
@@ -136,7 +134,7 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
       </Slide>
       <main>
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <FinancialTable edges={data.allData.edges} mode={mode} tab={tab} />
+          <FigureTabPane mobileTab={mobileTab} data={data.allData.edges} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
           {/*
           <FigureTabPane mobileTab={mobileTab} data={data} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
           <SummaryTabPane mobileTab={mobileTab} mode={mode} data={data} previous={previous} next={next} />

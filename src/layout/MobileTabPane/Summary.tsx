@@ -8,8 +8,8 @@ import YearInfo from '../../components/YearInfo';
 import PageNavigation from '../../components/PageNavigation';
 import { CategoryLink, YearsLink } from '../../components/links';
 
-import { Mode } from '../../types';
-import { ClubTemplateQuery, YearTemplateQuery, SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
+import { Mode } from '../../../types';
+// import { ClubTemplateQuery, YearTemplateQuery, SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
 function isClubData(data: ClubTemplateQuery | YearTemplateQuery): data is ClubTemplateQuery {
   return 'clubsYaml' in data;

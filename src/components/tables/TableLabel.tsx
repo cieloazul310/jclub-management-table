@@ -47,6 +47,7 @@ function TableCellIndex({ children, sx, ...props }: TableCellProps) {
         position: 'sticky',
         left: 0,
         width: 36,
+        minWidth: 36,
         padding: 0.5,
         ...sx,
       }}

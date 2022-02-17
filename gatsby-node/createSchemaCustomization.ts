@@ -65,7 +65,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
       revenue: Int!
       sponsor: Int
       ticket: Int
-      broadcast: Int!
+      broadcast: Int
       academy_rev: Int
       goods_rev: Int
       other_revs: Int

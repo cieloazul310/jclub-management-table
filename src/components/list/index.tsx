@@ -1,19 +1,22 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+// import { makeStyles, createStyles } from '@mui/core/styles';
 import ListItem from './ListItem';
-import { ContentBasisLarge } from '../Basis';
-import { AdInListFooter } from '../Ads';
+// import { ContentBasisLarge } from '../Basis';
+// import { AdInListFooter } from '../Ads';
 import useStateEdges from '../../utils/useStateEdges';
 import useIsMobile from '../../utils/useIsMobile';
-import { Edge, Mode, Tab } from '../../types';
+import { DatumBrowser, Mode, Tab } from '../../../types';
 
-interface Props {
-  edges: Edge[];
+type FinancialListProps = {
+  edges: {
+    node: DatumBrowser;
+  }[];
   mode: Mode;
   tab: Tab;
-}
-
+};
+/*
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
@@ -21,24 +24,26 @@ const useStyles = makeStyles(() =>
     },
   })
 );
-
-function FinancialList({ edges, mode, tab }: Props): JSX.Element {
-  const classes = useStyles();
+*/
+function FinancialList({ edges, mode, tab }: FinancialListProps) {
+  // const classes = useStyles();
   const stateEdges = useStateEdges(edges, mode);
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
   return (
-    <div className={classes.root}>
+    <Box flexGrow={1}>
       <Container maxWidth="sm" disableGutters>
         {stateEdges.map((edge, index) => (
-          <ListItem key={edge.node.id ?? index} edge={edge} mode={mode} tab={tab} index={index} />
+          <ListItem key={edge.node.id} edge={edge} mode={mode} tab={tab} index={index} />
         ))}
-        {isMobile ? (
+        {/*
+        isMobile ? (
           <ContentBasisLarge>
             <AdInListFooter />
           </ContentBasisLarge>
-        ) : null}
+        ) : null
+        */}
       </Container>
-    </div>
+    </Box>
   );
 }
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { AppLinkButton } from '@cieloazul310/gatsby-theme-aoi';
 import { useClubsByCategory } from '../../utils/graphql-hooks';
-import { ClubNode, Category } from '../../../types';
+import { ClubBrowser, Category } from '../../../types';
 
 type CategoryLinkCoreProps = {
   clubs: {
-    node: Pick<ClubNode, 'id' | 'short_name' | 'href'>;
+    node: Pick<ClubBrowser, 'id' | 'short_name' | 'href'>;
   }[];
 };
 

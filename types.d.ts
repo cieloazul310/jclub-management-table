@@ -105,7 +105,7 @@ export type Revenue = {
   /** 入場料収入 */
   ticket: number | null;
   /** Jリーグ配分金 */
-  broadcast: number;
+  broadcast: number | null;
   /** アカデミー関連収入 */
   academy_rev: number | null;
   /** 物販収入 */
@@ -139,7 +139,7 @@ export type Expense = {
 };
 export type Attd = {
   /** 入場料収入 */
-  ticket: number;
+  ticket: number | null;
   /** リーグ戦入場者数 */
   league_attd: number;
   /** リーグ戦ホーム試合数 */

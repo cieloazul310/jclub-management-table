@@ -21,8 +21,8 @@ function FinancialTable({ edges, mode, tab }: FinancialTableProps) {
   const stateEdges = useStateEdges(edges, mode);
   const id = useTableId(tab);
   return (
-    <TableContainer sx={{ flexGrow: 1 }} component={Paper}>
-      <Table id={id} sx={{ minWidth: 1000, scrollSnapType: 'both mandatory' }} size="small" stickyHeader>
+    <TableContainer sx={{ flexGrow: 1, maxHeight: mode === 'year' ? 'calc(100vh - 106px)' : undefined }} component={Paper}>
+      <Table id={id} size="small" sx={{ minWidth: 1000, scrollSnapType: 'both mandatory' }} stickyHeader>
         <TableHead>
           <TableHeadRow mode={mode} tab={tab} />
         </TableHead>
