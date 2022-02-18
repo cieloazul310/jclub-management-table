@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBarNavigation from './AppBarNavigation';
-import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
+import { YearPageNeighbor, ClubPageNeighbor } from '../../../types';
 
 type AppBarInnerProps = {
   title?: string;
-  previous?: SitePageContextPrevious | null;
-  next?: SitePageContextNext | null;
+  previous: YearPageNeighbor | ClubPageNeighbor;
+  next: YearPageNeighbor | ClubPageNeighbor;
   onLeftButtonClick?: () => void;
 };
 
@@ -61,8 +61,6 @@ function AppBarInner({
 
 AppBarInner.defaultProps = {
   title: undefined,
-  previous: undefined,
-  next: undefined,
   onLeftButtonClick: undefined,
 };
 

@@ -21,7 +21,7 @@ export type Club = {
   relatedCompanies: string[] | null;
 };
 export type ClubNode = Node & Club;
-export type ClubBrowser = Node & Club & { data: DatumBrowser[] };
+export type ClubBrowser = Club & { data: DatumBrowser[] };
 
 export type Year = {
   id: string;
@@ -30,7 +30,7 @@ export type Year = {
   categories: Category[];
 };
 export type YearNode = Node & Year;
-export type YearBrowser = Node & Year & { data: DatumBrowser[] };
+export type YearBrowser = Year & { data: DatumBrowser[] };
 
 export type General = {
   id: string;
@@ -180,3 +180,35 @@ export type SortableKeys = Exclude<keyof DatumBrowser, keyof General | 'elevatio
 export type Dict = {
   [K in Exclude<keyof DatumBrowser, 'slug'>]: string;
 };
+
+export type YearPageNeighbor = {
+  mode: Mode;
+  node: Pick<YearBrowser, 'year' | 'href'>;
+} | null;
+export type YearPageData = {
+  year: Omit<YearBrowser, 'data'>;
+  allData: {
+    edges: {
+      node: DatumBrowser;
+    }[];
+  };
+};
+export type YearPageContext = {
+  previous: YearPageNeighbor;
+  next: YearPageNeighbor;
+};
+
+export type ClubPageNeighbor = { mode: Mode; node: Pick<ClubBrowser, 'short_name' | 'name' | 'href'> } | null;
+export type ClubPageData = {
+  club: Omit<ClubBrowser, 'data'>;
+  allData: {
+    edges: {
+      node: DatumBrowser;
+    }[];
+  };
+};
+export type ClubPageContext = {
+  previous: ClubPageNeighbor;
+  next: ClubPageNeighbor;
+};
+export type PageContextNeighbor = ClubPageNeighbor | YearPageNeighbor;

@@ -13,7 +13,7 @@ export function CategoryLinkCore({ clubs }: CategoryLinkCoreProps) {
   return (
     <>
       {clubs.map(({ node }, index) => (
-        <AppLinkButton key={node.id ?? index} to={node.href}>
+        <AppLinkButton key={node.id ?? index} to={node.href} color="inherit">
           {node.short_name}
         </AppLinkButton>
       ))}

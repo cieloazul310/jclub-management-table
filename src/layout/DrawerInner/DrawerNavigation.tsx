@@ -6,7 +6,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import useNeighbor from '../../utils/useNeighbor';
+// import useNeighbors from '../../utils/useNeighbors';
 import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
 
 type DrawerNavigationProps = {

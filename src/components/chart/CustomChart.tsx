@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+// import { makeStyles, createStyles, Theme } from '@mui/core/styles';
 import { Chart, ChartProps } from '@devexpress/dx-react-chart-material-ui';
-
+/*
 interface StylesProps {
   height?: number;
 }
@@ -24,19 +25,35 @@ const useStyles = makeStyles<Theme, StylesProps>((theme) =>
     },
   })
 );
+*/
 
-function CustomChart(props: Omit<ChartProps, 'rootComponent'> & Chart.RootProps): JSX.Element {
+function ChartComponent({ children }: Chart.RootProps) {
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        maxWidth: 'sm',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '10px',
+        boxSizing: 'border-box',
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
+
+function CustomChart(props: Omit<ChartProps, 'rootComponent'> & Chart.RootProps) {
   const { data, width, height, rotated } = props;
-  const classes = useStyles({ height });
-  const ChartComponent = ({ children }: Chart.RootProps) => <div className={classes.chart}>{children}</div>;
 
   const { children } = props;
   return (
-    <div className={classes.container}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', py: 2, px: 1, height: height ?? 300 }}>
       <Chart rootComponent={ChartComponent} data={data} width={width} height={height} rotated={rotated}>
         {children}
       </Chart>
-    </div>
+    </Box>
   );
 }
 

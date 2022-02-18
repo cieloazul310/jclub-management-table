@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
-import TemplateLayout, { ClubPageData, ClubPageContext } from '../layout/TemplateLayout';
+import TemplateLayout from '../layout/TemplateLayout';
+import { ClubPageData, ClubPageContext } from '../../types';
 
 function ClubTemplate({ data, pageContext }: PageProps<ClubPageData, ClubPageContext>) {
   const { club } = data;

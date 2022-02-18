@@ -1,24 +1,9 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Title, TitleProps } from '@devexpress/dx-react-chart';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    chartTitle: {
-      flexGrow: 1,
-      textAlign: 'center',
-    },
-  })
-);
+import { ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
 
 function TextComponent({ text }: Title.TextProps) {
-  const classes = useStyles();
-  return (
-    <Typography className={classes.chartTitle} variant="body1" component="h3" gutterBottom>
-      {text}
-    </Typography>
-  );
+  return <ArticleTitle>{text}</ArticleTitle>;
 }
 
 function CustomTitle({ text, position }: Omit<TitleProps, 'textComponent'>): JSX.Element {

@@ -1,49 +1,44 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import MuiLink from '@material-ui/core/Link';
 import { BarSeries, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
+import { ExternalLink, H3, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
 import Chart from './chart/CustomChart';
 import Title from './chart/CustomTitle';
 import YearAxisLabel from './chart/YearAxisLabel';
-import { ContentBasis } from './Basis';
-import { ClubTemplateQuery } from '../../graphql-types';
+import { ClubBrowser, DatumBrowser } from '../../types';
 
-interface Props {
-  data: ClubTemplateQuery;
-}
+type ClubInfoProps = {
+  club: Omit<ClubBrowser, 'data'>;
+  edges: {
+    node: DatumBrowser;
+  }[];
+};
 
-function ClubInfo({ data }: Props): JSX.Element {
-  const { clubsYaml, allDataset } = data;
+function ClubInfo({ club, edges }: ClubInfoProps) {
   return (
-    <ContentBasis>
-      <Typography variant="h6" component="h2" gutterBottom>
-        {clubsYaml?.name}
-      </Typography>
-      {allDataset.edges.length > 2 ? (
-        <Chart height={360} data={allDataset.edges.map(({ node }) => ({ ...node, year: node.year?.toString() }))}>
+    <>
+      <H3>{club.name}</H3>
+      {edges.length > 2 ? (
+        <Chart height={360} data={edges.map(({ node }) => ({ ...node, year: node.year?.toString() }))}>
           <ArgumentAxis labelComponent={YearAxisLabel} />
           <ValueAxis />
           <BarSeries valueField="revenue" argumentField="year" />
           <Title text="営業収入推移" />
         </Chart>
       ) : null}
-      <Typography variant="body2" component="ul">
-        <li>正式名称: {clubsYaml?.fullname}</li>
-        <li>法人名: {clubsYaml?.company}</li>
-        <li>所属カテゴリ: {clubsYaml?.category}</li>
-        <li>ホームタウン: {clubsYaml?.hometown}</li>
-        <li>活動区域: {clubsYaml?.area}</li>
-        {clubsYaml?.settlement ? (
-          <li>
-            経営情報:{' '}
-            <MuiLink href={clubsYaml.settlement} color="secondary" target="_blank" rel="noopener noreferrer">
-              {decodeURIComponent(clubsYaml.settlement)}
-            </MuiLink>
-          </li>
+      <Ul>
+        <Li>正式名称: {club.fullname}</Li>
+        <Li>法人名: {club.company}</Li>
+        <Li>所属カテゴリ: {club.category}</Li>
+        <Li>ホームタウン: {club.hometown}</Li>
+        <Li>活動区域: {club.area}</Li>
+        {club.settlement ? (
+          <Li>
+            経営情報: <ExternalLink href={club.settlement}>{decodeURIComponent(club.settlement)}</ExternalLink>
+          </Li>
         ) : null}
-        {clubsYaml?.relatedCompanies ? <li>関連する法人: {clubsYaml.relatedCompanies.join(', ')}</li> : null}
-      </Typography>
-    </ContentBasis>
+        {club.relatedCompanies ? <Li>関連する法人: {club.relatedCompanies.join(', ')}</Li> : null}
+      </Ul>
+    </>
   );
 }
 

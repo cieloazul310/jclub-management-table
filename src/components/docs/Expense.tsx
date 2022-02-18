@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { MarkDownQuery } from '../../../graphql-types';
 import DocContainer from './DocContainer';
 
-function ExpenseDoc(): JSX.Element | null {
+function ExpenseDoc() {
   const { markdownRemark } = useStaticQuery<MarkDownQuery>(graphql`
     query {
       markdownRemark(frontmatter: { id: { eq: "expense" } }) {

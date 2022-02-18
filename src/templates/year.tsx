@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
-import TemplateLayout, { YearPageData, YearPageContext } from '../layout/TemplateLayout';
+import TemplateLayout from '../layout/TemplateLayout';
+import { YearPageData, YearPageContext } from '../../types';
 
 function YearTemplate({ data, pageContext }: PageProps<YearPageData, YearPageContext>) {
   const { year } = data;

@@ -1222,6 +1222,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@cieloazul310/gatsby-theme-aoi-blog-components@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-blog-components/-/gatsby-theme-aoi-blog-components-2.0.0.tgz#329bddba9db20a37cb20ceeab6258e896f554ecb"
+  integrity sha512-P26OPieFsZSakHdTFOEHHX48eLg/DI64HrDI3JDovW/nAv80JZp/8TNd6Lg1hWkVeGeOid+VTcr9bG0ouLPbEg==
+
 "@cieloazul310/gatsby-theme-aoi-components@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-components/-/gatsby-theme-aoi-components-2.0.0.tgz#6aa9f47dec7242633b1622d2206e2071b2f635a2"

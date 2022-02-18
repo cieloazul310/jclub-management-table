@@ -1,15 +1,15 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import { ContentBasis } from './Basis';
+import Grid from '@mui/material/Grid';
+import { H3, H4, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
 import useStat from '../utils/useStat';
-import { Edge } from '../types';
-import { YearTemplateQuery } from '../../graphql-types';
+import { DatumBrowser, YearBrowser } from '../../types';
 
-interface CategoryInfoProps {
-  edges: Edge[];
+type CategoryInfoProps = {
+  edges: {
+    node: DatumBrowser;
+  }[];
   category: string | null;
-}
+};
 
 function CategoryInfo({ edges, category }: CategoryInfoProps) {
   const stat = useStat(
@@ -19,44 +19,40 @@ function CategoryInfo({ edges, category }: CategoryInfoProps) {
   );
   return category && stat ? (
     <Grid item xs={12} sm={4}>
-      <ContentBasis>
-        <Typography variant="body1" component="h3" gutterBottom>
-          {category} {stat.n}クラブ
-        </Typography>
-        <Typography variant="body2" component="ul" gutterBottom>
-          <Typography component="li">総営業収入: {(stat.sum / 100).toFixed(2)}億円</Typography>
-          <Typography component="li">営業収入平均: {(stat.average / 100).toFixed(2)}億円</Typography>
-          <Typography component="li">
-            営業収入最大: {(stat.max.value / 100).toFixed(2)}億円【{stat.max.id}】
-          </Typography>
-          <Typography component="li">
-            営業収入最小: {(stat.min.value / 100).toFixed(2)}億円【{stat.min.id}】
-          </Typography>
-        </Typography>
-      </ContentBasis>
+      <H4>
+        {category} {stat.n}クラブ
+      </H4>
+      <Ul>
+        <Li>総営業収入: {(stat.sum / 100).toFixed(2)}億円</Li>
+        <Li>営業収入平均: {(stat.average / 100).toFixed(2)}億円</Li>
+        <Li>
+          営業収入最大: {(stat.max.value / 100).toFixed(2)}億円【{stat.max.id}】
+        </Li>
+        <Li>
+          営業収入最小: {(stat.min.value / 100).toFixed(2)}億円【{stat.min.id}】
+        </Li>
+      </Ul>
     </Grid>
   ) : null;
 }
 
-interface Props {
-  data: YearTemplateQuery;
-}
+type YearInfoProps = {
+  edges: {
+    node: DatumBrowser;
+  }[];
+  year: Omit<YearBrowser, 'data'>;
+};
 
-function YearInfo({ data }: Props): JSX.Element {
-  const { yearsYaml, allDataset } = data;
+function YearInfo({ edges, year }: YearInfoProps) {
   return (
-    <ContentBasis>
-      <Typography variant="h6" component="h2" gutterBottom>
-        {yearsYaml?.year}年
-      </Typography>
+    <>
+      <H3>{year.year}年</H3>
       <Grid container>
-        {yearsYaml?.categories
-          ? yearsYaml.categories.map((category, index) => (
-              <CategoryInfo key={category ?? index} edges={allDataset.edges} category={category} />
-            ))
-          : null}
+        {year.categories.map((category, index) => (
+          <CategoryInfo key={category ?? index} edges={edges} category={category} />
+        ))}
       </Grid>
-    </ContentBasis>
+    </>
   );
 }
 

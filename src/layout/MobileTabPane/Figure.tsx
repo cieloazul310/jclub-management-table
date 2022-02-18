@@ -5,17 +5,17 @@ import { Mode, Tab, DatumBrowser } from '../../../types';
 
 type FigureTabProps = {
   tab: Tab;
-  data: {
+  edges: {
     node: DatumBrowser;
   }[];
   mode: Mode;
   onChangeTabIndex: (index: number) => void;
 } & Omit<MobileTabPaneProps, 'children' | 'value'>;
 
-function FigureTab({ tab, data, mode, onChangeTabIndex, mobileOnly, mobileTab }: FigureTabProps) {
+function FigureTab({ tab, edges, mode, onChangeTabIndex, mobileOnly, mobileTab }: FigureTabProps) {
   return (
     <MobileTabPane value="figure" mobileOnly={mobileOnly} mobileTab={mobileTab}>
-      <Figure edges={data} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
+      <Figure edges={edges} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
     </MobileTabPane>
   );
 }

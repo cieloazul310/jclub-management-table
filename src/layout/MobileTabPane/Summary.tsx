@@ -1,53 +1,56 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { Section, SectionDivider, Article, ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
+import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import MobileTabPane, { MobileTabPaneProps } from './index';
-import { ContentBasisLarge, ContentBasis } from '../../components/Basis';
 import ClubInfo from '../../components/ClubInfo';
 import YearInfo from '../../components/YearInfo';
-import PageNavigation from '../../components/PageNavigation';
 import { CategoryLink, YearsLink } from '../../components/links';
+import useNeighbors from '../../utils/useNeighbors';
 
-import { Mode } from '../../../types';
-// import { ClubTemplateQuery, YearTemplateQuery, SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
+import { Mode, DatumBrowser, ClubBrowser, YearBrowser, ClubPageNeighbor, YearPageNeighbor } from '../../../types';
 
-function isClubData(data: ClubTemplateQuery | YearTemplateQuery): data is ClubTemplateQuery {
-  return 'clubsYaml' in data;
-}
-
-type SummaryTabProps = {
-  mode: Mode;
-  data: ClubTemplateQuery | YearTemplateQuery;
-  previous?: SitePageContextPrevious | null;
-  next?: SitePageContextNext | null;
+type SummaryTabProps<T extends Mode> = {
+  mode: T;
+  edges: {
+    node: DatumBrowser;
+  }[];
+  item: Omit<ClubBrowser, 'data'> | Omit<YearBrowser, 'data'>;
+  previous: ClubPageNeighbor | YearPageNeighbor;
+  next: ClubPageNeighbor | YearPageNeighbor;
 } & Omit<MobileTabPaneProps, 'children' | 'value'>;
 
-function SummaryTabPane({ mode, data, previous, next, mobileOnly, mobileTab }: SummaryTabProps) {
+function isClub<T extends Mode>(item: Omit<ClubBrowser, 'data'> | Omit<YearBrowser, 'data'>, mode: T): item is Omit<ClubBrowser, 'data'> {
+  return mode === 'club';
+}
+
+function SummaryTabPane<T extends Mode>({ mode, edges, item, previous, next, mobileOnly, mobileTab }: SummaryTabProps<T>) {
+  const neighbors = useNeighbors({ previous, next });
   return (
     <MobileTabPane value="summary" mobileOnly={mobileOnly} mobileTab={mobileTab}>
-      <ContentBasisLarge>
-        <Container maxWidth="md">
-          <ContentBasis>
-            <Typography variant="h3" component="h2" gutterBottom>
-              概要
-            </Typography>
-            {mode === 'club' ? <ClubInfo data={data} /> : <YearInfo data={data} />}
-          </ContentBasis>
-          <ContentBasis>
-            {mode === 'club' && isClubData(data) ? <CategoryLink category={data.clubsYaml?.category ?? ''} /> : <YearsLink />}
-          </ContentBasis>
-          <ContentBasis>
-            <PageNavigation previous={previous} next={next} />
-          </ContentBasis>
-        </Container>
-      </ContentBasisLarge>
+      <Section>
+        <Article maxWidth="md">
+          <ArticleTitle>概要</ArticleTitle>
+          {isClub(item, mode) ? <ClubInfo club={item} edges={edges} /> : <YearInfo year={item} edges={edges} />}
+        </Article>
+      </Section>
+      <SectionDivider />
+      <Section>
+        <Article maxWidth="md">{isClub(item, mode) ? <CategoryLink category={item.category} /> : <YearsLink />}</Article>
+      </Section>
+      <SectionDivider />
+      <Section>
+        <PageNavigationContainer>
+          <PageNavigationItem to={neighbors.previous?.to ?? '#'} disabled={!neighbors.previous}>
+            <Typography variant="body2">{neighbors.previous?.title}</Typography>
+          </PageNavigationItem>
+          <PageNavigationItem to={neighbors.next?.to ?? '#'} next disabled={!neighbors.next}>
+            <Typography variant="body2">{neighbors.next?.title}</Typography>
+          </PageNavigationItem>
+        </PageNavigationContainer>
+      </Section>
     </MobileTabPane>
   );
 }
-
-SummaryTabPane.defaultProps = {
-  next: undefined,
-  previous: undefined,
-};
 
 export default SummaryTabPane;
