@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import val from '../../utils/val';
-import { DatumBrowser, General, PL, BS, Revenue } from '../../../types';
+import { General, PL, BS, Revenue, Expense, AttdBrowser } from '../../../types';
 
 type CardValueProps<T> = {
   label: string;
@@ -15,6 +15,8 @@ type CardValueProps<T> = {
   emphasized?: boolean;
   // eslint-disable-next-line react/require-default-props
   strong?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  inset?: boolean;
 };
 
 function diffIcon(diffval: number | null) {
@@ -30,7 +32,7 @@ function CardValueCore<T>(
     node: T & General;
   } | null
 ) {
-  return function CardValue({ label, property, emphasized = false, strong = false, separator = false }: CardValueProps<T>) {
+  return function CardValue({ label, property, emphasized = false, strong = false, separator = false, inset = false }: CardValueProps<T>) {
     const value = edge.node[property];
     const prevValue = prev?.node[property] ?? null;
     if (typeof value !== 'number') return null;
@@ -47,13 +49,16 @@ function CardValueCore<T>(
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
           display: 'flex',
           alignItems: 'center',
+          fontSize: 'body2.fontSize',
         }}
       >
-        <Box flexGrow={1}>{label}</Box>
+        <Box flexGrow={1} pl={inset ? 2 : undefined}>
+          {label}
+        </Box>
         <Typography sx={{ fontWeight: emphasized || strong ? 'bold' : undefined }} component="span">
           {val(value, separator)}
         </Typography>
-        <Typography sx={{ width: '4em' }} color="text.secondary" textAlign="right" component="span">
+        <Typography sx={{ width: '6em' }} color="text.secondary" textAlign="right" component="span">
           {diffIcon(diffval)}
           {diffval ? val(Math.abs(diffval), separator ?? false) : null}
         </Typography>
@@ -74,54 +79,94 @@ type CardValuesProps<T> = {
 export function PLCardValues<T extends PL>({ edge, previous }: CardValuesProps<T>) {
   const CardValue = CardValueCore(edge, previous);
   return (
-    <Typography component="ul">
+    <>
       <CardValue label="営業収入" property="revenue" strong />
       <CardValue label="営業費用" property="expense" strong />
       <CardValue label="営業利益" property="op_profit" emphasized />
-      <CardValue label="営業外収入" property="no_rev" />
-      <CardValue label="営業外費用" property="no_exp" />
+      <CardValue label="営業外収入" property="no_rev" inset />
+      <CardValue label="営業外費用" property="no_exp" inset />
       <CardValue label="経常利益" property="ordinary_profit" emphasized />
-      <CardValue label="特別利益" property="sp_rev" />
-      <CardValue label="特別損失" property="sp_exp" />
+      <CardValue label="特別利益" property="sp_rev" inset />
+      <CardValue label="特別損失" property="sp_exp" inset />
       <CardValue label="税引前当期利益" property="profit_before_tax" emphasized />
-      <CardValue label="法人税および住民税等" property="tax" />
+      <CardValue label="法人税および住民税等" property="tax" inset />
       <CardValue label="当期純利益" property="profit" emphasized />
-      <CardValue label="関連する法人の営業収入" property="related_revenue" />
-    </Typography>
+      <CardValue label="(関連する法人の営業収入)" property="related_revenue" />
+    </>
   );
 }
 
 export function BSCardValues<T extends BS>({ edge, previous }: CardValuesProps<T>) {
   const CardValue = CardValueCore(edge, previous);
   return (
-    <Typography component="ul">
-      <CardValue label="総資産(資産の部)" property="assets" emphasized />
-      <CardValue label="流動資産" property="curr_assets" />
-      <CardValue label="固定資産等" property="fixed_assets" />
-      <CardValue label="総負債(負債の部)" property="liabilities" emphasized />
-      <CardValue label="流動負債" property="curr_liabilities" />
-      <CardValue label="固定負債" property="fixed_liabilities" />
-      <CardValue label="純資産(資本の部)" property="net_worth" emphasized />
-      <CardValue label="資本金" property="capital_stock" />
-      <CardValue label="資本剰余金" property="capital_surplus" emphasized />
-      <CardValue label="利益剰余金" property="retained_earnings" />
-      <CardValue label="当期純利益" property="profit" />
-    </Typography>
+    <>
+      <CardValue label="資産の部" property="assets" emphasized />
+      <CardValue label="流動資産" property="curr_assets" inset />
+      <CardValue label="固定資産等" property="fixed_assets" inset />
+      <CardValue label="負債の部" property="liabilities" emphasized />
+      <CardValue label="流動負債" property="curr_liabilities" inset />
+      <CardValue label="固定負債" property="fixed_liabilities" inset />
+      <CardValue label="純資産の部" property="net_worth" emphasized />
+      <CardValue label="資本金" property="capital_stock" inset />
+      <CardValue label="資本剰余金" property="capital_surplus" inset />
+      <CardValue label="利益剰余金" property="retained_earnings" inset />
+      <CardValue label="(当期純利益)" property="profit" inset />
+    </>
   );
 }
 
 export function RevenueCardValues<T extends Revenue>({ edge, previous }: CardValuesProps<T>) {
   const CardValue = CardValueCore(edge, previous);
   return (
-    <Typography component="ul">
+    <>
       <CardValue label="営業収入" property="revenue" emphasized />
-      <CardValue label="広告料収入" property="sponsor" />
-      <CardValue label="入場料収入" property="ticket" />
-      <CardValue label="Jリーグ配分金" property="broadcast" />
-      <CardValue label="アカデミー関連収入" property="academy_rev" />
-      <CardValue label="物販関連収入" property="goods_rev" />
-      <CardValue label="その他収入" property="other_revs" />
-      <CardValue label="関連する法人の営業収入" property="related_revenue" />
-    </Typography>
+      <CardValue label="広告料収入" property="sponsor" inset />
+      <CardValue label="入場料収入" property="ticket" inset />
+      <CardValue label="Jリーグ配分金" property="broadcast" inset />
+      <CardValue label="アカデミー関連収入" property="academy_rev" inset />
+      <CardValue label="物販関連収入" property="goods_rev" inset />
+      <CardValue label="その他収入" property="other_revs" inset />
+      <CardValue label="(関連する法人の営業収入)" property="related_revenue" />
+    </>
+  );
+}
+
+export function ExpenseCardValues<T extends Expense>({ edge, previous }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous);
+  return (
+    <>
+      <CardValue label="営業費用" property="expense" emphasized />
+      <CardValue label="チーム人件費" property="salary" inset />
+      <CardValue label="事業費(チーム人件費を除く)" property="manage_exp" inset />
+      <CardValue label="試合関連経費" property="game_exp" inset />
+      <CardValue label="トップチーム運営経費" property="team_exp" inset />
+      <CardValue label="アカデミー関連経費" property="academy_exp" inset />
+      <CardValue label="女子チーム運営経費" property="women_exp" inset />
+      <CardValue label="物販関連費" property="goods_exp" inset />
+      <CardValue label="販売費および一般管理費" property="sga" inset />
+    </>
+  );
+}
+
+export function AttdCardValues<T extends AttdBrowser>({ edge, previous }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous);
+  return (
+    <>
+      <CardValue label="入場料収入" property="ticket" emphasized />
+      <CardValue label="リーグ戦平均入場者数" property="average_attd" strong separator />
+      <CardValue label="客単価" property="unit_price" strong />
+      <CardValue label="年間総入場者数" property="all_attd" separator emphasized />
+      <CardValue label="リーグ戦" property="league_attd" inset separator />
+      <CardValue label="リーグカップ" property="leaguecup_attd" inset separator />
+      <CardValue label="ACL" property="acl_attd" inset separator />
+      <CardValue label="プレーオフ" property="po_attd" inset separator />
+      <CardValue label="U-23" property="second_attd" inset separator />
+      <CardValue label="年間ホームゲーム数" property="all_games" emphasized />
+      <CardValue label="リーグ戦" property="league_games" inset />
+      <CardValue label="リーグカップ" property="leaguecup_games" inset />
+      <CardValue label="ACL" property="acl_games" inset />
+      <CardValue label="プレーオフ" property="po_games" inset />
+      <CardValue label="U-23" property="second_games" inset />
+    </>
   );
 }

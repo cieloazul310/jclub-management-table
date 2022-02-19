@@ -1,40 +1,6 @@
-import { Categories, SortableKeys } from '../../../../types';
-/*
-export type SortKey =
-  | 'rank'
-  | 'revenue'
-  | 'sponsor'
-  | 'ticket'
-  | 'broadcast'
-  | 'academy_rev'
-  | 'goods_rev'
-  | 'other_revs'
-  | 'expense'
-  | 'salary'
-  | 'game_exp'
-  | 'team_exp'
-  | 'academy_exp'
-  | 'women_exp'
-  | 'goods_exp'
-  | 'sga'
-  | 'no_rev'
-  | 'no_exp'
-  | 'sp_rev'
-  | 'sp_exp'
-  | 'op_profit'
-  | 'ordinary_profit'
-  | 'profit'
-  | 'related_revenue'
-  | 'assets'
-  | 'liabilities'
-  | 'capital_stock'
-  | 'net_worth'
-  | 'league_attd'
-  | 'average_attd'
-  | 'unit_price'
-  | 'all_attd';
-*/
-export type FilterCategory = Categories | 'others';
+import { Category, SortableKeys } from '../../../../types';
+
+export type FilterCategory = Category | 'others';
 
 export interface AppState {
   sortKey: SortableKeys;
@@ -42,6 +8,7 @@ export interface AppState {
   filterCategories: FilterCategory[];
   displayFullAttd: boolean;
   listMode: boolean;
+  card: number;
 }
 
 export const initialAppState: AppState = {
@@ -50,6 +17,7 @@ export const initialAppState: AppState = {
   filterCategories: ['J1', 'J2', 'J3', 'others'],
   displayFullAttd: false,
   listMode: false,
+  card: 2020,
 };
 
 export function useInitialAppState(isMobile: boolean): AppState {
@@ -65,6 +33,7 @@ export type Action =
   | { type: 'TOGGLE_SORTASC' }
   | { type: 'TOGGLE_FILTERCATEGORY'; category: FilterCategory }
   | { type: 'TOGGLE_LISTMODE' }
+  | { type: 'SET_CARD_YEAR'; year: number }
   | { type: 'RESET' };
 
 export default function reducer(state: AppState, action: Action): AppState {
@@ -96,6 +65,11 @@ export default function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         listMode: !state.listMode,
+      };
+    case 'SET_CARD_YEAR':
+      return {
+        ...state,
+        card: action.year,
       };
     case 'RESET': {
       const isMobile = window.matchMedia('(max-width: 600px)').matches;

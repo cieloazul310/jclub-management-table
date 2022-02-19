@@ -3,7 +3,8 @@ import Container from '@mui/material/Container';
 import SwipeableViews from 'react-swipeable-views';
 import FigureToolbar from './Toolbar';
 import FinancialTable from '../tables';
-import FinancialList from '../list';
+// import FinancialList from '../list';
+import FinancialCard from '../Card';
 import { useAppState } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import tabs from '../../utils/tabs';
 import { Mode, Tab, DatumBrowser } from '../../../types';
@@ -21,7 +22,7 @@ function Figure({ edges, mode, tab, onChangeTabIndex }: FigureProps) {
   const { listMode } = useAppState();
   const tableOrList = (tabItem: Tab) => {
     if (tabItem !== tab) return null;
-    return listMode ? <FinancialList edges={edges} mode={mode} tab={tab} /> : <FinancialTable edges={edges} mode={mode} tab={tab} />;
+    return listMode ? <FinancialCard edges={edges} tab={tab} /> : <FinancialTable edges={edges} mode={mode} tab={tab} />;
   };
 
   return (
