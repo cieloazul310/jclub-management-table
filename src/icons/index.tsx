@@ -8,7 +8,7 @@ import FigureIcon from '@mui/icons-material/TableChart';
 import ArticleIcon from '@mui/icons-material/School';
 
 import TableIcon from '@mui/icons-material/ViewComfy';
-import ListIcon from '@mui/icons-material/List';
+import ListIcon from '@mui/icons-material/ListAlt';
 
 import DarkModeIcon from '@mui/icons-material/Brightness2';
 import LightModeIcon from '@mui/icons-material/Brightness5';

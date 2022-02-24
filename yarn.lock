@@ -2135,25 +2135,25 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cieloazul310/gatsby-theme-aoi-blog-components@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-blog-components/-/gatsby-theme-aoi-blog-components-2.0.0.tgz#329bddba9db20a37cb20ceeab6258e896f554ecb"
-  integrity sha512-P26OPieFsZSakHdTFOEHHX48eLg/DI64HrDI3JDovW/nAv80JZp/8TNd6Lg1hWkVeGeOid+VTcr9bG0ouLPbEg==
+"@cieloazul310/gatsby-theme-aoi-blog-components@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-blog-components/-/gatsby-theme-aoi-blog-components-2.1.0.tgz#0a3840276f1fc4da896f657f2b3dcc7dd31b46e8"
+  integrity sha512-nZKnyCrFEna8yt6aROTkZ/GOI69g6j9PzTdumlrSmWNXwCu0ixougBOoj6G8ZlQ49miOpi4iJutfJnhbuong+w==
 
-"@cieloazul310/gatsby-theme-aoi-components@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-components/-/gatsby-theme-aoi-components-2.0.0.tgz#6aa9f47dec7242633b1622d2206e2071b2f635a2"
-  integrity sha512-1brmzwFVPZVPK21/xAUAjSTsIjSZI3Fke3+ohbZC03u6V6sd1gKkCSynSZc7dlKMViKpPgESXJin9UkB8ySkXw==
+"@cieloazul310/gatsby-theme-aoi-components@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-components/-/gatsby-theme-aoi-components-2.1.0.tgz#b8e0e4147b867f80169c180a72eb52cbf53c59c4"
+  integrity sha512-Z1NBlZl832A8pjK3gTeYf0j48PBRvVOYAKnqffnAOFohjOapH3JhNi82FIvG1411WPjcDCWHIYSjITkAxrMsAw==
 
 "@cieloazul310/gatsby-theme-aoi-layout@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-layout/-/gatsby-theme-aoi-layout-2.0.0.tgz#387ce7d6f7c3292d33ce10ef291d908d61c72dd5"
   integrity sha512-KugithLsCkjK7uHEVBzDSrF4329P+BKWlHDpnV/D2C/ESHVuxT0u5pQTP8fheQOsRC0AJo9G/GzCq4jRXT+svw==
 
-"@cieloazul310/gatsby-theme-aoi-top-layout@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-top-layout/-/gatsby-theme-aoi-top-layout-2.0.0.tgz#668d9655a8aa1e937e9fab02f71a01bbf407002e"
-  integrity sha512-ptYGgytS2dBhQMrm8dCSVhgv64iKyUQ8fZbdybe+v6IgS8sB9OShqa/eWVaorKmtZ/XDGZ4KVFOVvvfVu72erg==
+"@cieloazul310/gatsby-theme-aoi-top-layout@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi-top-layout/-/gatsby-theme-aoi-top-layout-2.1.0.tgz#56adfd9b031a1d299ff08f64f4bb9af9c2366d36"
+  integrity sha512-9lUQNRUUAogtb0/1tqQy94mgBdgfhRZfowQahRePF/H82WBYkGZat8EJ3akVXaZ4zLpS9PLs1kIxsnIxEGTPQg==
   dependencies:
     gatsby-plugin-react-helmet "^5.5.0"
     gatsby-plugin-webfonts "^2.2.1"
@@ -2166,14 +2166,14 @@
     "@types/url-join" "^4.0.1"
     url-join "^4.0.1"
 
-"@cieloazul310/gatsby-theme-aoi@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi/-/gatsby-theme-aoi-2.0.0.tgz#da729046d79b390bf891e0fdd09104d9ac64a4e4"
-  integrity sha512-+DkGY1Y5vvmVX1G+/c3ZjeFkdr6FOB09ZoVOxzenKNVVC1DOI3QNLYnhlSrQQBZSqQuEeVVoPtGzNUm2NM2DaQ==
+"@cieloazul310/gatsby-theme-aoi@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cieloazul310/gatsby-theme-aoi/-/gatsby-theme-aoi-2.1.0.tgz#1f9cffd5c29cb628f7b18c58c18e57a793d8f602"
+  integrity sha512-vrHzJExL+7iUzgFEV0VethGnHDsMZ3t3viEY5Mm0/KUlHiQoJ7YRe92Zrp3PuPRxBVH52dlk98EVgDCyQMOkrQ==
   dependencies:
-    "@cieloazul310/gatsby-theme-aoi-components" "^2.0.0"
+    "@cieloazul310/gatsby-theme-aoi-components" "^2.1.0"
     "@cieloazul310/gatsby-theme-aoi-layout" "^2.0.0"
-    "@cieloazul310/gatsby-theme-aoi-top-layout" "^2.0.0"
+    "@cieloazul310/gatsby-theme-aoi-top-layout" "^2.1.0"
     "@cieloazul310/gatsby-theme-aoi-utils" "^2.0.0"
     gatsby-plugin-material-ui "^4.1.0"
     gatsby-plugin-react-helmet "^5.5.0"
