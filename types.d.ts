@@ -173,7 +173,7 @@ export type AttdBrowser = Attd & {
 };
 export type Datum = General & SeasonResult & PL & BS & Revenue & Expense & Attd;
 export type DatumNode = Node & Datum;
-export type DatumBrowser = Datum & AttdBrowser;
+export type DatumBrowser = Datum & AttdBrowser & { previousData: (PL & BS & Revenue & Expense & AttdBrowser) | null };
 
 export type SortableKeys = Exclude<keyof DatumBrowser, keyof General | 'elevation'>;
 

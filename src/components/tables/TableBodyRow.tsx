@@ -192,7 +192,7 @@ export function AttdTableRow({ edge }: TableRowProps<AttdBrowser>) {
 type TableBodyRowProps = {
   tab: Tab;
   edge: {
-    node: DatumBrowser;
+    node: Omit<DatumBrowser, 'previousData'>;
   };
   mode: Mode;
   index: number;

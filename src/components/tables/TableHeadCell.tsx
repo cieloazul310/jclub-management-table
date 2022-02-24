@@ -42,6 +42,8 @@ function TableHeadCell({ sortableKey, mode, children, ...props }: TableHeadCellP
         },
       }}
       align="center"
+      role="button"
+      tabIndex={0}
       onClick={onClick}
       {...props}
     >

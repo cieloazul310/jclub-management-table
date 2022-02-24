@@ -82,6 +82,18 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
     setTab(tabs[index]);
   };
 
+  const tabPanel = React.useMemo(() => {
+    return (
+      <Tabs value={tab} variant="scrollable" indicatorColor="secondary" textColor="secondary" scrollButtons="auto" onChange={handleTab}>
+        <MuiTab label="損益計算書" value="pl" wrapped />
+        <MuiTab label="貸借対照表" value="bs" wrapped />
+        <MuiTab label="営業収入" value="revenue" wrapped />
+        <MuiTab label="営業費用" value="expense" wrapped />
+        <MuiTab label="入場者数" value="attd" wrapped />
+      </Tabs>
+    );
+  }, [tab, handleTab]);
+
   return (
     <Box
       sx={{
@@ -100,6 +112,7 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
         <Box
           component="nav"
           sx={{
+            display: { xs: 'none', sm: 'block' },
             position: 'sticky',
             top: trigger ? 0 : { xs: '56px', sm: '64px' },
             bgcolor: 'background.paper',
@@ -108,13 +121,7 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
             transition: (theme) => theme.transitions.create('top', { delay: 100 }),
           }}
         >
-          <Tabs value={tab} variant="scrollable" indicatorColor="secondary" textColor="secondary" scrollButtons="auto" onChange={handleTab}>
-            <MuiTab label="損益計算書" value="pl" wrapped />
-            <MuiTab label="貸借対照表" value="bs" wrapped />
-            <MuiTab label="営業収入" value="revenue" wrapped />
-            <MuiTab label="営業費用" value="expense" wrapped />
-            <MuiTab label="入場者数" value="attd" wrapped />
-          </Tabs>
+          {tabPanel}
         </Box>
       </Slide>
       <main>
@@ -140,10 +147,14 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
           width: '100%',
           bottom: 0,
           zIndex: 'appBar',
+          bgcolor: 'background.default',
           borderTop: (theme) => `1px solid ${theme.palette.divider}`,
         }}
       >
-        <BottomNavigation value={mobileTab} onChange={handleMobileTab} />
+        {tabPanel}
+        {/*
+        <BottomNavigation value={mobileTab} onChange={handleMobileTab} /> 
+        */}
       </Box>
       <Box
         sx={{

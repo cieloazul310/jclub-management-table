@@ -94,6 +94,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
       all_games: Int!
       average_attd: Int!
       unit_price: Int
+      previousData: Data
     }
   `);
 
@@ -154,6 +155,18 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
           resolve: (source: Datum) => {
             if (!source.ticket) return null;
             return Math.round((source.ticket * 1000000) / source.all_attd);
+          },
+        },
+        previousData: {
+          type: `Data`,
+          resolve: async (source: Datum, arges, context: GatsbyGraphQLContext, info) => {
+            const node = await context.nodeModel.findOne({
+              type: `Data`,
+              query: {
+                filter: { year: { eq: source.year - 1 }, slug: { eq: source.slug } },
+              },
+            });
+            return node;
           },
         },
       },

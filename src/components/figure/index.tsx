@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 import FigureToolbar from './Toolbar';
 import FinancialTable from '../tables';
 // import FinancialList from '../list';

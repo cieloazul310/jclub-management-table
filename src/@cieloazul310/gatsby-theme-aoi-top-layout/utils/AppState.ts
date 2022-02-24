@@ -8,7 +8,6 @@ export interface AppState {
   filterCategories: FilterCategory[];
   displayFullAttd: boolean;
   listMode: boolean;
-  card: number;
 }
 
 export const initialAppState: AppState = {
@@ -17,7 +16,6 @@ export const initialAppState: AppState = {
   filterCategories: ['J1', 'J2', 'J3', 'others'],
   displayFullAttd: false,
   listMode: false,
-  card: 2020,
 };
 
 export function useInitialAppState(isMobile: boolean): AppState {
@@ -33,7 +31,6 @@ export type Action =
   | { type: 'TOGGLE_SORTASC' }
   | { type: 'TOGGLE_FILTERCATEGORY'; category: FilterCategory }
   | { type: 'TOGGLE_LISTMODE' }
-  | { type: 'SET_CARD_YEAR'; year: number }
   | { type: 'RESET' };
 
 export default function reducer(state: AppState, action: Action): AppState {
@@ -65,11 +62,6 @@ export default function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         listMode: !state.listMode,
-      };
-    case 'SET_CARD_YEAR':
-      return {
-        ...state,
-        card: action.year,
       };
     case 'RESET': {
       const isMobile = window.matchMedia('(max-width: 600px)').matches;

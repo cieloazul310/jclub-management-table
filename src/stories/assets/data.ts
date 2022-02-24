@@ -1,6 +1,6 @@
 import { DatumBrowser } from '../../../types';
 
-const data: { node: DatumBrowser }[] = [
+const data: { node: Omit<DatumBrowser, 'previousData'> }[] = [
   {
     node: {
       id: 'mitohollyhock2005',

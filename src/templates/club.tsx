@@ -45,6 +45,13 @@ export const query = graphql`
           ...revenueFields
           ...expenseFields
           ...attdFields
+          previousData {
+            ...plFields
+            ...bsFields
+            ...revenueFields
+            ...expenseFields
+            ...attdFields
+          }
         }
       }
     }

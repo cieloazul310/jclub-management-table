@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import val from '../../utils/val';
-import { General, PL, BS, Revenue, Expense, AttdBrowser } from '../../../types';
+import { General, PL, BS, Revenue, Expense, AttdBrowser, Mode } from '../../../types';
 
 type CardValueProps<T> = {
   label: string;
@@ -28,15 +29,16 @@ function CardValueCore<T>(
   edge: {
     node: T & General;
   },
-  prev: {
-    node: T & General;
-  } | null
+  prev: T | null,
+  mode: Mode
 ) {
   return function CardValue({ label, property, emphasized = false, strong = false, separator = false, inset = false }: CardValueProps<T>) {
+    const { sortKey, sortAsc } = useAppState();
     const value = edge.node[property];
-    const prevValue = prev?.node[property] ?? null;
+    const prevValue = prev?.[property] ?? null;
     if (typeof value !== 'number') return null;
     const diffval = value && prevValue && typeof prevValue === 'number' ? value - prevValue : null;
+    const selected = mode === 'year' && sortKey === property;
 
     return (
       <Box
@@ -52,13 +54,17 @@ function CardValueCore<T>(
           fontSize: 'body2.fontSize',
         }}
       >
-        <Box flexGrow={1} pl={inset ? 2 : undefined}>
+        <Box flexGrow={1} pl={inset ? 2 : undefined} color={selected ? 'secondary.main' : 'inherit'}>
           {label}
         </Box>
-        <Typography sx={{ fontWeight: emphasized || strong ? 'bold' : undefined }} component="span">
+        <Typography sx={{ fontWeight: emphasized || strong || selected ? 'bold' : undefined }} component="span">
           {val(value, separator)}
         </Typography>
-        <Typography sx={{ width: '6em', display: 'flex', justifyContent: 'end' }} color="text.secondary" component="span">
+        <Typography
+          sx={{ width: '6em', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+          color="text.secondary"
+          component="span"
+        >
           {diffIcon(diffval)}
           {diffval ? val(Math.abs(diffval), separator ?? false) : null}
         </Typography>
@@ -71,13 +77,12 @@ type CardValuesProps<T> = {
   edge: {
     node: T & General;
   };
-  previous: {
-    node: T & General;
-  } | null;
+  previous: T | null;
+  mode: Mode;
 };
 
-export function PLCardValues<T extends PL>({ edge, previous }: CardValuesProps<T>) {
-  const CardValue = CardValueCore(edge, previous);
+export function PLCardValues<T extends PL>({ edge, previous, mode }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous, mode);
   return (
     <>
       <CardValue label="営業収入" property="revenue" strong />
@@ -96,8 +101,8 @@ export function PLCardValues<T extends PL>({ edge, previous }: CardValuesProps<T
   );
 }
 
-export function BSCardValues<T extends BS>({ edge, previous }: CardValuesProps<T>) {
-  const CardValue = CardValueCore(edge, previous);
+export function BSCardValues<T extends BS>({ edge, previous, mode }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous, mode);
   return (
     <>
       <CardValue label="資産の部" property="assets" emphasized />
@@ -115,8 +120,8 @@ export function BSCardValues<T extends BS>({ edge, previous }: CardValuesProps<T
   );
 }
 
-export function RevenueCardValues<T extends Revenue>({ edge, previous }: CardValuesProps<T>) {
-  const CardValue = CardValueCore(edge, previous);
+export function RevenueCardValues<T extends Revenue>({ edge, previous, mode }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous, mode);
   return (
     <>
       <CardValue label="営業収入" property="revenue" emphasized />
@@ -131,8 +136,8 @@ export function RevenueCardValues<T extends Revenue>({ edge, previous }: CardVal
   );
 }
 
-export function ExpenseCardValues<T extends Expense>({ edge, previous }: CardValuesProps<T>) {
-  const CardValue = CardValueCore(edge, previous);
+export function ExpenseCardValues<T extends Expense>({ edge, previous, mode }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous, mode);
   return (
     <>
       <CardValue label="営業費用" property="expense" emphasized />
@@ -148,8 +153,8 @@ export function ExpenseCardValues<T extends Expense>({ edge, previous }: CardVal
   );
 }
 
-export function AttdCardValues<T extends AttdBrowser>({ edge, previous }: CardValuesProps<T>) {
-  const CardValue = CardValueCore(edge, previous);
+export function AttdCardValues<T extends AttdBrowser>({ edge, previous, mode }: CardValuesProps<T>) {
+  const CardValue = CardValueCore(edge, previous, mode);
   return (
     <>
       <CardValue label="入場料収入" property="ticket" emphasized />

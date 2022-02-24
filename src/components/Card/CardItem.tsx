@@ -2,11 +2,9 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import MuiCard from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 import { PLCardValues, BSCardValues, RevenueCardValues, ExpenseCardValues, AttdCardValues } from './CardValues';
 
-import { DatumBrowser, Tab } from '../../../types';
+import { DatumBrowser, Tab, Mode, General, SeasonResult } from '../../../types';
 
 function cardTitle(tab: Tab) {
   if (tab === 'pl') return '損益計算書 (P/L)';
@@ -16,41 +14,40 @@ function cardTitle(tab: Tab) {
   return '入場者数';
 }
 
-type CardItemProps<T> = {
+type CardItemProps<T extends Mode> = {
   edge: {
-    node: T;
+    node: Omit<DatumBrowser, 'previousData'>;
   };
-  previous: {
-    node: T;
-  } | null;
+  previous: Omit<DatumBrowser, 'previousData' | keyof General | keyof SeasonResult> | null;
   tab: Tab;
-  handleChangeIndex: (index: number) => void;
+  mode: T;
   index: number;
+  length: number;
 };
 
-function CardItem({ edge, previous, tab, handleChangeIndex, index }: CardItemProps<DatumBrowser>) {
-  const back = () => {
-    handleChangeIndex(index - 1);
-  };
-  const forward = () => {
-    handleChangeIndex(index + 1);
-  };
-
+function CardItem<T extends Mode>({ edge, previous, tab, mode, index, length }: CardItemProps<T>) {
   function cardValues() {
-    if (tab === 'pl') return <PLCardValues edge={edge} previous={previous} />;
-    if (tab === 'bs') return <BSCardValues edge={edge} previous={previous} />;
-    if (tab === 'revenue') return <RevenueCardValues edge={edge} previous={previous} />;
-    if (tab === 'expense') return <ExpenseCardValues edge={edge} previous={previous} />;
-    return <AttdCardValues edge={edge} previous={previous} />;
+    if (tab === 'pl') return <PLCardValues edge={edge} previous={previous} mode={mode} />;
+    if (tab === 'bs') return <BSCardValues edge={edge} previous={previous} mode={mode} />;
+    if (tab === 'revenue') return <RevenueCardValues edge={edge} previous={previous} mode={mode} />;
+    if (tab === 'expense') return <ExpenseCardValues edge={edge} previous={previous} mode={mode} />;
+    return <AttdCardValues edge={edge} previous={previous} mode={mode} />;
   }
   return (
     <MuiCard sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {edge.node.year}年 {edge.node.category} {edge.node.rank}位
-          {edge.node.elevation ? (
-            <Typography component="span" ml={1} color={edge.node.elevation === '昇格' ? 'success.main' : 'error.main'}>
-              {edge.node.elevation}
+        <Typography sx={{ fontSize: 14 }} gutterBottom display="flex">
+          <Typography component="span" flexGrow={1} color="text.secondary">
+            {edge.node.year}年 {edge.node.category} {edge.node.rank}位
+            {edge.node.elevation ? (
+              <Typography component="span" ml={1} color={edge.node.elevation === '昇格' ? 'success.main' : 'error.main'}>
+                {edge.node.elevation}
+              </Typography>
+            ) : null}
+          </Typography>
+          {mode === 'year' ? (
+            <Typography component="span">
+              {(index + 1).toString()}/{length}
             </Typography>
           ) : null}
         </Typography>
@@ -64,14 +61,6 @@ function CardItem({ edge, previous, tab, handleChangeIndex, index }: CardItemPro
           {cardValues()}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={back} disabled={index === 0}>
-          前年度へ
-        </Button>
-        <Button size="small" onClick={forward}>
-          次年度へ
-        </Button>
-      </CardActions>
     </MuiCard>
   );
 }

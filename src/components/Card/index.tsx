@@ -1,19 +1,26 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
-import { alpha, Theme } from '@mui/material/styles';
-import SwipeableViews from 'react-swipeable-views';
+import { Theme } from '@mui/material/styles';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CardItem from './CardItem';
-import useIsMobile from '../../utils/useIsMobile';
 import useElementSize from '../../utils/useElementSize';
-import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import useIsMobile from '../../utils/useIsMobile';
+import useStateEdges from '../../utils/useStateEdges';
 import { DatumBrowser, Tab, Mode } from '../../../types';
 
-function useRange(edges: { node: DatumBrowser }[]) {
+function rangeIsNumbers(range: (number | string)[], mode: Mode): range is number[] {
+  return mode === 'club';
+}
+function rangeIsStrings(range: (number | string)[], mode: Mode): range is string[] {
+  return mode === 'year';
+}
+
+function useRange(edges: { node: DatumBrowser }[], mode: Mode) {
+  const range = edges.map(({ node }) => (mode === 'club' ? node.year : node.slug));
   return {
-    range: edges.map(({ node }) => node.year),
+    range,
     totalCount: edges.length,
   };
 }
@@ -64,80 +71,111 @@ type CardProps = {
 
 function Card({ edges, tab, mode }: CardProps) {
   const isMobile = useIsMobile();
-  const { card } = useAppState();
-  const dispatch = useDispatch();
-  const { range } = useRange(edges);
+  const stateEdges = useStateEdges(edges, mode);
+  const { range, totalCount } = useRange(stateEdges, mode);
   const [squareRef, { width }] = useElementSize();
+  const ref = React.useRef<HTMLDivElement>(null);
+  let timer: NodeJS.Timeout;
+
+  const contentWidth = React.useMemo(() => {
+    if (!totalCount || !ref?.current) return 0;
+    return (ref.current.scrollWidth - 10) / totalCount;
+  }, [width, ref]);
+
   const px = React.useMemo(() => {
     if (isMobile) return 5;
-    return Math.max((width - 400) / 2 - 40, 0);
+    return Math.max((width - 400) / 2, 5);
   }, [width, isMobile]);
 
   React.useEffect(() => {
-    if (card < range[0]) {
-      dispatch({ type: 'SET_CARD_YEAR', year: range[0] });
+    if (rangeIsNumbers(range, mode)) {
+      const storaged = window.sessionStorage.getItem('currentYear');
+      if (!storaged || !ref.current) return;
+      const currentYear = parseInt(storaged, 10);
+      const index = range.indexOf(currentYear);
+      if (index < 0) return;
+      ref.current.scrollTo({ left: contentWidth * index });
     }
-  }, [range]);
+    if (rangeIsStrings(range, mode)) {
+      const storaged = window.sessionStorage.getItem('currentClub');
+      if (!storaged || !ref.current) return;
+      const index = range.indexOf(storaged);
+      if (index < 0) return;
+      ref.current.scrollTo({ left: contentWidth * index });
+    }
+  }, [ref, contentWidth]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    if (newValue < range[0] || newValue > range[range.length - 1]) return;
-    dispatch({ type: 'SET_CARD_YEAR', year: newValue });
+  const handleChange = (newIndex: number) => () => {
+    const { current } = ref;
+    if (!current) return;
+    const { scrollWidth, scrollLeft } = current;
+
+    current.scrollTo({ left: Math.max(0, Math.min(scrollLeft + contentWidth * newIndex, scrollWidth)), behavior: 'smooth' });
   };
 
-  const handleChangeIndex = (index: number) => {
-    if (index < 0 || index >= edges.length) return;
-    dispatch({ type: 'SET_CARD_YEAR', year: range[index] });
-  };
-  const useHandleChange = (newValue: number) => (event: React.SyntheticEvent) => {
-    handleChange(event, newValue);
+  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    clearTimeout(timer);
+    const { currentTarget } = event;
+    timer = setTimeout(() => {
+      const left = currentTarget.scrollLeft;
+      const index = Math.round(left / contentWidth);
+
+      if (rangeIsNumbers(range, mode)) {
+        const currentYear = range[index];
+        window.sessionStorage.setItem('currentYear', currentYear.toString());
+      }
+      if (rangeIsStrings(range, mode)) {
+        const currentClub = range[index];
+        window.sessionStorage.setItem('currentClub', currentClub);
+      }
+    }, 250);
   };
 
   return (
     <Box
       display="flex"
       flexGrow={1}
+      minHeight={400}
       ref={squareRef}
       position="relative"
       bgcolor={({ palette }) => (palette.mode === 'light' ? 'grey.100' : 'Background.default')}
     >
-      <SwipeableViews
-        resistance
-        enableMouseEvents
-        index={range.indexOf(card)}
-        onChangeIndex={handleChangeIndex}
-        style={{
-          flexGrow: 1,
-          padding: `0 ${px}px`,
+      <Box
+        sx={{
+          px: `${px}px`,
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
+          width: 'max-content',
+          overflow: 'auto',
+          scrollSnapType: 'x mandatory',
+          scrollPaddingLeft: `${px}px`,
         }}
-        containerStyle={{
-          flexGrow: 1,
-          flexShrink: 1,
-        }}
-        slideStyle={{
-          flexGrow: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          padding: isMobile ? '5px' : '20px',
-        }}
+        ref={ref}
+        onScroll={onScroll}
       >
-        {edges.map((edge, index) => (
-          <Box key={edge.node.id} minWidth={320} maxWidth={400} flexGrow={1} display="flex" flexShrink={1}>
-            <CardItem
-              edge={edge}
-              previous={index !== 0 ? edges[index - 1] : null}
-              tab={tab}
-              index={index}
-              handleChangeIndex={handleChangeIndex}
-            />
+        {stateEdges.map((edge, index) => (
+          <Box
+            key={edge.node.id}
+            sx={{
+              minWidth: 320,
+              maxWidth: 400,
+              flexShrink: 0,
+              flexBasis: '100%;',
+              flexGrow: 1,
+              p: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+              scrollSnapAlign: 'start',
+            }}
+          >
+            <CardItem edge={edge} previous={edge.node.previousData} tab={tab} mode={mode} index={index} length={totalCount} />
           </Box>
         ))}
-      </SwipeableViews>
-      {!isMobile ? (
+      </Box>
+      {!isMobile && totalCount ? (
         <>
-          <CarouselButton onClick={useHandleChange(card - 1)} disabled={card === range[0]} />
-          <CarouselButton onClick={useHandleChange(card + 1)} next disabled={card === range[range.length - 1]} />
+          <CarouselButton onClick={handleChange(-1)} />
+          <CarouselButton onClick={handleChange(1)} next />
         </>
       ) : null}
     </Box>
