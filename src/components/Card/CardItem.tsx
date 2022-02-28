@@ -2,6 +2,8 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import MuiCard from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { AppLink } from '@cieloazul310/gatsby-theme-aoi';
+import { CategoryLabel } from '../CategoryAvatar';
 import { PLCardValues, BSCardValues, RevenueCardValues, ExpenseCardValues, AttdCardValues } from './CardValues';
 
 import { DatumBrowser, Tab, Mode, General, SeasonResult } from '../../../types';
@@ -37,8 +39,10 @@ function CardItem<T extends Mode>({ edge, previous, tab, mode, index, length }: 
     <MuiCard sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: 14 }} gutterBottom display="flex">
-          <Typography component="span" flexGrow={1} color="text.secondary">
-            {edge.node.year}年 {edge.node.category} {edge.node.rank}位
+          <CategoryLabel category={edge.node.category} />
+          <Typography component="span" flexGrow={1} color="text.secondary" ml={1}>
+            {mode === 'club' ? edge.node.name : `${edge.node.year}年`}
+            {` ${edge.node.category} ${edge.node.rank}位`}
             {edge.node.elevation ? (
               <Typography component="span" ml={1} color={edge.node.elevation === '昇格' ? 'success.main' : 'error.main'}>
                 {edge.node.elevation}
@@ -51,8 +55,10 @@ function CardItem<T extends Mode>({ edge, previous, tab, mode, index, length }: 
             </Typography>
           ) : null}
         </Typography>
-        <Typography variant="h5" component="div">
-          {edge.node.fullname}
+        <Typography variant="h6" component="div">
+          <AppLink color="inherit" to={mode === 'club' ? `/year/${edge.node.year}/` : `/club/${edge.node.slug}/`}>
+            {mode === 'club' ? `${edge.node.year}年度決算` : edge.node.fullname}
+          </AppLink>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {cardTitle(tab)}

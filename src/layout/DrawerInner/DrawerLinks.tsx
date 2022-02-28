@@ -36,7 +36,7 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {clubs.map(({ node }, index) => (
-            <ListItemAppLink key={node.short_name ?? index} button dense to={node.href}>
+            <ListItemAppLink key={node.short_name ?? index} button to={node.href}>
               <ListItemText primary={node.name} />
             </ListItemAppLink>
           ))}
@@ -67,7 +67,7 @@ export function YearsLinks() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {years.map(({ node }) => (
-            <ListItemAppLink key={node.id} button dense to={node.href}>
+            <ListItemAppLink key={node.id} button to={node.href}>
               <ListItemText primary={node.year} />
             </ListItemAppLink>
           ))}

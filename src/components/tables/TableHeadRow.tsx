@@ -43,7 +43,7 @@ export function PLTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
         当期純利益
       </TableHeadCell>
       <TableHeadCell mode={mode} sortableKey="related_revenue">
-        関連法人
+        (関連法人)
       </TableHeadCell>
     </>
   );
@@ -71,7 +71,7 @@ export function BSTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
       <TableHeadCell mode={mode}>資本剰余金等</TableHeadCell>
       <TableHeadCell mode={mode}>利益剰余金</TableHeadCell>
       <TableHeadCell mode={mode} sortableKey="profit">
-        当期純利益
+        (当期純利益)
       </TableHeadCell>
     </>
   );
@@ -102,7 +102,7 @@ export function RevenueTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
         その他
       </TableHeadCell>
       <TableHeadCell mode={mode} sortableKey="related_revenue">
-        関連法人
+        (関連法人)
       </TableHeadCell>
     </>
   );

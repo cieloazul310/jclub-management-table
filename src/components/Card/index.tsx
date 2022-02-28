@@ -82,13 +82,11 @@ function Card({ edges, tab, mode }: CardProps) {
   const { contentWidth, px } = React.useMemo(() => {
     const itemWidth = isMobile ? Math.min(Math.max(320, width - 10), 400) : 400;
     const padding = Math.max((width - itemWidth) / 2, 5);
-    console.log(itemWidth, padding);
 
     return { contentWidth: itemWidth, px: padding };
   }, [width, isMobile]);
 
   React.useEffect(() => {
-    console.log('use session storage');
     if (rangeIsNumbers(range, mode)) {
       const storaged = window.sessionStorage.getItem('currentYear');
       if (!storaged || !ref.current) return;
@@ -107,7 +105,6 @@ function Card({ edges, tab, mode }: CardProps) {
   }, [contentWidth, tab]);
 
   React.useEffect(() => {
-    console.log('set left to 0');
     if (!ref.current) return;
     ref.current.scrollTo({ left: 0 });
   }, [sortAsc, sortKey]);

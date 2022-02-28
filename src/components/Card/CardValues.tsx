@@ -38,7 +38,7 @@ function CardValueCore<T>(
     const value = edge.node[property];
     const prevValue = prev?.[property] ?? null;
     if (typeof value !== 'number') return null;
-    const diffval = value && prevValue && typeof prevValue === 'number' ? value - prevValue : null;
+    const diffval = typeof prevValue === 'number' ? value - prevValue : null;
     const selected = mode === 'year' && sortKey === property;
     const sortable = mode === 'year';
     const onClick = () => {
@@ -70,8 +70,8 @@ function CardValueCore<T>(
             flexGrow: 1,
             color: selected ? 'secondary.main' : 'inherit',
             '&:hover': {
-              textDecoration: 'underline',
-              cursor: 'pointer',
+              textDecoration: mode === 'year' ? 'underline' : undefined,
+              cursor: mode === 'year' ? 'pointer' : undefined,
             },
           }}
           role="button"
@@ -80,7 +80,11 @@ function CardValueCore<T>(
         >
           {label}
         </Box>
-        <Typography sx={{ fontWeight: emphasized || strong || selected ? 'bold' : undefined }} component="span">
+        <Typography
+          sx={{ fontWeight: emphasized || strong || selected ? 'bold' : undefined }}
+          component="span"
+          color={property === 'net_worth' && value < 0 ? 'error.main' : undefined}
+        >
           {val(value, separator)}
         </Typography>
         <Typography
@@ -136,7 +140,7 @@ export function BSCardValues<T extends BS>({ edge, previous, mode }: CardValuesP
       <CardValue label="固定負債" property="fixed_liabilities" inset />
       <CardValue label="純資産の部" property="net_worth" emphasized />
       <CardValue label="資本金" property="capital_stock" inset />
-      <CardValue label="資本剰余金" property="capital_surplus" inset />
+      <CardValue label="資本剰余金等" property="capital_surplus" inset />
       <CardValue label="利益剰余金" property="retained_earnings" inset />
       <CardValue label="(当期純利益)" property="profit" inset />
     </>

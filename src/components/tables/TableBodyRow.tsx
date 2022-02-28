@@ -12,13 +12,15 @@ type DataTableCellProps = {
   emphasized?: boolean;
   separator?: boolean;
   strong?: boolean;
+  red?: boolean;
 } & Omit<TableCellProps, 'children'>;
 
-function DataTableCell({ value, emphasized = false, strong = false, separator = false, ...props }: DataTableCellProps) {
+function DataTableCell({ value, emphasized = false, strong = false, separator = false, red = false, ...props }: DataTableCellProps) {
   return (
     <TableCell
       align={props.align ?? 'right'}
       sx={{
+        color: red && typeof value === 'number' && value < 0 ? 'error.main' : undefined,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`,
         bgcolor: ({ palette }) => {
           if (!emphasized) return undefined;
@@ -36,6 +38,7 @@ DataTableCell.defaultProps = {
   emphasized: false,
   strong: false,
   separator: false,
+  red: false,
 };
 
 type TableRowProps<T> = {
@@ -74,11 +77,11 @@ export function BSTableRow({ edge }: TableRowProps<BS>) {
       <DataTableCell value={node.liabilities} emphasized />
       <DataTableCell value={node.curr_liabilities} />
       <DataTableCell value={node.fixed_liabilities} />
-      <DataTableCell value={node.net_worth} emphasized />
+      <DataTableCell value={node.net_worth} emphasized red />
       <DataTableCell value={node.capital_stock} />
       <DataTableCell value={node.capital_surplus} />
       <DataTableCell value={node.retained_earnings} />
-      <DataTableCell value={node.profit} strong />
+      <DataTableCell value={node.profit} />
     </>
   );
 }

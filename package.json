@@ -21,7 +21,7 @@
     "@types/react-swipeable-views": "^0.13.1",
     "clsx": "^1.1.1",
     "d3-dsv": "^3.0.1",
-    "gatsby": "^4.7.2",
+    "gatsby": "^4.8.1",
     "gatsby-plugin-eslint": "^4.0.2",
     "gatsby-plugin-google-analytics": "^4.7.0",
     "gatsby-plugin-manifest": "^4.7.0",
