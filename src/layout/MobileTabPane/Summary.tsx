@@ -2,7 +2,6 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Section, SectionDivider, Article, ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
-import MobileTabPane, { MobileTabPaneProps } from './index';
 import ClubInfo from '../../components/ClubInfo';
 import YearInfo from '../../components/YearInfo';
 import { CategoryLink, YearsLink } from '../../components/links';
@@ -18,16 +17,16 @@ type SummaryTabProps<T extends Mode> = {
   item: Omit<ClubBrowser, 'data'> | Omit<YearBrowser, 'data'>;
   previous: ClubPageNeighbor | YearPageNeighbor;
   next: ClubPageNeighbor | YearPageNeighbor;
-} & Omit<MobileTabPaneProps, 'children' | 'value'>;
+};
 
 function isClub<T extends Mode>(item: Omit<ClubBrowser, 'data'> | Omit<YearBrowser, 'data'>, mode: T): item is Omit<ClubBrowser, 'data'> {
   return mode === 'club';
 }
 
-function SummaryTabPane<T extends Mode>({ mode, edges, item, previous, next, mobileOnly, mobileTab }: SummaryTabProps<T>) {
+function Summary<T extends Mode>({ mode, edges, item, previous, next }: SummaryTabProps<T>) {
   const neighbors = useNeighbors({ previous, next });
   return (
-    <MobileTabPane value="summary" mobileOnly={mobileOnly} mobileTab={mobileTab}>
+    <section>
       <Section>
         <Article maxWidth="md">
           <ArticleTitle>概要</ArticleTitle>
@@ -49,8 +48,8 @@ function SummaryTabPane<T extends Mode>({ mode, edges, item, previous, next, mob
           </PageNavigationItem>
         </PageNavigationContainer>
       </Section>
-    </MobileTabPane>
+    </section>
   );
 }
 
-export default SummaryTabPane;
+export default Summary;

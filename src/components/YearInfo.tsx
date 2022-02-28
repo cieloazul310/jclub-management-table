@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { H3, H4, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
-import useStat from '../utils/useStat';
+import Stats from './Summary/Stats';
+// import useStat from '../utils/useStat';
 import { DatumBrowser, YearBrowser } from '../../types';
-
+/*
 type CategoryInfoProps = {
   edges: {
     node: DatumBrowser;
@@ -35,23 +36,27 @@ function CategoryInfo({ edges, category }: CategoryInfoProps) {
     </Grid>
   ) : null;
 }
-
+*/
 type YearInfoProps = {
   edges: {
     node: DatumBrowser;
   }[];
   year: Omit<YearBrowser, 'data'>;
+  prevYear: Pick<YearBrowser, 'stats'> | null;
 };
 
-function YearInfo({ edges, year }: YearInfoProps) {
+function YearInfo({ edges, year, prevYear }: YearInfoProps) {
   return (
     <>
       <H3>{year.year}年</H3>
-      <Grid container>
+      <Stats tab="pl" year={year} prevYear={prevYear} />
+      {/*
+        <Grid container>
         {year.categories.map((category, index) => (
           <CategoryInfo key={category ?? index} edges={edges} category={category} />
         ))}
       </Grid>
+      */}
     </>
   );
 }

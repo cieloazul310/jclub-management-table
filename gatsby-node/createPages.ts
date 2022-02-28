@@ -79,6 +79,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
           previous,
           next,
           year: node.year,
+          prevYear: previous?.node.year ?? null,
         },
       });
     });

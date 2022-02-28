@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-
-import { MarkDownQuery } from '../../../graphql-types';
 import DocContainer from './DocContainer';
+import { DocsQueryData } from '../../../types';
 
 function PLDoc() {
-  const { markdownRemark } = useStaticQuery<MarkDownQuery>(graphql`
+  const { mdx } = useStaticQuery<DocsQueryData>(graphql`
     query {
-      markdownRemark(frontmatter: { id: { eq: "pl" } }) {
-        htmlAst
+      mdx(frontmatter: { id: { eq: "pl" } }) {
+        body
         frontmatter {
           title
         }
       }
     }
   `);
-  return markdownRemark ? <DocContainer markdownRemark={markdownRemark} /> : null;
+  return <DocContainer mdx={mdx} />;
 }
 
 export default PLDoc;

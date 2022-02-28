@@ -1,7 +1,11 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, SectionDivider, Article, Paragraph, AppLinkButton, useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
+import Grid from '@mui/material/Grid';
+import { Section, SectionDivider, Article, Paragraph, AppLink, AppLinkButton, useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
 import Layout from '../layout';
+import Jumbotron from '../components/Jumbotron';
+import { J1Link, J2Link, J3Link, YearsLink } from '../components/links';
+import { AttributionDoc } from '../components/docs';
 
 function IndexPage() {
   const { title, description } = useSiteMetadata();
@@ -11,8 +15,9 @@ function IndexPage() {
         <Typography variant="h5" component="h2" gutterBottom>
           {title}
         </Typography>
+        <Paragraph>{description}</Paragraph>
         <span>
-          <AppLinkButton to="/" variant="contained" color="primary">
+          <AppLinkButton to="/year/2020/" variant="contained" color="primary">
             最新の経営情報を見る
           </AppLinkButton>
         </span>
@@ -20,13 +25,52 @@ function IndexPage() {
       <SectionDivider />
       <Section>
         <Article maxWidth="md">
-          <Paragraph>{description}</Paragraph>
+          <Grid container spacing={2} component="nav">
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                J1
+              </Typography>
+              <J1Link />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                J2
+              </Typography>
+              <J2Link />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                J3
+              </Typography>
+              <J3Link />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                年度別
+              </Typography>
+              <YearsLink />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                <AppLink to="/series" color="inherit">
+                  項目別表示
+                </AppLink>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                <AppLink to="/download" color="inherit">
+                  データダウンロード
+                </AppLink>
+              </Typography>
+            </Grid>
+          </Grid>
         </Article>
       </Section>
       <SectionDivider />
       <Section>
         <Article maxWidth="md">
-          <Paragraph>{description}</Paragraph>
+          <AttributionDoc />
         </Article>
       </Section>
     </Layout>

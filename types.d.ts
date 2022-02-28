@@ -30,7 +30,25 @@ export type Year = {
   categories: Category[];
 };
 export type YearNode = Node & Year;
-export type YearBrowser = Year & { data: DatumBrowser[] };
+export type StatsValues = {
+  values: number[];
+  sum: number;
+  average: number;
+  median: number;
+  max: number;
+  min: number;
+};
+export type YearStats = {
+  revenue: StatsValues;
+  expense: StatsValues;
+  net_worth: StatsValues;
+  ticket: StatsValues;
+  average_attd: StatsValues;
+  unit_price: StatsValues;
+  totalCount: !number;
+};
+
+export type YearBrowser = Year & { data: DatumBrowser[]; stats: { J1: YearStats; J2: YearStats; J3: YearStats | null } };
 
 export type General = {
   id: string;
@@ -173,9 +191,11 @@ export type AttdBrowser = Attd & {
 };
 export type Datum = General & SeasonResult & PL & BS & Revenue & Expense & Attd;
 export type DatumNode = Node & Datum;
-export type DatumBrowser = Datum & AttdBrowser & { previousData: (PL & BS & Revenue & Expense & AttdBrowser) | null };
+export type DatumBrowser = Datum &
+  AttdBrowser & { previousData: (General & SeasonResult & PL & BS & Revenue & Expense & AttdBrowser) | null };
+export type DatumBrowserNode = DatumBrowser & Node;
 
-export type SortableKeys = Exclude<keyof DatumBrowser, keyof General | 'elevation', 'previousData'>;
+export type SortableKeys = keyof (Omit<SeasonResult, 'elevation'> & PL & BS & Revenue & Expense & AttdBrowser);
 
 export type Dict = {
   [K in Exclude<keyof DatumBrowser, 'slug'>]: string;
@@ -187,6 +207,7 @@ export type YearPageNeighbor = {
 } | null;
 export type YearPageData = {
   year: Omit<YearBrowser, 'data'>;
+  prevYear: Pick<YearBrowser, 'stats'> | null;
   allData: {
     edges: {
       node: DatumBrowser;
@@ -212,3 +233,12 @@ export type ClubPageContext = {
   next: ClubPageNeighbor;
 };
 export type PageContextNeighbor = ClubPageNeighbor | YearPageNeighbor;
+
+export type DocsQueryData = {
+  mdx: {
+    frontmatter: {
+      title: string;
+    };
+    body: string;
+  };
+};

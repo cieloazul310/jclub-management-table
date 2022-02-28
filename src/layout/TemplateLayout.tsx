@@ -9,16 +9,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Slide from '@mui/material/Slide';
 import useScrollTriger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
+import { SectionDivider } from '@cieloazul310/gatsby-theme-aoi';
 
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
-import SummaryTabPane from './MobileTabPane/Summary';
-import FigureTabPane from './MobileTabPane/Figure';
-// import ArticleTabPane from './MobileTabPane/Article';
-import SettingsTabPane from './MobileTabPane/Settings';
+import Summary from './MobileTabPane/Summary';
+import Figure from './MobileTabPane/Figure';
+import ArticleSection from './MobileTabPane/Article';
 import Footer from './Footer';
-import BottomNavigation from './BottomNavigation';
 
 import useIsMobile from '../utils/useIsMobile';
 import tabs from '../utils/tabs';
@@ -126,17 +125,15 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
       </Slide>
       <main>
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <FigureTabPane mobileTab={mobileTab} edges={data.allData.edges} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
-          <SummaryTabPane mobileTab={mobileTab} mode={mode} edges={data.allData.edges} item={item} previous={previous} next={next} />
-          <SettingsTabPane mobileTab={mobileTab} />
-          {/*
-          <FigureTabPane mobileTab={mobileTab} data={data} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
-          <ArticleTabPane data={data} mobileTab={mobileTab} tab={tab} mode={mode} onChangeTabIndex={onChangeTabIndex} />
-          <SettingsTabPane mobileTab={mobileTab} />
-          */}
+          <Figure edges={data.allData.edges} mode={mode} tab={tab} onChangeTabIndex={onChangeTabIndex} />
+          <SectionDivider />
+          <Summary mode={mode} edges={data.allData.edges} item={item} previous={previous} next={next} />
+          <SectionDivider />
+          <ArticleSection tab={tab} />
         </Box>
       </main>
       <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <SectionDivider />
         <Footer />
       </Box>
       <Box
@@ -152,9 +149,6 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
         }}
       >
         {tabPanel}
-        {/*
-        <BottomNavigation value={mobileTab} onChange={handleMobileTab} /> 
-        */}
       </Box>
       <Box
         sx={{

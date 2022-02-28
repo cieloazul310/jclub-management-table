@@ -7,6 +7,7 @@ import Slide from '@mui/material/Slide';
 import Tooltip from '@mui/material/Tooltip';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
+import { SectionDivider } from '@cieloazul310/gatsby-theme-aoi';
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
@@ -47,7 +48,10 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
       >
         <main>{children}</main>
       </Box>
-      <Footer />
+      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <SectionDivider />
+        <Footer />
+      </Box>
       <SwipeableDrawer
         open={drawerOpen}
         onClose={setDrawer(false)}

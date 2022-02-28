@@ -20,12 +20,36 @@ function YearTemplate({ data, pageContext }: PageProps<YearPageData, YearPageCon
 export default YearTemplate;
 
 export const query = graphql`
-  query YearTemplate($year: Int!) {
+  query YearTemplate($year: Int!, $prevYear: Int) {
     year(year: { eq: $year }) {
       id
       year
       href
       categories
+      stats {
+        J1 {
+          ...allStats
+        }
+        J2 {
+          ...allStats
+        }
+        J3 {
+          ...allStats
+        }
+      }
+    }
+    prev: year(year: { eq: $prevYear }) {
+      stats {
+        J1 {
+          ...allStats
+        }
+        J2 {
+          ...allStats
+        }
+        J3 {
+          ...allStats
+        }
+      }
     }
     allData(filter: { year: { eq: $year } }, sort: { fields: revenue, order: DESC }) {
       edges {
@@ -38,6 +62,8 @@ export const query = graphql`
           ...expenseFields
           ...attdFields
           previousData {
+            ...generalFields
+            ...seasonResultFields
             ...plFields
             ...bsFields
             ...revenueFields

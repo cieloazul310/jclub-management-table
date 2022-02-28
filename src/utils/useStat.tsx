@@ -1,50 +1,90 @@
 import * as React from 'react';
-import { Edge } from '../types';
+import { DatumBrowser, SortableKeys, Category } from '../../types';
 
 export interface StatItem {
-  id: string | number;
+  club: DatumBrowser;
   value: number;
 }
 
 export interface Stat {
   key: string;
-  n: number;
-  sum: number;
-  average: number;
-  max: StatItem;
-  min: StatItem;
+  totalCount: number;
+  sum: {
+    value: number;
+    prev: number | null;
+  };
+  average: {
+    value: number;
+    prev: number | null;
+  };
+  median: {
+    value: number;
+    prev: number | null;
+  };
+  max: {
+    club: DatumBrowser;
+    value: number;
+    prev: number | null;
+  };
+  min: {
+    club: DatumBrowser;
+    value: number;
+    prev: number | null;
+  };
 }
 
-type EdgeProps = keyof Edge['node'];
+function getStat(edges: { node: DatumBrowser }[], key: SortableKeys) {
+  const sorted = edges.sort((a, b) => (a.node[key] ?? 0) - (b.node[key] ?? 0));
+  const totalCount = edges.length;
+  const sum = edges.reduce((accum, curr) => accum + (curr.node[key] ?? 0), 0);
+  const average = sum / totalCount;
+  const median =
+    totalCount % 2 === 0
+      ? Math.round(((sorted[totalCount / 2 - 1].node[key] ?? 0) + (sorted[totalCount / 2].node[key] ?? 0)) / 2)
+      : Math.round(sorted[Math.floor(totalCount / 2)].node[key] ?? 0);
+  const min = sorted[0];
+  const max = sorted[sorted.length - 1];
 
-function isNumbers(array: (number | string | undefined | null)[]): array is number[] {
-  return typeof array[0] === 'number';
+  return { totalCount, sum, average, median, min, max };
 }
 
-function useStat(edges: Edge[], key: EdgeProps, idField: EdgeProps): Stat | null {
+function useStat(edges: { node: DatumBrowser }[], category: Category, key: SortableKeys): Stat {
   return React.useMemo(() => {
-    const values = edges.map(({ node }) => node[key]);
-    if (!isNumbers(values)) return null;
+    const filtered = edges.filter(({ node }) => node.category === category).sort((a, b) => (a.node[key] ?? 0) - (b.node[key] ?? 0));
+    const prevs = edges
+      .filter(({ node }) => node.previousData?.category === category)
+      .sort((a, b) => (a.node[key] ?? 0) - (b.node[key] ?? 0));
 
-    const n = values.length;
-    const sum = values.reduce((accum, curr) => accum + curr, 0);
-    const max = values.reduce((accum, curr, index) => (accum[0] < curr ? [curr, index] : accum), [-Infinity, 0]);
-    const min = values.reduce((accum, curr, index) => (accum[0] > curr ? [curr, index] : accum), [Infinity, 0]);
+    const { totalCount, sum, average, median, min, max } = getStat(filtered, key);
+    const prevStat = prevs.length ? getStat(prevs, key) : null;
+
     return {
-      n,
       key,
-      sum,
-      average: sum / n,
-      max: {
-        id: edges[max[1]].node[idField] ?? `${max[1]}`,
-        value: max[0],
+      totalCount,
+      sum: {
+        value: sum,
+        prev: prevStat?.sum ?? null,
+      },
+      average: {
+        value: average,
+        prev: prevStat?.average ?? null,
+      },
+      median: {
+        value: median,
+        prev: prevStat?.median ?? null,
       },
       min: {
-        id: edges[min[1]].node[idField] ?? `${min[1]}`,
-        value: min[0],
+        club: min.node,
+        value: min.node[key] ?? 0,
+        prev: prevStat?.min.node[key] ?? null,
+      },
+      max: {
+        club: max.node,
+        value: max.node[key] ?? 0,
+        prev: prevStat?.max.node[key] ?? null,
       },
     };
-  }, [edges, key, idField]);
+  }, [edges, key, category]);
 }
 
 export default useStat;

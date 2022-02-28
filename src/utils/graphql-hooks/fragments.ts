@@ -83,5 +83,56 @@ export default function useFragments() {
       average_attd
       unit_price
     }
+    fragment allStats on Stats {
+      totalCount
+      revenue {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+      average_attd {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+      expense {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+      net_worth {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+      ticket {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+      unit_price {
+        average
+        max
+        median
+        min
+        sum
+        values
+      }
+    }
   `);
 }

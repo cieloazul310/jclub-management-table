@@ -40,7 +40,13 @@ module.exports = {
         path: `./docs`,
       },
     },
-    `gatsby-transformer-remark`,
+    // `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: ['.md', '.mdx'],
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {

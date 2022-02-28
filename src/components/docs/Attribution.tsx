@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import DocContainer from './DocContainer';
-import { MarkDownQuery } from '../../../graphql-types';
+import { DocsQueryData } from '../../../types';
 
 function AttributionDoc() {
-  const { markdownRemark } = useStaticQuery<MarkDownQuery>(graphql`
-    query MarkDown {
-      markdownRemark(frontmatter: { id: { eq: "data" } }) {
-        htmlAst
+  const { mdx } = useStaticQuery<DocsQueryData>(graphql`
+    query {
+      mdx(frontmatter: { id: { eq: "data" } }) {
+        body
         frontmatter {
           title
         }
       }
     }
   `);
-  return markdownRemark ? <DocContainer markdownRemark={markdownRemark} /> : null;
+  return <DocContainer mdx={mdx} />;
 }
 
 export default AttributionDoc;

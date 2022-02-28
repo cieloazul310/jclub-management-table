@@ -1,23 +1,22 @@
 import * as React from 'react';
+import { MDXProvider } from '@mdx-js/react';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
-import renderAst from '../../utils/renderAst';
+import { muiComponents } from '@cieloazul310/gatsby-theme-aoi-blog-components';
+import { DocsQueryData } from '../../../types';
+// import renderAst from '../../utils/renderAst';
 
 type DocContainerProps = {
-  markdownRemark: {
-    frontmatter: {
-      title: string;
-    };
-    htmlAst: string;
-  };
+  mdx: DocsQueryData['mdx'];
 };
 
-function DocContainer({ markdownRemark }: DocContainerProps) {
-  const { frontmatter, htmlAst } = markdownRemark;
+function DocContainer({ mdx }: DocContainerProps) {
+  const { frontmatter, body } = mdx;
   return (
-    <>
+    <MDXProvider components={muiComponents}>
       <ArticleTitle>{frontmatter.title}</ArticleTitle>
-      {renderAst(htmlAst)}
-    </>
+      <MDXRenderer>{body}</MDXRenderer>
+    </MDXProvider>
   );
 }
 
