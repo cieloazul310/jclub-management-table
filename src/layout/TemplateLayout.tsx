@@ -19,7 +19,6 @@ import Figure from './MobileTabPane/Figure';
 import ArticleSection from './MobileTabPane/Article';
 import Footer from './Footer';
 
-import useIsMobile from '../utils/useIsMobile';
 import { useAppState, useDispatch } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import { Mode, YearPageData, YearPageContext, ClubPageData, ClubPageContext } from '../../types';
 
@@ -48,7 +47,6 @@ function getPrevYear<T extends Mode>(data: T extends 'club' ? ClubPageData : Yea
 function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description, data, pageContext }: TemplateLayoutProps<T>) {
   const { tab } = useAppState();
   const dispatch = useDispatch();
-  const isMobile = useIsMobile();
   const trigger = useScrollTriger();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const { previous, next } = pageContext;
@@ -65,24 +63,12 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
     dispatch({ type: 'SET_TAB', tab: newValue });
   };
 
-  const tabPanel = React.useMemo(() => {
-    return (
-      <Tabs value={tab} variant="scrollable" indicatorColor="secondary" textColor="secondary" scrollButtons="auto" onChange={handleTab}>
-        <MuiTab label="損益計算書" value="pl" wrapped />
-        <MuiTab label="貸借対照表" value="bs" wrapped />
-        <MuiTab label="営業収入" value="revenue" wrapped />
-        <MuiTab label="営業費用" value="expense" wrapped />
-        <MuiTab label="入場者数" value="attd" wrapped />
-      </Tabs>
-    );
-  }, [tab, handleTab]);
-
   return (
     <Box
       sx={{
         flexGrow: 1,
-        paddingTop: { xs: '56px', sm: '64px' },
-        paddingBottom: { xs: '56px', sm: 0 },
+        paddingTop: { xs: '56px', sm: '112px' },
+        paddingBottom: { xs: '48px', sm: 0 },
       }}
     >
       <SEO title={title} description={description} />
@@ -90,22 +76,6 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
         <AppBar>
           <AppBarInner title={headerTitle ?? title} onLeftButtonClick={handleDrawer()} previous={previous} next={next} />
         </AppBar>
-      </Slide>
-      <Slide appear={false} direction="down" in={!isMobile}>
-        <Box
-          component="nav"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            position: 'sticky',
-            top: trigger ? 0 : { xs: '56px', sm: '64px' },
-            bgcolor: 'background.paper',
-            zIndex: (theme) => theme.zIndex.appBar - 1,
-            boxShadow: 1,
-            transition: (theme) => theme.transitions.create('top', { delay: 100 }),
-          }}
-        >
-          {tabPanel}
-        </Box>
       </Slide>
       <main>
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
@@ -123,16 +93,25 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
       <Box
         component="nav"
         sx={{
-          display: { xs: 'block', sm: 'none' },
           position: 'fixed',
-          width: '100%',
-          bottom: 0,
-          zIndex: 'appBar',
-          bgcolor: 'background.default',
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+          width: 1,
+          top: { xs: 'unset', sm: trigger ? 0 : '64px' },
+          bottom: { xs: 0, sm: 'unset' },
+          bgcolor: 'background.paper',
+          border: 'divider',
+          borderTop: { xs: 1, sm: 0 },
+          zIndex: (theme) => theme.zIndex.appBar - 1,
+          boxShadow: 1,
+          transition: (theme) => theme.transitions.create(['top', 'bottom'], { delay: 100 }),
         }}
       >
-        {tabPanel}
+        <Tabs value={tab} variant="scrollable" indicatorColor="secondary" textColor="secondary" scrollButtons="auto" onChange={handleTab}>
+          <MuiTab label="損益計算書" value="pl" wrapped />
+          <MuiTab label="貸借対照表" value="bs" wrapped />
+          <MuiTab label="営業収入" value="revenue" wrapped />
+          <MuiTab label="営業費用" value="expense" wrapped />
+          <MuiTab label="入場者数" value="attd" wrapped />
+        </Tabs>
       </Box>
       <Box
         sx={{
@@ -140,6 +119,11 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
           right: (theme) => theme.spacing(2),
           bottom: (theme) => ({ xs: `calc(${theme.spacing(2)} + 56px)`, sm: theme.spacing(2) }),
           zIndex: (theme) => theme.zIndex.appBar - 1,
+          opacity: 0.4,
+          transition: (theme) => theme.transitions.create('opacity'),
+          '&:hover': {
+            opacity: 1,
+          },
         }}
       >
         <Tooltip title="メニュー">

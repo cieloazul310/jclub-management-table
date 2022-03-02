@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Title, TitleProps } from '@devexpress/dx-react-chart';
-import { ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
+import { H4 } from '@cieloazul310/gatsby-theme-aoi';
 
 function TextComponent({ text }: Title.TextProps) {
-  return <ArticleTitle>{text}</ArticleTitle>;
+  return <H4>{text}</H4>;
 }
 
 function CustomTitle({ text, position }: Omit<TitleProps, 'textComponent'>): JSX.Element {

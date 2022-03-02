@@ -21,7 +21,9 @@ function DataTableCell({ value, emphasized = false, strong = false, separator = 
       align={props.align ?? 'right'}
       sx={{
         color: red && typeof value === 'number' && value < 0 ? 'error.main' : undefined,
-        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+        borderRight: 1,
+        borderColor: 'divider',
+        // borderRight: (theme) => `1px solid ${theme.palette.divider}`,
         bgcolor: ({ palette }) => {
           if (!emphasized) return undefined;
           return palette.mode === 'light' ? 'grey.100' : 'background.paper';

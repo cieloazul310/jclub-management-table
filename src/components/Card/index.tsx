@@ -138,6 +138,8 @@ function Card({ edges, mode }: CardProps) {
     <Box
       display="flex"
       flexGrow={1}
+      width={1}
+      overflow="hidden"
       minHeight={400}
       ref={squareRef}
       position="relative"

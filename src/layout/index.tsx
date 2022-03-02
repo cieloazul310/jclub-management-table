@@ -43,7 +43,8 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
       </Slide>
       <Box
         sx={{
-          paddingTop: { xs: '56px', sm: '64px' },
+          pt: { xs: '56px', sm: '64px' },
+          pb: { xs: '48px' },
         }}
       >
         <main>{children}</main>
@@ -66,6 +67,12 @@ function Layout({ children, drawerContents, title, description, headerTitle }: P
           position: 'fixed',
           bottom: (theme) => theme.spacing(2),
           right: (theme) => theme.spacing(2),
+          zIndex: (theme) => theme.zIndex.appBar - 1,
+          opacity: 0.4,
+          transition: (theme) => theme.transitions.create('opacity'),
+          '&:hover': {
+            opacity: 1,
+          },
         }}
       >
         <Tooltip title="メニュー">

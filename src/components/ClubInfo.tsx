@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BarSeries, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
-import { ExternalLink, H3, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
+import { ExternalLink, ArticleTitle, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
 import Chart from './chart/CustomChart';
 import Title from './chart/CustomTitle';
 import YearAxisLabel from './chart/YearAxisLabel';
@@ -16,7 +16,7 @@ type ClubInfoProps = {
 function ClubInfo({ club, edges }: ClubInfoProps) {
   return (
     <>
-      <H3>{club.name}</H3>
+      <ArticleTitle>{club.name}</ArticleTitle>
       {edges.length > 2 ? (
         <Chart height={360} data={edges.map(({ node }) => ({ ...node, year: node.year?.toString() }))}>
           <ArgumentAxis labelComponent={YearAxisLabel} />

@@ -10,7 +10,7 @@ export default async function gatsbyCreateResolvers({ createResolvers }: CreateR
       dictionary: {
         type: `Dict!`,
         resolve: () => {
-          const dict: Dict = yaml.parse(fs.readFileSync(path.resolve(__dirname, '../data/frames/dict.yml'), 'utf8'));
+          const dict: Dict = yaml.parse(fs.readFileSync(path.resolve('./data/frames/dict.yml'), 'utf8'));
           return dict;
         },
       },

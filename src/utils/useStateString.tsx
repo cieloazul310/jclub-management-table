@@ -12,11 +12,7 @@ export function useSortStateString(): SortStateString {
   const { sortAsc, sortKey } = useAppState();
   const dictionary = useDictionary();
 
-  const field = (() => {
-    if (sortKey === 'average_attd') return '平均入場者数';
-    if (sortKey === 'unit_price') return '客単価';
-    return dictionary ? dictionary[sortKey] : '';
-  })();
+  const field = dictionary[sortKey];
 
   const rankSort = sortAsc ? '高い順' : '低い順';
   const valueSort = sortAsc ? '少ない順' : '多い順';

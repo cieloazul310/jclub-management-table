@@ -21,7 +21,7 @@ function IndexPage() {
   const { title, description } = useSiteMetadata();
   return (
     <Layout title={title}>
-      <Jumbotron maxWidth="md" bgcolor={palette.mode === 'light' ? 'primary.dark' : 'grey.800'}>
+      <Jumbotron maxWidth="md" bgcolor={palette.mode === 'light' ? 'primary.dark' : 'grey.800'} height={280}>
         <Typography variant="h5" component="h2" gutterBottom>
           {title}
         </Typography>

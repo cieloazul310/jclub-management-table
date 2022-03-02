@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import FigureToolbar from './Toolbar';
 import FinancialTable from '../tables';
 import FinancialCard from '../Card';
@@ -15,6 +16,7 @@ type FigureProps = {
 
 function Figure({ edges, mode }: FigureProps) {
   const { listMode } = useAppState();
+  const isYearTable = !listMode && mode === 'year';
 
   return (
     <Container
@@ -22,10 +24,15 @@ function Figure({ edges, mode }: FigureProps) {
       disableGutters
       sx={{
         overflowY: 'auto',
+        display: 'flex',
+        flexDirection: { xs: 'column-reverse', sm: 'column' },
+        height: isYearTable ? { xs: 'calc(100vh - 104px)', sm: 'calc(100vh - 112px)' } : undefined,
       }}
     >
       <FigureToolbar mode={mode} />
-      <div>{listMode ? <FinancialCard edges={edges} mode={mode} /> : <FinancialTable edges={edges} mode={mode} />}</div>
+      <Box flexGrow={1} overflow="auto" display="flex">
+        {listMode ? <FinancialCard edges={edges} mode={mode} /> : <FinancialTable edges={edges} mode={mode} />}
+      </Box>
     </Container>
   );
 }

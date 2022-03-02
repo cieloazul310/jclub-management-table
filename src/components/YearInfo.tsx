@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { H3 } from '@cieloazul310/gatsby-theme-aoi';
+import { ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
 import Stats from './Summary/Stats';
 import { YearBrowser } from '../../types';
 
@@ -11,7 +11,7 @@ type YearInfoProps = {
 function YearInfo({ year, prevYear }: YearInfoProps) {
   return (
     <>
-      <H3>{year.year}年</H3>
+      <ArticleTitle>{year.year}年</ArticleTitle>
       <Stats year={year} prevYear={prevYear} />
     </>
   );

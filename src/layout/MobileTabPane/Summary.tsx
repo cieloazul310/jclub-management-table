@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import { Section, SectionDivider, Article, ArticleTitle } from '@cieloazul310/gatsby-theme-aoi';
+import { Section, SectionDivider, Article } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import ClubInfo from '../../components/ClubInfo';
 import YearInfo from '../../components/YearInfo';
@@ -30,7 +30,6 @@ function Summary<T extends Mode>({ mode, edges, item, previous, next, prevYear }
     <section>
       <Section>
         <Article maxWidth="md">
-          <ArticleTitle>概要</ArticleTitle>
           {isClub(item, mode) ? <ClubInfo club={item} edges={edges} /> : <YearInfo year={item} prevYear={prevYear} />}
         </Article>
       </Section>

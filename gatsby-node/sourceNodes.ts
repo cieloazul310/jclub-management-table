@@ -7,7 +7,7 @@ import { Club, Year } from '../types';
 export default async function souceNodes({ actions, createNodeId, createContentDigest }: SourceNodesArgs) {
   const { createNode } = actions;
 
-  const clubs: Omit<Club, 'href'>[] = yaml.parse(fs.readFileSync(path.resolve(__dirname, '../data/frames/clubs.yml'), 'utf-8'));
+  const clubs: Omit<Club, 'href'>[] = yaml.parse(fs.readFileSync(path.resolve('./data/frames/clubs.yml'), 'utf-8'));
 
   clubs.forEach((data) => {
     const href = `/club/${data.slug}/`;
@@ -29,7 +29,7 @@ export default async function souceNodes({ actions, createNodeId, createContentD
     createNode(node);
   });
 
-  const years: Omit<Year, 'href'>[] = yaml.parse(fs.readFileSync(path.resolve(__dirname, '../data/frames/years.yml'), 'utf-8'));
+  const years: Omit<Year, 'href'>[] = yaml.parse(fs.readFileSync(path.resolve('./data/frames/years.yml'), 'utf-8'));
 
   years.forEach((data) => {
     const href = `/year/${data.year}/`;

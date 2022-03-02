@@ -12,6 +12,7 @@ export default function useDictionary() {
         all_attd
         all_games
         assets
+        average_attd
         broadcast
         capital_stock
         capital_surplus
@@ -61,6 +62,7 @@ export default function useDictionary() {
         tax
         team_exp
         ticket
+        unit_price
         women_exp
         year
         id
