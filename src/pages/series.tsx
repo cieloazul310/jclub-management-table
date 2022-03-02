@@ -59,7 +59,7 @@ function CategoryTableCell({ datum, field }: CategoryTableCellProps) {
         py: 1,
       }}
     >
-      {datum ? datum[field] : '-'}
+      {datum ? datum[field] : ''}
     </TableCell>
   );
 }

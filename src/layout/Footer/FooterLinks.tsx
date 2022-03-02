@@ -54,28 +54,28 @@ function FooterLinks() {
   const { j1, j2, j3 } = useClubsByCategory();
   return (
     <Grid container spacing={2} component="nav">
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <CategoryLinks title="J1" clubs={j1.edges} />
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <CategoryLinks title="J2" clubs={j2.edges} />
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <CategoryLinks title="J3" clubs={j3.edges} />
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <YearsLinks />
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <Typography variant="subtitle1" component="p" gutterBottom>
-          <AppLink to="/series" color="inherit">
+          <AppLink to="/series/" color="inherit">
             項目別表示
           </AppLink>
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <Typography variant="subtitle1" component="p" gutterBottom>
-          <AppLink to="/download" color="inherit">
+          <AppLink to="/download/" color="inherit">
             データダウンロード
           </AppLink>
         </Typography>

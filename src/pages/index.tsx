@@ -15,6 +15,7 @@ import {
 import Layout from '../layout';
 import { J1Link, J2Link, J3Link, YearsLink } from '../components/links';
 import { AttributionDoc } from '../components/docs';
+import { AdInSectionDivider } from '../components/Ads';
 
 function IndexPage() {
   const { palette } = useTheme();
@@ -60,24 +61,26 @@ function IndexPage() {
               </Typography>
               <YearsLink />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="h6" component="h3" gutterBottom>
                 <AppLink to="/series" color="inherit">
                   項目別表示
                 </AppLink>
               </Typography>
+              <Paragraph>営業収入や入場者数など特定の項目を、縦軸にクラブ、横軸に年度で表したページです</Paragraph>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="h6" component="h3" gutterBottom>
                 <AppLink to="/download" color="inherit">
                   データダウンロード
                 </AppLink>
               </Typography>
+              <Paragraph>データをJSONやCSV形式でダウンロードできるページです</Paragraph>
             </Grid>
           </Grid>
         </Article>
       </Section>
-      <SectionDivider />
+      <AdInSectionDivider />
       <Section>
         <Article maxWidth="md">
           <AttributionDoc />

@@ -14,44 +14,25 @@ import { SectionDivider } from '@cieloazul310/gatsby-theme-aoi';
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
-import Summary from './MobileTabPane/Summary';
-import Figure from './MobileTabPane/Figure';
-import ArticleSection from './MobileTabPane/Article';
 import Footer from './Footer';
 
 import { useAppState, useDispatch } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import { Mode, YearPageData, YearPageContext, ClubPageData, ClubPageContext } from '../../types';
+import { Mode, YearPageContext, ClubPageContext } from '../../types';
 
 type TemplateLayoutProps<T extends Mode> = {
-  mode: T;
   title: string;
   headerTitle?: string;
   description?: string;
-  data: T extends 'club' ? ClubPageData : YearPageData;
   pageContext: T extends 'club' ? ClubPageContext : YearPageContext;
+  children: React.ReactNode;
 };
 
-function isClub<T extends Mode>(data: ClubPageData | YearPageData, mode: T): data is ClubPageData {
-  return mode === 'club';
-}
-
-function getItem<T extends Mode>(data: T extends 'club' ? ClubPageData : YearPageData, mode: T) {
-  if (isClub(data, mode)) return data.club;
-  return data.year;
-}
-function getPrevYear<T extends Mode>(data: T extends 'club' ? ClubPageData : YearPageData, mode: T) {
-  if (isClub(data, mode)) return null;
-  return data.prevYear;
-}
-
-function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description, data, pageContext }: TemplateLayoutProps<T>) {
+function TemplateLayout<T extends Mode>({ children, title, headerTitle, description, pageContext }: TemplateLayoutProps<T>) {
   const { tab } = useAppState();
   const dispatch = useDispatch();
   const trigger = useScrollTriger();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const { previous, next } = pageContext;
-  const item = getItem<T>(data, mode);
-  const prevYear = getPrevYear<T>(data, mode);
 
   const handleDrawer = (newValue: boolean | undefined = undefined) => {
     return () => setDrawerOpen(newValue ?? !drawerOpen);
@@ -78,13 +59,7 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
         </AppBar>
       </Slide>
       <main>
-        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <Figure edges={data.allData.edges} mode={mode} />
-          <SectionDivider />
-          <Summary mode={mode} edges={data.allData.edges} item={item} previous={previous} next={next} prevYear={prevYear} />
-          <SectionDivider />
-          <ArticleSection />
-        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>{children}</Box>
       </main>
       <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         <SectionDivider />
@@ -98,8 +73,8 @@ function TemplateLayout<T extends Mode>({ mode, title, headerTitle, description,
           top: { xs: 'unset', sm: trigger ? 0 : '64px' },
           bottom: { xs: 0, sm: 'unset' },
           bgcolor: 'background.paper',
-          border: 'divider',
           borderTop: { xs: 1, sm: 0 },
+          borderColor: 'divider',
           zIndex: (theme) => theme.zIndex.appBar - 1,
           boxShadow: 1,
           transition: (theme) => theme.transitions.create(['top', 'bottom'], { delay: 100 }),

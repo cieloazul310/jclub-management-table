@@ -42,7 +42,6 @@ const config: GatsbyConfig = {
         path: `./docs`,
       },
     },
-    // `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

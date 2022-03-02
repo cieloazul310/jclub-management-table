@@ -3,8 +3,7 @@ import Box from '@mui/material/Box';
 import { Article } from '@cieloazul310/gatsby-theme-aoi';
 import FooterLinks from './FooterLinks';
 import Copyrights from './Copyrights';
-// import { ContentBasis } from '../../components/Basis';
-// import { AdInFooter } from '../../components/Ads';
+import { AdInFooter } from '../../components/Ads';
 
 function Footer() {
   return (
@@ -12,12 +11,9 @@ function Footer() {
       <Article maxWidth="lg">
         <FooterLinks />
       </Article>
-      {/*
-        <ContentBasis>
-          <AdInFooter />
-        </ContentBasis>
-        <ContentBasis>
-        */}
+      <Article maxWidth="lg">
+        <AdInFooter />
+      </Article>
       <Article maxWidth="lg">
         <Copyrights />
       </Article>

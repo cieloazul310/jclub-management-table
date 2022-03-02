@@ -19,11 +19,10 @@ type DrawerInnerProps = {
   title?: string;
   next?: ClubPageNeighbor | YearPageNeighbor;
   previous?: ClubPageNeighbor | YearPageNeighbor;
-  drawerContents?: React.ReactNode;
   onCloseIconClick: () => void;
 };
 
-function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }: DrawerInnerProps) {
+function DrawerInner({ title, next, previous, onCloseIconClick }: DrawerInnerProps) {
   const siteTitle = useSiteMetadata().title;
   const neighbors = useNeighbors({ previous, next });
   return (
@@ -37,15 +36,13 @@ function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }
           </Tooltip>
         </Box>
         <Divider />
-        <Box p={2}>
+      </div>
+      <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+        <Box height={140} p={2}>
           <Typography variant="body1">
             <strong>{title ?? siteTitle}</strong>
           </Typography>
         </Box>
-        {drawerContents}
-        {drawerContents ? <Divider /> : null}
-      </div>
-      <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
         {previous || next ? <DrawerPageNavigation previous={neighbors.previous} next={neighbors.next} /> : null}
         <Divider />
         <DrawerLinks />
@@ -54,9 +51,10 @@ function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }
         <StateHandler />
         <ThemeHandler />
         <DrawerShare title={title} />
+        <Divider />
         <Box sx={{ py: 8, px: 2 }}>
           <footer>
-            <strong>Jクラブ経営情報2005-2019</strong>
+            <strong>Jクラブ経営情報ポータル</strong>
             <SubParagraph>
               © {new Date().getFullYear()} cieloazul310 All rights reserved. Built with
               {` `}
@@ -75,7 +73,6 @@ DrawerInner.defaultProps = {
   title: undefined,
   next: undefined,
   previous: undefined,
-  drawerContents: undefined,
 };
 
 export default DrawerInner;

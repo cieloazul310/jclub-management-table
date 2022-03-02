@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Section, SectionDivider, Article } from '@cieloazul310/gatsby-theme-aoi';
+import { Section, Article } from '@cieloazul310/gatsby-theme-aoi';
+import { AdInSectionDivider } from '../../components/Ads';
 import { useAppState } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import { PLDoc, BSDoc, RevenueDoc, ExpenseDoc, AttdDoc, AttributionDoc } from '../../components/docs';
 
@@ -22,7 +23,7 @@ function MainTab() {
           </article>
         </Article>
       </Section>
-      <SectionDivider />
+      <AdInSectionDivider />
       <Section>
         <Article maxWidth="md">
           <AttributionDoc />

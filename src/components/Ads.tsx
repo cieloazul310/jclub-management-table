@@ -57,7 +57,7 @@ export function AdInFooter() {
   );
 }
 
-export function AdInListFooter() {
+export function AdInSectionDivider() {
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -67,7 +67,7 @@ export function AdInListFooter() {
   }, [pathname]);
 
   return (
-    <Box py={2} px={1} overflow="hidden" key={pathname}>
+    <Box py={2} px={1} overflow="hidden" key={pathname} bgcolor={({ palette }) => (palette.mode === 'light' ? '#fafafa' : '#000')}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"

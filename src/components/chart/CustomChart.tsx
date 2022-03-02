@@ -1,31 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-// import { makeStyles, createStyles, Theme } from '@mui/core/styles';
 import { Chart, ChartProps } from '@devexpress/dx-react-chart-material-ui';
-/*
-interface StylesProps {
-  height?: number;
-}
-
-const useStyles = makeStyles<Theme, StylesProps>((theme) =>
-  createStyles({
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      padding: theme.spacing(2, 1),
-      height: ({ height }) => height ?? 300,
-    },
-    chart: {
-      flexGrow: 1,
-      maxWidth: theme.breakpoints.width('sm'),
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '10px',
-      boxSizing: 'border-box',
-    },
-  })
-);
-*/
 
 function ChartComponent({ children }: Chart.RootProps) {
   return (

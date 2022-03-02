@@ -1,17 +1,75 @@
 import * as React from 'react';
-import { Jumbotron } from '@cieloazul310/gatsby-theme-aoi';
+import { graphql, PageProps } from 'gatsby';
+import Box from '@mui/material/Box';
 import Layout from '../layout';
+import ItemFilter from '../components/download/ItemFilter';
+import { DatumBrowser, ClubBrowser, YearBrowser } from '../../types';
 
-function DownloadPage() {
+type DownloadPageData = {
+  allData: {
+    edges: {
+      node: Omit<DatumBrowser, 'previousData'>;
+    }[];
+  };
+  j1: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  j2: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  j3: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  allYear: {
+    edges: {
+      node: Pick<YearBrowser, 'year'>;
+    }[];
+  };
+};
+
+function DownloadPage({ data }: PageProps<DownloadPageData>) {
+  const { allData, j1, j2, j3, allYear } = data;
+  const allCategories = ['J1', 'J2', 'J3', 'others'];
+  const slugs = [...j1.edges, ...j2.edges, ...j3.edges].map(({ node }) => node.slug);
+  const years = allYear.edges.map(({ node }) => node.year);
+  const [clubsFilter, setClubsFilter] = React.useState(slugs);
+  const [yearsFilter, setYearsFilter] = React.useState([years[years.length - 1]]);
+  const [categoriesFilter, setCategoriesFilter] = React.useState(allCategories);
+
+  const dataset = React.useMemo(() => {
+    return allData.edges
+      .filter(({ node }) => yearsFilter.includes(node.year))
+      .filter(({ node }) => clubsFilter.includes(node.slug))
+      .filter(({ node }) => categoriesFilter.includes(node.category));
+  }, [allData, clubsFilter, yearsFilter]);
+
   return (
-    <Layout title="Jクラブ経営情報ポータル">
-      <Jumbotron />
+    <Layout title="データダウンロード">
+      <Box display="flex">
+        <Box flex={1}>
+          <ItemFilter
+            clubs={{ j1, j2, j3 }}
+            clubsFilter={clubsFilter}
+            yearsFilter={yearsFilter}
+            categoriesFilter={categoriesFilter}
+            setClubsFilter={setClubsFilter}
+            setYearsFilter={setYearsFilter}
+            setCategoriesFilter={setCategoriesFilter}
+          />
+        </Box>
+        <Box flex={1} />
+      </Box>
     </Layout>
   );
 }
 export default DownloadPage;
 /*
-import { graphql, PageProps } from 'gatsby';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Tabs from '@material-ui/core/Tabs';
@@ -197,75 +255,52 @@ function DownloadPage({ data }: PageProps<DownloadQuery>): JSX.Element {
 }
 
 export default DownloadPage;
-
+*/
 export const query = graphql`
-  query Download {
-    allDataset(sort: { fields: year }) {
+  query {
+    allData(sort: { fields: [year, slug] }) {
       edges {
         node {
-          academy_exp
-          academy_rev
-          acl_attd
-          acl_games
-          all_attd
-          all_games
-          assets
-          broadcast
-          capital_stock
-          capital_surplus
-          category
-          curr_assets
-          curr_liabilities
-          elevation
-          expense
-          fixed_assets
-          fixed_liabilities
-          fullname
-          game_exp
-          general_exp
-          goods_exp
-          goods_rev
-          id
-          league_attd
-          league_games
-          leaguecup_attd
-          leaguecup_games
-          liabilities
-          license
-          manage_exp
+          ...generalFields
+          ...seasonResultFields
+          ...plFields
+          ...bsFields
+          ...revenueFields
+          ...expenseFields
+          ...attdFields
+        }
+      }
+    }
+    j1: allClub(filter: { category: { eq: "J1" } }) {
+      edges {
+        node {
           name
-          net_worth
-          no_exp
-          no_rev
-          op_profit
-          ordinary_profit
-          other_revs
-          po_attd
-          po_games
-          ppg
-          points
-          profit
-          profit_before_tax
-          rank
-          related_revenue
-          retained_earnings
-          revenue
-          salary
-          second_attd
-          second_games
-          sga
           slug
-          sp_exp
-          sponsor
-          sp_rev
-          tax
-          team_exp
-          ticket
+        }
+      }
+    }
+    j2: allClub(filter: { category: { eq: "J2" } }) {
+      edges {
+        node {
+          name
+          slug
+        }
+      }
+    }
+    j3: allClub(filter: { category: { eq: "J3" } }) {
+      edges {
+        node {
+          name
+          slug
+        }
+      }
+    }
+    allYear(sort: { fields: year }) {
+      edges {
+        node {
           year
-          women_exp
         }
       }
     }
   }
 `;
-*/
