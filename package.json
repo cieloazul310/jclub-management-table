@@ -81,10 +81,10 @@
     "lint": "eslint --ignore-path .gitignore . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --parser typescript --trailing-comma es5 --single-quote --write \"src/**/*.ts*\"",
     "start": "npm run develop",
-    "convert": "node converter/index.js",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build:gatsby-node": "tsc gatsby-node/*.ts --module commonjs --target esnext --outDir gatsby-node-dist --skipLibCheck"
   },
   "repository": {
     "type": "git",
