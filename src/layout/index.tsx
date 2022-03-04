@@ -48,7 +48,7 @@ function Layout({ children, title, description, headerTitle }: LayoutProps) {
       <main>
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>{children}</Box>
       </main>
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Box>
         <SectionDivider />
         <Footer />
       </Box>

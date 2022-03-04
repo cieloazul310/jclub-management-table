@@ -1,10 +1,10 @@
-// import { GatsbyConfig } from 'gatsby';
+import { GatsbyConfig } from 'gatsby';
 
 const baseUrl = 'https://cieloazul310.github.io';
 const pathPrefix = '/jclub-financial-table';
 // const siteUrl = path.join(baseUrl, pathPrefix);
 
-module.exports = {
+const config: GatsbyConfig = {
   siteMetadata: {
     title: `Jクラブ経営情報ポータル`,
     description: `Jリーグが毎年公開している「Jクラブ個別経営情報開示資料」のデータをクラブ別、年度別に表示したページ。損益計算書、貸借対照表、営業収入、営業費用、入場者数の項目別に表と解説を掲載。`,
@@ -72,32 +72,8 @@ module.exports = {
         icon: `src/images/og_twitter.png`, // This path is relative to the root of the site.
       },
     },
-    /*
-    {
-      resolve: `gatsby-plugin-sitemap`,
-      options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                baseUrl
-              }
-            }
-            allSitePage {
-              nodes {
-                path
-              }
-            }
-          }
-        `,
-        resolveSiteUrl: ({ site }) => {
-          // Alternatively, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
-          return site.siteMetadata.baseUrl;
-        },
-      },
-    },
-    */
+    `gatsby-plugin-sitemap`,
   ],
 };
 
-// export default config;
+export default config;
