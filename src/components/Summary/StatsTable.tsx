@@ -67,14 +67,35 @@ function StatsTable({ stats, prevStats }: StatsTableProps) {
       return (
         <>
           <StatsRow label="純資産平均" value={stats.net_worth.average} prev={prevStats?.net_worth.average} />
-          <StatsRow label="純資産最大" value={stats.net_worth.max} prev={prevStats?.net_worth.max} />
-          <StatsRow label="純資産最少" value={stats.net_worth.min} prev={prevStats?.net_worth.min} />
           <StatsRow
             label="債務超過クラブ数"
             value={stats.net_worth.values.filter((val) => val < 0).length}
             prev={prevStats?.net_worth.values.filter((val) => val < 0).length}
             disableOku
             unit="クラブ"
+          />
+        </>
+      );
+    if (tab === 'revenue')
+      return (
+        <>
+          <StatsRow label="営業収入平均" value={stats.revenue.average} prev={prevStats?.revenue.average} />
+          <StatsRow label="広告料収入平均" value={stats.sponsor.average} prev={prevStats?.sponsor.average} />
+          <StatsRow label="入場料収入平均" value={stats.ticket.average} prev={prevStats?.ticket.average} />
+          <StatsRow label="Jリーグ配分金平均" value={stats.broadcast.average} prev={prevStats?.broadcast.average} />
+        </>
+      );
+    if (tab === 'expense')
+      return (
+        <>
+          <StatsRow label="営業費用平均" value={stats.expense.average} prev={prevStats?.expense.average} />
+          <StatsRow label="チーム人件費平均" value={stats.salary.average} prev={prevStats?.salary.average} />
+          <StatsRow
+            label="平均チーム人件費比率"
+            value={Math.round((stats.salary.average / stats.expense.average) * 100)}
+            prev={prevStats ? Math.round((prevStats.salary.average / prevStats.expense.average) * 100) : null}
+            unit="%"
+            disableOku
           />
         </>
       );
@@ -95,9 +116,7 @@ function StatsTable({ stats, prevStats }: StatsTableProps) {
     return (
       <>
         <StatsRow label="営業収入平均" value={stats.revenue.average} prev={prevStats?.revenue.average} />
-        <StatsRow label="営業収入最大" value={stats.revenue.max} prev={prevStats?.revenue.max} />
-        <StatsRow label="営業収入最少" value={stats.revenue.min} prev={prevStats?.revenue.min} />
-        <StatsRow label="営業収入合計" value={stats.revenue.sum} prev={prevStats?.revenue.sum} />
+        <StatsRow label="営業費用平均" value={stats.expense.average} prev={prevStats?.expense.average} />
       </>
     );
   }

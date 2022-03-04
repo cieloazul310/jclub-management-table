@@ -5,12 +5,7 @@ function valuesToStats(data) {
     const totalCount = values.length;
     const sum = values.reduce((accum, curr) => accum + curr, 0);
     const average = Math.round(sum / totalCount);
-    const median = totalCount % 2 === 0
-        ? Math.round((values[totalCount / 2 - 1] + values[totalCount / 2]) / 2)
-        : Math.round(values[Math.floor(totalCount / 2)]);
-    const min = values[0];
-    const max = values[values.length - 1];
-    return { values, sum, average, median, min, max };
+    return { values, totalCount, average };
 }
 function createStats(data, key) {
     if (key === 'average_attd') {
@@ -34,10 +29,12 @@ function entriesToStats(entries, categories) {
                 revenue: createStats(data, 'revenue'),
                 expense: createStats(data, 'expense'),
                 net_worth: createStats(data, 'net_worth'),
+                sponsor: createStats(data, 'sponsor'),
                 ticket: createStats(data, 'ticket'),
+                broadcast: createStats(data, 'broadcast'),
+                salary: createStats(data, 'salary'),
                 unit_price: createStats(data, 'unit_price'),
                 average_attd: createStats(data, 'average_attd'),
-                totalCount: data.length,
             },
         };
     });
@@ -145,18 +142,17 @@ async function createSchemaCustomization({ actions, schema }) {
       revenue: StatsValues!
       expense: StatsValues!
       net_worth: StatsValues!
+      sponsor: StatsValues!
       ticket: StatsValues!
+      broadcast: StatsValues!
+      salary: StatsValues!
       average_attd: StatsValues!
       unit_price: StatsValues!
-      totalCount: Int!
     }
     type StatsValues {
       values: [Int]!
-      sum: Int!
+      totalCount: Int!
       average: Int!
-      median: Int!
-      max: Int!
-      min: Int!
     }
   `);
     createTypes(schema.buildObjectType({
