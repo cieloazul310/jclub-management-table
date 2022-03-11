@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
 import * as React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
 import { useLocation } from '@reach/router';
 
 declare global {
@@ -9,40 +9,15 @@ declare global {
   }
 }
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      padding: theme.spacing(2, 1),
-      overflow: 'hidden',
-    },
-  })
-);
-
-export function AdInDrawer() {
-  const classes = useStyles();
-  const { pathname } = useLocation();
-  React.useEffect(() => {
-    if (window) {
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({});
-    }
-  }, [pathname]);
+export function AdInSectionDividerWrapper({ children }: React.PropsWithChildren<Record<string, unknown>>) {
   return (
-    <div className={classes.root} key={pathname}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-7323207940463794"
-        data-ad-slot="2525174843"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      />
-    </div>
+    <Box px={1} py={2} bgcolor={({ palette }) => (palette.mode === 'light' ? '#fafafa' : '#000')}>
+      {children}
+    </Box>
   );
 }
 
 export function AdInArticle() {
-  const classes = useStyles();
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -51,7 +26,7 @@ export function AdInArticle() {
     }
   }, [pathname]);
   return (
-    <div className={classes.root} key={pathname}>
+    <Box overflow="hidden" key={pathname} py={2}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
@@ -62,37 +37,11 @@ export function AdInArticle() {
           data-ad-slot="9174058264"
         />
       ) : null}
-    </div>
+    </Box>
   );
 }
 
-export function AdInFooter() {
-  const classes = useStyles();
-  const { pathname } = useLocation();
-  React.useEffect(() => {
-    if (window) {
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({});
-    }
-  }, [pathname]);
-  return (
-    <div className={classes.root} key={pathname}>
-      {typeof window === 'object' ? (
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-7323207940463794"
-          data-ad-slot="3332658358"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
-      ) : null}
-    </div>
-  );
-}
-
-export function AdInListFooter() {
-  const classes = useStyles();
+export function AdOne() {
   const { pathname } = useLocation();
   React.useEffect(() => {
     if (window) {
@@ -102,17 +51,82 @@ export function AdInListFooter() {
   }, [pathname]);
 
   return (
-    <div className={classes.root} key={pathname}>
+    <Box overflow="hidden" key={pathname}>
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
-          style={{ display: 'block' }}
+          style={{ display: 'block', textAlign: 'center' }}
           data-ad-client="ca-pub-7323207940463794"
           data-ad-slot="6963353890"
           data-ad-format="auto"
           data-full-width-responsive="true"
         />
       ) : null}
-    </div>
+    </Box>
+  );
+}
+
+export function AdTwo() {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    if (window) {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+    }
+  }, [pathname]);
+
+  return (
+    <Box overflow="hidden" key={pathname}>
+      {typeof window === 'object' ? (
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block', textAlign: 'center' }}
+          data-ad-client="ca-pub-7323207940463794"
+          data-ad-slot="5693068398"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+      ) : null}
+    </Box>
+  );
+}
+
+export function AdInSectionDividerOne() {
+  return (
+    <AdInSectionDividerWrapper>
+      <AdOne />
+    </AdInSectionDividerWrapper>
+  );
+}
+
+export function AdInSectionDividerTwo() {
+  return (
+    <AdInSectionDividerWrapper>
+      <AdTwo />
+    </AdInSectionDividerWrapper>
+  );
+}
+
+export function AdInFooter() {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    if (window) {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+    }
+  }, [pathname]);
+  return (
+    <Box py={2} px={1} overflow="hidden" key={pathname}>
+      {typeof window === 'object' ? (
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block', textAlign: 'center' }}
+          data-ad-client="ca-pub-7323207940463794"
+          data-ad-slot="3332658358"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+      ) : null}
+    </Box>
   );
 }

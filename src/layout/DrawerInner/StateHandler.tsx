@@ -1,22 +1,22 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Switch from '@material-ui/core/Switch';
-import { useAppState, useDispatch } from '../../utils/AppStateContext';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import Switch from '@mui/material/Switch';
+import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 
 function StateHandler() {
   const { displayFullAttd, listMode } = useAppState();
   const dispatch = useDispatch();
-  const _toggleListMode = () => {
+  const toggleListMode = () => {
     dispatch({ type: 'TOGGLE_LISTMODE' });
   };
-  const _toggleFullAttd = () => {
+  const toggleFullAttd = () => {
     dispatch({ type: 'TOGGLE_FULL_ATTD' });
   };
-  const _reset = () => {
+  const reset = () => {
     dispatch({ type: 'RESET' });
   };
 
@@ -25,16 +25,16 @@ function StateHandler() {
       <ListItem>
         <ListItemText primary="リストモード" />
         <ListItemSecondaryAction>
-          <Switch edge="end" checked={listMode} onChange={_toggleListMode} />
+          <Switch edge="end" checked={listMode} onChange={toggleListMode} color="secondary" />
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem>
         <ListItemText primary="詳細な観客数を表示" />
         <ListItemSecondaryAction>
-          <Switch edge="end" checked={displayFullAttd} onChange={_toggleFullAttd} />
+          <Switch edge="end" checked={displayFullAttd} onChange={toggleFullAttd} color="secondary" />
         </ListItemSecondaryAction>
       </ListItem>
-      <ListItem button onClick={_reset}>
+      <ListItem button onClick={reset}>
         <ListItemText primary="設定をリセット" />
       </ListItem>
     </List>

@@ -17,7 +17,7 @@ module.exports = function converter(file) {
       name: club.short_name,
     };
 
-    for (let key in dict) {
+    for (const key in dict) {
       if (!row.hasOwnProperty([dict[key]])) continue;
       if (row[dict[key]] === 'Null') continue;
       obj[key] = stringFileds.includes(key) ? row[dict[key]] : parseFloat(row[dict[key]]);

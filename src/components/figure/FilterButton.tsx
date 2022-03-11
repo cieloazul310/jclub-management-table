@@ -1,30 +1,30 @@
 import * as React from 'react';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import CheckIcon from '@material-ui/icons/Check';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { useAppState, useDispatch } from '../../utils/AppStateContext';
-import { FilterCategory } from '../../utils/AppState';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import CheckIcon from '@mui/icons-material/Check';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import { FilterCategory } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppState';
 
-interface Props {
+type FilterButtonProps = {
   disabled: boolean;
-}
+};
 
-function FilterButton({ disabled }: Props) {
+function FilterButton({ disabled }: FilterButtonProps) {
   const { filterCategories } = useAppState();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const _handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const _handleClose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
-  const _toggleCategory = (category: FilterCategory) => () => {
+  const toggleCategory = (category: FilterCategory) => () => {
     dispatch({ type: 'TOGGLE_FILTERCATEGORY', category });
   };
 
@@ -32,23 +32,23 @@ function FilterButton({ disabled }: Props) {
     <>
       <Tooltip title="フィルタ">
         <span>
-          <IconButton onClick={_handleClick} color={filterCategories.length === 4 ? 'inherit' : 'primary'} disabled={disabled}>
+          <IconButton onClick={handleClick} color={filterCategories.length === 4 ? 'inherit' : 'primary'} disabled={disabled}>
             <FilterListIcon />
           </IconButton>
         </span>
       </Tooltip>
-      <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={_handleClose} keepMounted>
-        <MenuItem onClick={_toggleCategory('J1')}>
+      <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose} keepMounted>
+        <MenuItem onClick={toggleCategory('J1')}>
           <ListItemIcon>{filterCategories.includes('J1') ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>
           J1
         </MenuItem>
-        <MenuItem onClick={_toggleCategory('J2')}>
+        <MenuItem onClick={toggleCategory('J2')}>
           <ListItemIcon>{filterCategories.includes('J2') ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>J2
         </MenuItem>
-        <MenuItem onClick={_toggleCategory('J3')}>
+        <MenuItem onClick={toggleCategory('J3')}>
           <ListItemIcon>{filterCategories.includes('J3') ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>J3
         </MenuItem>
-        <MenuItem onClick={_toggleCategory('others')}>
+        <MenuItem onClick={toggleCategory('others')}>
           <ListItemIcon>{filterCategories.includes('others') ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>JFL・地域
         </MenuItem>
       </Menu>

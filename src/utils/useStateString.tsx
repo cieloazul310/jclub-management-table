@@ -1,11 +1,22 @@
-import { useAppState } from './AppStateContext';
+import { useAppState } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 import { useDictionary } from './graphql-hooks';
+import { SortableKeys } from '../../types';
 
-export function useSortStateString() {
+interface SortStateString {
+  field: string | null | undefined;
+  sortKey: SortableKeys;
+  sortType: string;
+}
+
+export function useSortStateString(): SortStateString {
   const { sortAsc, sortKey } = useAppState();
   const dictionary = useDictionary();
-  const field = sortKey === 'average_attd' ? '平均入場者数' : sortKey === 'unit_price' ? '客単価' : dictionary ? dictionary[sortKey] : '';
-  const sortType = sortKey === 'rank' ? (sortAsc ? '高い順' : '低い順') : sortAsc ? '少ない順' : '多い順';
+
+  const field = dictionary[sortKey];
+
+  const rankSort = sortAsc ? '高い順' : '低い順';
+  const valueSort = sortAsc ? '少ない順' : '多い順';
+  const sortType = sortKey === 'rank' ? rankSort : valueSort;
 
   return {
     field,
@@ -14,7 +25,7 @@ export function useSortStateString() {
   };
 }
 
-export function useFilterStateString() {
+export function useFilterStateString(): string {
   const { filterCategories } = useAppState();
 
   return `フィルタ: ${
@@ -22,7 +33,10 @@ export function useFilterStateString() {
   }`;
 }
 
-export default function useStateString() {
+export default function useStateString(): {
+  sortString: SortStateString;
+  filterString: string;
+} {
   const sortString = useSortStateString();
   const filterString = useFilterStateString();
   return { sortString, filterString };

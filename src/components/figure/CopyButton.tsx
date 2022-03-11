@@ -1,61 +1,42 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Snackbar from '@material-ui/core/Snackbar';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import useTableId from '../../utils/useTableId';
-import { Tab } from '../../types';
+import useCopy from '../../utils/useCopy';
 
-interface Props {
-  tab: Tab;
+type CopyButtonProps = {
   disabled: boolean;
-}
+};
 
-function CopyButton({ tab, disabled }: Props) {
-  const tableId = useTableId(tab);
+function CopyButton({ disabled }: CopyButtonProps) {
+  const tableId = useTableId();
   const [open, setOpen] = React.useState(false);
-  const _handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
-  const _onClick = () => {
-    const table = document.querySelector(`#${tableId}`);
-    if (table) {
-      const range = document.createRange();
-      const selection = document.getSelection();
-
-      selection?.removeAllRanges();
-
-      try {
-        range.selectNodeContents(table);
-        selection?.addRange(range);
-      } catch (e) {
-        range.selectNode(table);
-        selection?.addRange(range);
-      }
-
-      document.execCommand('copy');
-      selection?.removeAllRanges();
-      setOpen(true);
-    }
-  };
+  const onClick = useCopy(tableId, () => {
+    setOpen(true);
+  });
 
   return (
     <>
       <Tooltip title="表をクリップボードにコピー">
         <span>
-          <IconButton onClick={_onClick} disabled={disabled}>
+          <IconButton onClick={onClick} disabled={disabled}>
             <FileCopyIcon />
           </IconButton>
         </span>
       </Tooltip>
       <Snackbar
         open={open}
-        onClose={_handleClose}
+        onClose={handleClose}
         message="クリップボードにコピーしました"
         autoHideDuration={2500}
         action={
-          <Button color="secondary" size="small" onClick={_handleClose}>
+          <Button color="secondary" size="small" onClick={handleClose}>
             OK
           </Button>
         }

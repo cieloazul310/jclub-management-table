@@ -1,17 +1,17 @@
-import HomeIcon from '@material-ui/icons/Home';
-import SeriesIcon from '@material-ui/icons/GridOn';
-import DownloadIcon from '@material-ui/icons/GetApp';
-import SummaryIcon from '@material-ui/icons/Description';
-import SettingsIcon from '@material-ui/icons/Settings';
+import HomeIcon from '@mui/icons-material/Home';
+import SeriesIcon from '@mui/icons-material/GridOn';
+import DownloadIcon from '@mui/icons-material/GetApp';
+import SummaryIcon from '@mui/icons-material/Description';
+import SettingsIcon from '@mui/icons-material/Settings';
 
-import FigureIcon from '@material-ui/icons/TableChart';
-import ArticleIcon from '@material-ui/icons/School';
+import FigureIcon from '@mui/icons-material/TableChart';
+import ArticleIcon from '@mui/icons-material/School';
 
-import TableIcon from '@material-ui/icons/ViewComfy';
-import ListIcon from '@material-ui/icons/List';
+import TableIcon from '@mui/icons-material/ViewComfy';
+import ListIcon from '@mui/icons-material/ListAlt';
 
-import DarkModeIcon from '@material-ui/icons/Brightness2';
-import LightModeIcon from '@material-ui/icons/Brightness5';
+import DarkModeIcon from '@mui/icons-material/Brightness2';
+import LightModeIcon from '@mui/icons-material/Brightness5';
 
 export {
   HomeIcon,

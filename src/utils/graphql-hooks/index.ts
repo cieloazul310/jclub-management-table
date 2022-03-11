@@ -1,7 +1,5 @@
-export * from './useAllClubs';
-export * from './useJ1Clubs';
-export * from './useJ2Clubs';
-export * from './useJ3Clubs';
-export * from './useAllYears';
-export * from './useDictionary';
-export * from './useSiteMetadata';
+export { default as useAllClubs } from './useAllClubs';
+export { default as useClubsByCategory } from './useClubsByCategory';
+export { default as useAllYears } from './useAllYears';
+export { default as useDictionary } from './useDictionary';
+export { default as useStatistics } from './useStatistics';

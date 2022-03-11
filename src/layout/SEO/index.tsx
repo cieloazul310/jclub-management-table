@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from '@reach/router';
-import { useSiteMetadata } from '../../utils/graphql-hooks';
+import { useSiteMetadata } from '@cieloazul310/gatsby-theme-aoi';
 import ogImage from '../../images/og_image.png';
 import ogTwitter from '../../images/og_twitter.png';
 
-interface Props {
+type SeoProps = {
   title?: string;
   description?: string;
-}
+};
 
-function Seo({ title, description }: Props) {
+function Seo({ title, description }: SeoProps) {
   const siteMetadata = useSiteMetadata();
   const { href } = useLocation();
+  const ogTitle = title ? `${title} | ${siteMetadata.title}` : siteMetadata.title;
+
   return (
     <Helmet
       htmlAttributes={{ lang: 'ja' }}
@@ -33,7 +35,7 @@ function Seo({ title, description }: Props) {
         },
         {
           property: 'og:title',
-          content: title || siteMetadata.title,
+          content: ogTitle,
         },
         {
           property: 'og:description',
@@ -50,7 +52,7 @@ function Seo({ title, description }: Props) {
         },
         {
           name: 'twitter:title',
-          content: title ? `${title} | ${siteMetadata.title}` : siteMetadata.title,
+          content: ogTitle,
         },
         {
           name: 'twitter:description',
@@ -64,5 +66,10 @@ function Seo({ title, description }: Props) {
     />
   );
 }
+
+Seo.defaultProps = {
+  title: undefined,
+  description: undefined,
+};
 
 export default Seo;

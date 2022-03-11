@@ -1,32 +1,32 @@
+/* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import useNeighbor from '../../utils/useNeighbor';
-import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import useNeighbors from '../../utils/useNeighbors';
+import { YearPageNeighbor, ClubPageNeighbor } from '../../../types';
 
-interface Props {
-  previous?: SitePageContextPrevious | null;
-  next?: SitePageContextNext | null;
-}
+type AppBarNavigationProps = {
+  previous?: YearPageNeighbor | ClubPageNeighbor;
+  next?: YearPageNeighbor | ClubPageNeighbor;
+};
 
-function AppBarNavigation({ previous, next }: Props) {
-  const prev = useNeighbor(previous);
-  const nxt = useNeighbor(next);
+function AppBarNavigation(props: AppBarNavigationProps) {
+  const { previous, next } = useNeighbors(props);
   return (
     <div>
-      <Tooltip title={prev?.title ?? ''}>
+      <Tooltip title={previous?.title ?? ''}>
         <span>
-          <IconButton disabled={!prev} color="inherit" component={GatsbyLink} to={prev?.to ?? '#'}>
+          <IconButton disabled={!previous} color="inherit" component={GatsbyLink} to={previous?.to ?? '#'}>
             <ArrowBackIcon />
           </IconButton>
         </span>
       </Tooltip>
-      <Tooltip title={nxt?.title ?? ''}>
+      <Tooltip title={next?.title ?? ''}>
         <span>
-          <IconButton disabled={!nxt} color="inherit" component={GatsbyLink} to={nxt?.to ?? '#'}>
+          <IconButton disabled={!next} color="inherit" component={GatsbyLink} to={next?.to ?? '#'}>
             <ArrowForwardIcon />
           </IconButton>
         </span>
@@ -34,5 +34,10 @@ function AppBarNavigation({ previous, next }: Props) {
     </div>
   );
 }
+
+AppBarNavigation.defaultProps = {
+  previous: undefined,
+  next: undefined,
+};
 
 export default AppBarNavigation;
