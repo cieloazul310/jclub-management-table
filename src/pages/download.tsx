@@ -1,256 +1,200 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { TabPane, Section, Article } from '@cieloazul310/gatsby-theme-aoi';
 import Layout from '../layout';
-import ItemFilter from '../components/download/ItemFilter';
-import FieldFilter from '../components/download/FieldFilter';
-import Preview from '../components/download/Preview';
-import allFields from '../components/download/fields';
-import TabPane from '../components/download/TabPane';
-import { ContentBasisLarge } from '../components/Basis';
-import { AdInArticle } from '../components/Ads';
+import ItemFilter from '../components/Download/ItemFilter';
+import FieldFilter from '../components/Download/FieldFilter';
+import Preview from '../components/Download/Preview';
+import AttributionDoc from '../components/Article/Attribution';
+import { AdInSectionDividerOne } from '../components/Ads';
+import allFields from '../utils/allFields';
 import useIsMobile from '../utils/useIsMobile';
-import { useAllClubs, useDictionary } from '../utils/graphql-hooks';
-import { DownloadDataset } from '../types';
-import { DownloadQuery } from '../../graphql-types';
+import { useDictionary } from '../utils/graphql-hooks';
+import { DatumBrowser, ClubBrowser, YearBrowser, Dict, DownloadDatum } from '../../types';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-      [theme.breakpoints.only('xs')]: {
-        display: 'block',
-      },
-    },
-    tabPane: {
-      width: '50%',
-      height: 'calc(100vh - 64px)',
-      overflowY: 'auto',
-      [theme.breakpoints.only('xs')]: {
-        width: '100%',
-        height: 'calc(100vh - 56px)',
-      },
-    },
-  })
-);
-
-function getCategory(category: string | null | undefined) {
+function getCategory(category: string | number | null) {
   return category === 'J1' || category === 'J2' || category === 'J3' ? category : 'others';
 }
 
-function DownloadPage({ data }: PageProps<DownloadQuery>): JSX.Element {
-  const { allDataset } = data;
-  const classes = useStyles();
+type DownloadPageData = {
+  allData: {
+    edges: {
+      node: Omit<DatumBrowser, 'previousData'>;
+    }[];
+  };
+  j1: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  j2: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  j3: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
+  allYear: {
+    edges: {
+      node: Pick<YearBrowser, 'year'>;
+    }[];
+  };
+};
+
+function DownloadPage({ data }: PageProps<DownloadPageData>) {
+  const { allData, j1, j2, j3, allYear } = data;
   const isMobile = useIsMobile();
-  const dict = useDictionary();
-  const allClubs = useAllClubs().map(({ node }) => node.slug ?? '');
-  const allCategories = React.useMemo(() => ['J1', 'J2', 'J3', 'others'], []);
+  const dictionary = useDictionary();
+  const allCategories = ['J1', 'J2', 'J3', 'others'];
+  const slugs = [...j1.edges, ...j2.edges, ...j3.edges].map(({ node }) => node.slug);
+  const years = allYear.edges.map(({ node }) => node.year);
 
   const [tab, setTab] = React.useState(0);
-  const [clubsFilter, setClubsFilter] = React.useState(allClubs);
-  const [yearsFilter, setYearsFilter] = React.useState([2019]);
+  const [clubsFilter, setClubsFilter] = React.useState(slugs);
+  const [yearsFilter, setYearsFilter] = React.useState([years[years.length - 1]]);
   const [categoriesFilter, setCategoriesFilter] = React.useState(allCategories);
   const [fields, setFields] = React.useState<string[]>(allFields);
+
   const handleTabChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setTab(value);
-  };
-  const handleChangeIndex = (index: number) => {
-    setTab(index);
   };
   React.useEffect(() => {
     if (!isMobile && tab === 2) {
       setTab(0);
     }
   }, [isMobile, tab]);
-  const dataset = React.useMemo(
-    () =>
-      allDataset.edges
-        .map(({ node }) => node)
-        .filter(({ slug }) => clubsFilter.includes(slug ?? ''))
-        .filter(({ year }) => yearsFilter.includes(year ?? 0))
-        .filter(({ category }) => categoriesFilter.includes(getCategory(category)))
-        .map((datum) => {
-          const obj: DownloadDataset = {
-            クラブ: datum.name ?? '',
-            年: datum.year ?? 0,
-            所属: datum.category ?? '',
-            id: datum.slug ?? '',
-          };
-          const selectedFields = allFields.filter((field) => fields.includes(field));
-          for (let i = 0; i < selectedFields.length; i += 1) {
-            const field = selectedFields[i];
-            if (field === 'league_average') {
-              obj['リーグ平均入場者数'] = Math.round((datum.league_attd ?? 0) / (datum.league_games ?? 1));
-            } else if (field === 'unit_price') {
-              obj['客単価'] = Math.round(((datum.ticket ?? 0) * 1000000) / (datum.all_attd ?? 1));
-            } else if (dict && dict[field]) {
-              obj[dict[field]] = datum[field];
-            }
-          }
-          return obj;
-        })
-        .sort(
-          (a, b) =>
-            a['年'] - b['年'] ||
-            allCategories.indexOf(getCategory(a['所属'])) - allCategories.indexOf(getCategory(b['所属'])) ||
-            allClubs.indexOf(a.id) - allClubs.indexOf(b.id)
-        ),
-    [allDataset, clubsFilter, yearsFilter, categoriesFilter, fields, dict, allClubs, allCategories]
-  );
-  const ItemFilterTab = React.useMemo(
-    () => (
-      <Container maxWidth="md">
-        <Typography paragraph>データのアイテムを選択</Typography>
-        <ItemFilter
-          clubsFilter={clubsFilter}
-          setClubsFilter={setClubsFilter}
-          yearsFilter={yearsFilter}
-          setYearsFilter={setYearsFilter}
-          categoriesFilter={categoriesFilter}
-          setCategoriesFilter={setCategoriesFilter}
-        />
-      </Container>
-    ),
-    [clubsFilter, setClubsFilter, yearsFilter, setYearsFilter, categoriesFilter, setCategoriesFilter]
-  );
-  const FieldFilterTab = React.useMemo(
-    () => (
-      <Container maxWidth="md">
-        <Typography paragraph>データの項目を選択</Typography>
-        <FieldFilter fields={fields} setFields={setFields} />
-      </Container>
-    ),
-    [fields, setFields]
-  );
-  const PreviewItem = React.useMemo(
-    () => (
-      <Container maxWidth="md">
-        <Preview dataset={dataset} />
-      </Container>
-    ),
-    [dataset]
-  );
+
+  const dataset = React.useMemo(() => {
+    const selectedFields = allFields.filter((field) => fields.includes(field));
+    return allData.edges
+      .filter(({ node }) => yearsFilter.includes(node.year))
+      .filter(({ node }) => clubsFilter.includes(node.slug))
+      .filter(({ node }) => categoriesFilter.includes(node.category))
+      .map(({ node }) => {
+        const obj: DownloadDatum = {
+          クラブ: node.name,
+          id: node.slug,
+          年: node.year,
+          所属: node.category,
+        };
+        for (let i = 0; i < selectedFields.length; i += 1) {
+          const field = selectedFields[i] as keyof Dict;
+          const fieldName = dictionary[field];
+          obj[fieldName] = node[field] ?? null;
+        }
+        return obj;
+      })
+      .sort(
+        (a, b) =>
+          a['年'] - b['年'] ||
+          allCategories.indexOf(getCategory(a['所属'])) - allCategories.indexOf(getCategory(b['所属'])) ||
+          slugs.indexOf(a.id) - slugs.indexOf(b.id)
+      );
+  }, [allData, clubsFilter, yearsFilter, fields]);
 
   return (
     <Layout title="データダウンロード">
-      {isMobile ? (
-        <div>
-          <Tabs value={tab} textColor="secondary" onChange={handleTabChange}>
-            <Tab label="フィルタ" value={0} />
-            <Tab label="項目" value={1} />
-            <Tab label="プレビュー" value={2} />
-          </Tabs>
-          <SwipeableViews index={tab} onChangeIndex={handleChangeIndex} resistance>
-            <TabPane value={tab} index={0}>
-              {ItemFilterTab}
-            </TabPane>
-            <TabPane value={tab} index={1}>
-              {FieldFilterTab}
-            </TabPane>
-            <TabPane value={tab} index={2}>
-              {PreviewItem}
-            </TabPane>
-          </SwipeableViews>
-        </div>
-      ) : (
-        <div className={classes.root}>
-          <div className={classes.tabPane}>
-            <Tabs value={tab} textColor="secondary" onChange={handleTabChange}>
+      <Box display="flex" flexGrow={1}>
+        <Box display="flex" flexDirection={{ xs: 'column-reverse', sm: 'column' }} flex={1}>
+          <Box flexShrink={0}>
+            <Tabs value={tab} textColor="secondary" indicatorColor="secondary" onChange={handleTabChange}>
               <Tab label="フィルタ" value={0} />
               <Tab label="項目" value={1} />
+              {isMobile ? <Tab label="プレビュー" value={2} /> : null}
             </Tabs>
-            <div>
-              <TabPane value={tab} index={0}>
-                {ItemFilterTab}
+          </Box>
+          <Box flexGrow={1} height={{ xs: 'calc(100vh - 104px)', sm: 'calc(100vh - 112px)' }} overflow="auto">
+            <TabPane index={0} currentTab={tab}>
+              <ItemFilter
+                clubsFilter={clubsFilter}
+                yearsFilter={yearsFilter}
+                categoriesFilter={categoriesFilter}
+                setClubsFilter={setClubsFilter}
+                setYearsFilter={setYearsFilter}
+                setCategoriesFilter={setCategoriesFilter}
+              />
+            </TabPane>
+            <TabPane index={1} currentTab={tab}>
+              <FieldFilter fields={fields} setFields={setFields} />
+            </TabPane>
+            {isMobile ? (
+              <TabPane index={2} currentTab={tab}>
+                <Container maxWidth="sm">
+                  <Preview dataset={dataset} />
+                </Container>
               </TabPane>
-              <TabPane value={tab} index={1}>
-                {FieldFilterTab}
-              </TabPane>
-            </div>
-          </div>
-          <div className={classes.tabPane}>{PreviewItem}</div>
-        </div>
-      )}
-      <ContentBasisLarge>
-        <AdInArticle />
-      </ContentBasisLarge>
+            ) : null}
+          </Box>
+        </Box>
+        {!isMobile ? (
+          <Box flex={1} maxHeight="calc(100vh - 64px)" overflow="auto">
+            <Container maxWidth="sm">
+              <Preview dataset={dataset} />
+            </Container>
+          </Box>
+        ) : null}
+      </Box>
+      <AdInSectionDividerOne />
+      <Section>
+        <Article maxWidth="md">
+          <AttributionDoc />
+        </Article>
+      </Section>
     </Layout>
   );
 }
-
 export default DownloadPage;
 
 export const query = graphql`
-  query Download {
-    allDataset(sort: { fields: year }) {
+  query {
+    allData(sort: { fields: [year, slug] }) {
       edges {
         node {
-          academy_exp
-          academy_rev
-          acl_attd
-          acl_games
-          all_attd
-          all_games
-          assets
-          broadcast
-          capital_stock
-          capital_surplus
-          category
-          curr_assets
-          curr_liabilities
-          elevation
-          expense
-          fixed_assets
-          fixed_liabilities
-          fullname
-          game_exp
-          general_exp
-          goods_exp
-          goods_rev
-          id
-          league_attd
-          league_games
-          leaguecup_attd
-          leaguecup_games
-          liabilities
-          license
-          manage_exp
+          ...generalFields
+          ...seasonResultFields
+          ...plFields
+          ...bsFields
+          ...revenueFields
+          ...expenseFields
+          ...attdFields
+        }
+      }
+    }
+    j1: allClub(filter: { category: { eq: "J1" } }) {
+      edges {
+        node {
           name
-          net_worth
-          no_exp
-          no_rev
-          op_profit
-          ordinary_profit
-          other_revs
-          po_attd
-          po_games
-          ppg
-          points
-          profit
-          profit_before_tax
-          rank
-          related_revenue
-          retained_earnings
-          revenue
-          salary
-          second_attd
-          second_games
-          sga
           slug
-          sp_exp
-          sponsor
-          sp_rev
-          tax
-          team_exp
-          ticket
+        }
+      }
+    }
+    j2: allClub(filter: { category: { eq: "J2" } }) {
+      edges {
+        node {
+          name
+          slug
+        }
+      }
+    }
+    j3: allClub(filter: { category: { eq: "J3" } }) {
+      edges {
+        node {
+          name
+          slug
+        }
+      }
+    }
+    allYear(sort: { fields: year }) {
+      edges {
+        node {
           year
-          women_exp
         }
       }
     }

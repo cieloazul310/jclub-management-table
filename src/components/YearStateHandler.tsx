@@ -1,14 +1,14 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Checkbox from '@material-ui/core/Checkbox';
-import { useAppState, useDispatch } from '../utils/AppStateContext';
-import { FilterCategory } from '../utils/AppState';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import Checkbox from '@mui/material/Checkbox';
+import { useAppState, useDispatch } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import { FilterCategory } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppState';
 
-function YearStateHandler(): JSX.Element {
+function YearStateHandler() {
   const { filterCategories } = useAppState();
   const dispatch = useDispatch();
   const toggleCategory = (category: FilterCategory) => () => {

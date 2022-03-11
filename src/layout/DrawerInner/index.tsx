@@ -1,106 +1,67 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import MuiLink from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
-import Tooltip from '@material-ui/core/Tooltip';
-import Hidden from '@material-ui/core/Hidden';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import ClearIcon from '@material-ui/icons/Clear';
-import DrawerNavigation from './DrawerNavigation';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import ClearIcon from '@mui/icons-material/Clear';
+import { ExternalLink, SubParagraph } from '@cieloazul310/gatsby-theme-aoi';
+import { DrawerPageNavigation } from '@cieloazul310/gatsby-theme-aoi-blog-components';
+import DrawerTop from './DrawerTop';
 import DrawerMenu from './DrawerMenu';
 import DrawerLinks from './DrawerLinks';
 import StateHandler from './StateHandler';
 import ThemeHandler from './ThemeHandler';
 import DrawerShare from './DrawerShare';
-import { useSiteMetadata } from '../../utils/graphql-hooks';
-import { SitePageContextNext, SitePageContextPrevious } from '../../../graphql-types';
+import useNeighbors from '../../utils/useNeighbors';
+import { ClubPageNeighbor, YearPageNeighbor } from '../../../types';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      width: 280,
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'auto',
-    },
-    titleContainer: {
-      padding: theme.spacing(2),
-    },
-    toolbar: {
-      ...theme.mixins.toolbar,
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 2),
-    },
-    items: {
-      flexGrow: 1,
-      overflowY: 'auto',
-    },
-    footer: {
-      padding: theme.spacing(8, 2),
-      color: theme.palette.text.secondary,
-      fontSize: theme.typography.caption.fontSize,
-    },
-  })
-);
-
-interface Props {
+type DrawerInnerProps = {
   title?: string;
-  next?: SitePageContextNext | null;
-  previous?: SitePageContextPrevious | null;
-  drawerContents?: React.ReactNode;
+  next?: ClubPageNeighbor | YearPageNeighbor;
+  previous?: ClubPageNeighbor | YearPageNeighbor;
   onCloseIconClick: () => void;
-}
+};
 
-function DrawerInner({ title, next, previous, drawerContents, onCloseIconClick }: Props): JSX.Element {
-  const classes = useStyles();
-  const siteTitle = useSiteMetadata().title;
+function DrawerInner({ title, next, previous, onCloseIconClick }: DrawerInnerProps) {
+  const neighbors = useNeighbors({ previous, next });
   return (
-    <div className={classes.root}>
+    <Box sx={{ width: 280, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
       <div>
-        <div className={classes.toolbar}>
+        <Box sx={{ display: 'flex', alignItems: 'center', px: 2, py: 0, minHeight: (theme) => theme.mixins.toolbar.minHeight }}>
           <Tooltip title="閉じる">
             <IconButton edge="start" onClick={onCloseIconClick}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
-        </div>
-        <Divider />
-        <div className={classes.titleContainer}>
-          <Typography variant="body1">
-            <strong>{title ?? siteTitle}</strong>
-          </Typography>
-        </div>
-        <DrawerNavigation next={next} previous={previous} />
+        </Box>
         <Divider />
       </div>
-      <div className={classes.items}>
-        {drawerContents}
-        {drawerContents ? <Divider /> : null}
+      <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+        <DrawerTop title={title} />
+        <Divider />
+        {previous || next ? <DrawerPageNavigation previous={neighbors.previous} next={neighbors.next} /> : null}
         <Divider />
         <DrawerLinks />
         <DrawerMenu />
-        <Hidden only="xs">
-          <Divider />
-          <StateHandler />
-          <ThemeHandler />
-        </Hidden>
+        <Divider />
+        <StateHandler />
+        <ThemeHandler />
         <DrawerShare title={title} />
-        <div className={classes.footer}>
+        <Divider />
+        <Box sx={{ py: 8, px: 2 }}>
           <footer>
-            <strong>Jクラブ経営情報2005-2019</strong>
-            <p>
+            <strong>Jクラブ経営情報ポータル</strong>
+            <SubParagraph>
               © {new Date().getFullYear()} cieloazul310 All rights reserved. Built with
               {` `}
-              <MuiLink color="inherit" href="https://www.gatsbyjs.org" target="_blank" rel="noopener noreferrer">
+              <ExternalLink color="inherit" href="https://www.gatsbyjs.org">
                 Gatsby
-              </MuiLink>
-            </p>
+              </ExternalLink>
+            </SubParagraph>
           </footer>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
@@ -108,7 +69,6 @@ DrawerInner.defaultProps = {
   title: undefined,
   next: undefined,
   previous: undefined,
-  drawerContents: undefined,
 };
 
 export default DrawerInner;

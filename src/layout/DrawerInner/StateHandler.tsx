@@ -1,13 +1,13 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Switch from '@material-ui/core/Switch';
-import { useAppState, useDispatch } from '../../utils/AppStateContext';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import Switch from '@mui/material/Switch';
+import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
 
-function StateHandler(): JSX.Element {
+function StateHandler() {
   const { displayFullAttd, listMode } = useAppState();
   const dispatch = useDispatch();
   const toggleListMode = () => {
@@ -25,13 +25,13 @@ function StateHandler(): JSX.Element {
       <ListItem>
         <ListItemText primary="リストモード" />
         <ListItemSecondaryAction>
-          <Switch edge="end" checked={listMode} onChange={toggleListMode} />
+          <Switch edge="end" checked={listMode} onChange={toggleListMode} color="secondary" />
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem>
         <ListItemText primary="詳細な観客数を表示" />
         <ListItemSecondaryAction>
-          <Switch edge="end" checked={displayFullAttd} onChange={toggleFullAttd} />
+          <Switch edge="end" checked={displayFullAttd} onChange={toggleFullAttd} color="secondary" />
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem button onClick={reset}>

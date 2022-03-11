@@ -1,23 +1,28 @@
 import * as React from 'react';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Collapse from '@material-ui/core/Collapse';
-import Divider from '@material-ui/core/Divider';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useJ1Clubs, useJ2Clubs, useJ3Clubs, useAllYears, Clubs } from '../../utils/graphql-hooks';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useAllYears, useClubsByCategory } from '../../utils/graphql-hooks';
+import { ClubBrowser } from '../../../types';
 
-type ClubListByCategoryProps = Pick<Props, 'clubsFilter' | 'setClubsFilter'> & {
-  clubs: Clubs;
+type ClubListByCategoryProps = Pick<ItemFilterProps, 'clubsFilter' | 'setClubsFilter'> & {
+  clubs: {
+    edges: {
+      node: Pick<ClubBrowser, 'name' | 'slug'>;
+    }[];
+  };
   title: string;
 };
 
 function ClubListByCategory({ clubs, title, clubsFilter, setClubsFilter }: ClubListByCategoryProps) {
-  const slugs = clubs.map(({ node }) => node.slug ?? '');
+  const slugs = clubs.edges.map(({ node }) => node.slug);
   const allSelected = slugs.every((slug) => clubsFilter.includes(slug));
   const allEmpty = !slugs.some((slug) => clubsFilter.includes(slug));
   const [open, setOpen] = React.useState(false);
@@ -38,7 +43,7 @@ function ClubListByCategory({ clubs, title, clubsFilter, setClubsFilter }: ClubL
     <>
       <ListItem button onClick={toggleOpen}>
         <ListItemIcon>
-          <Checkbox checked={!allEmpty} indeterminate={!allSelected && !allEmpty} edge="start" disableRipple />
+          <Checkbox checked={!allEmpty} indeterminate={!allSelected && !allEmpty} edge="start" color="secondary" disableRipple />
         </ListItemIcon>
         <ListItemText primary={title} />
         {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -50,10 +55,10 @@ function ClubListByCategory({ clubs, title, clubsFilter, setClubsFilter }: ClubL
         <ListItem button onClick={clearAll}>
           <ListItemText primary="全て解除" />
         </ListItem>
-        {clubs.map(({ node }, index) => (
-          <ListItem key={node.slug ?? index} button dense onClick={onClick(node.slug ?? '')}>
+        {clubs.edges.map(({ node }) => (
+          <ListItem key={node.slug} button dense onClick={onClick(node.slug)}>
             <ListItemIcon>
-              <Checkbox checked={clubsFilter.includes(node.slug ?? '')} edge="start" disableRipple />
+              <Checkbox checked={clubsFilter.includes(node.slug)} edge="start" color="secondary" disableRipple />
             </ListItemIcon>
             <ListItemText primary={node.name} />
           </ListItem>
@@ -63,13 +68,11 @@ function ClubListByCategory({ clubs, title, clubsFilter, setClubsFilter }: ClubL
   );
 }
 
-type ClubListProps = Pick<Props, 'clubsFilter' | 'setClubsFilter'>;
+type ClubListProps = Pick<ItemFilterProps, 'clubsFilter' | 'setClubsFilter'>;
 
 function ClubList({ clubsFilter, setClubsFilter }: ClubListProps) {
-  const j1 = useJ1Clubs();
-  const j2 = useJ2Clubs();
-  const j3 = useJ3Clubs();
-  const slugs = [...j1, ...j2, ...j3].map(({ node }) => node.slug ?? '');
+  const { j1, j2, j3 } = useClubsByCategory();
+  const slugs = [...j1.edges, ...j2.edges, ...j3.edges].map(({ node }) => node.slug ?? '');
   const setAllClub = () => {
     setClubsFilter(slugs);
   };
@@ -91,10 +94,10 @@ function ClubList({ clubsFilter, setClubsFilter }: ClubListProps) {
   );
 }
 
-type YearsListProps = Pick<Props, 'yearsFilter' | 'setYearsFilter'>;
+type YearsListProps = Pick<ItemFilterProps, 'yearsFilter' | 'setYearsFilter'>;
 
 function YearsList({ yearsFilter, setYearsFilter }: YearsListProps) {
-  const allYears = useAllYears().map(({ year }) => year ?? 0);
+  const allYears = useAllYears().map(({ node }) => node.year);
   const toggleYear = (newYear: number) => () => {
     setYearsFilter(yearsFilter.includes(newYear) ? yearsFilter.filter((year) => year !== newYear) : [...yearsFilter, newYear]);
   };
@@ -112,10 +115,10 @@ function YearsList({ yearsFilter, setYearsFilter }: YearsListProps) {
       <ListItem button onClick={clearAllYears}>
         <ListItemText primary="全て解除" />
       </ListItem>
-      {allYears.map((year, index) => (
-        <ListItem key={year ?? index} button onClick={toggleYear(year)}>
+      {allYears.map((year) => (
+        <ListItem key={year.toString()} button onClick={toggleYear(year)}>
           <ListItemIcon>
-            <Checkbox checked={yearsFilter.includes(year ?? 0)} edge="start" disableRipple />
+            <Checkbox checked={yearsFilter.includes(year)} edge="start" color="secondary" disableRipple />
           </ListItemIcon>
           <ListItemText primary={year} />
         </ListItem>
@@ -124,7 +127,7 @@ function YearsList({ yearsFilter, setYearsFilter }: YearsListProps) {
   );
 }
 
-type CategoriesListProps = Pick<Props, 'categoriesFilter' | 'setCategoriesFilter'>;
+type CategoriesListProps = Pick<ItemFilterProps, 'categoriesFilter' | 'setCategoriesFilter'>;
 
 function CategoriesList({ categoriesFilter, setCategoriesFilter }: CategoriesListProps) {
   const allCategories = ['J1', 'J2', 'J3', 'others'];
@@ -149,25 +152,25 @@ function CategoriesList({ categoriesFilter, setCategoriesFilter }: CategoriesLis
       </ListItem>
       <ListItem button onClick={toggleCategory('J1')}>
         <ListItemIcon>
-          <Checkbox checked={categoriesFilter.includes('J1')} edge="start" disableRipple />
+          <Checkbox checked={categoriesFilter.includes('J1')} edge="start" color="secondary" disableRipple />
         </ListItemIcon>
         <ListItemText primary="J1" />
       </ListItem>
       <ListItem button onClick={toggleCategory('J2')}>
         <ListItemIcon>
-          <Checkbox checked={categoriesFilter.includes('J2')} edge="start" disableRipple />
+          <Checkbox checked={categoriesFilter.includes('J2')} edge="start" color="secondary" disableRipple />
         </ListItemIcon>
         <ListItemText primary="J2" />
       </ListItem>
       <ListItem button onClick={toggleCategory('J3')}>
         <ListItemIcon>
-          <Checkbox checked={categoriesFilter.includes('J3')} edge="start" disableRipple />
+          <Checkbox checked={categoriesFilter.includes('J3')} edge="start" color="secondary" disableRipple />
         </ListItemIcon>
         <ListItemText primary="J3" />
       </ListItem>
       <ListItem button onClick={toggleCategory('others')}>
         <ListItemIcon>
-          <Checkbox checked={categoriesFilter.includes('others')} edge="start" disableRipple />
+          <Checkbox checked={categoriesFilter.includes('others')} edge="start" color="secondary" disableRipple />
         </ListItemIcon>
         <ListItemText primary="その他" />
       </ListItem>
@@ -175,23 +178,16 @@ function CategoriesList({ categoriesFilter, setCategoriesFilter }: CategoriesLis
   );
 }
 
-interface Props {
+type ItemFilterProps = {
   clubsFilter: string[];
   setClubsFilter: React.Dispatch<React.SetStateAction<string[]>>;
   yearsFilter: number[];
   setYearsFilter: React.Dispatch<React.SetStateAction<number[]>>;
   categoriesFilter: string[];
   setCategoriesFilter: React.Dispatch<React.SetStateAction<string[]>>;
-}
+};
 
-function ItemFilter({
-  clubsFilter,
-  yearsFilter,
-  categoriesFilter,
-  setClubsFilter,
-  setYearsFilter,
-  setCategoriesFilter,
-}: Props): JSX.Element {
+function ItemFilter({ clubsFilter, yearsFilter, categoriesFilter, setClubsFilter, setYearsFilter, setCategoriesFilter }: ItemFilterProps) {
   return (
     <>
       <ClubList clubsFilter={clubsFilter} setClubsFilter={setClubsFilter} />

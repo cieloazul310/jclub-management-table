@@ -1,56 +1,42 @@
 import * as React from 'react';
-import clsx from 'clsx';
-import Container from '@material-ui/core/Container';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import FigureToolbar from './Toolbar';
-import FinancialTable from '../tables';
-import FinancialList from '../list';
-import { useAppState } from '../../utils/AppStateContext';
-import { tabs, Mode, Edge, Tab } from '../../types';
+import FinancialTable from '../Table';
+import FinancialCard from '../Card';
+import { useAppState } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import { Mode, DatumBrowser } from '../../../types';
 
-const useStyles = makeStyles<Theme>((theme) =>
-  createStyles({
-    root: {
-      overflowY: 'auto',
-    },
-    rootYear: {
-      [theme.breakpoints.up('sm')]: {
-        height: 'calc(100vh - 106px)',
-      },
-    },
-  })
-);
-
-interface Props {
-  edges: Edge[];
+type FigureSectionProps = {
+  edges: {
+    node: DatumBrowser;
+  }[];
   mode: Mode;
-  tab: Tab;
-  onChangeTabIndex: (index: number) => void;
-}
+};
 
-function Figure({ edges, mode, tab, onChangeTabIndex }: Props): JSX.Element {
+function FigureSection({ edges, mode }: FigureSectionProps) {
   const { listMode } = useAppState();
-  const classes = useStyles();
-  const tableOrList = (tabItem: Tab) => {
-    if (tabItem !== tab) return null;
-    return listMode ? <FinancialList edges={edges} mode={mode} tab={tab} /> : <FinancialTable edges={edges} mode={mode} tab={tab} />;
-  };
+  const isYearTable = !listMode && mode === 'year';
 
   return (
-    <Container maxWidth="lg" disableGutters className={clsx(classes.root, { [classes.rootYear]: mode === 'year' })}>
-      <FigureToolbar tab={tab} mode={mode} />
-      <div className={classes.main}>
-        <SwipeableViews resistance disabled={!listMode} index={tabs.indexOf(tab)} onChangeIndex={onChangeTabIndex}>
-          {tabs.map((t) => (
-            <div key={t} role="tabpanel" hidden={t !== tab}>
-              {tableOrList(t)}
-            </div>
-          ))}
-        </SwipeableViews>
-      </div>
-    </Container>
+    <section>
+      <Container
+        maxWidth="lg"
+        disableGutters
+        sx={{
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: { xs: 'column-reverse', sm: 'column' },
+          height: isYearTable ? { xs: 'calc(100vh - 104px)', sm: 'calc(100vh - 112px)' } : undefined,
+        }}
+      >
+        <FigureToolbar mode={mode} />
+        <Box flexGrow={1} overflow="auto" display="flex">
+          {listMode ? <FinancialCard edges={edges} mode={mode} /> : <FinancialTable edges={edges} mode={mode} />}
+        </Box>
+      </Container>
+    </section>
   );
 }
 
-export default Figure;
+export default FigureSection;

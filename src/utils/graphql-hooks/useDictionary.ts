@@ -1,12 +1,10 @@
 import { useStaticQuery, graphql } from 'gatsby';
-import { DictYaml, Node } from '../../../graphql-types';
+import { Dict } from '../../../types';
 
-type Dict = Omit<DictYaml, Exclude<keyof Node, 'id'>>;
-
-export default function useDictionary(): Dict {
-  const { dictYaml } = useStaticQuery<{ dictYaml: Dict }>(graphql`
-    query Dictionary {
-      dictYaml {
+export default function useDictionary() {
+  const { dictionary } = useStaticQuery<{ dictionary: Dict }>(graphql`
+    {
+      dictionary {
         academy_exp
         academy_rev
         acl_attd
@@ -14,6 +12,7 @@ export default function useDictionary(): Dict {
         all_attd
         all_games
         assets
+        average_attd
         broadcast
         capital_stock
         capital_surplus
@@ -63,11 +62,12 @@ export default function useDictionary(): Dict {
         tax
         team_exp
         ticket
+        unit_price
         women_exp
         year
         id
       }
     }
   `);
-  return dictYaml;
+  return dictionary;
 }

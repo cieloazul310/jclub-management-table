@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { Link as GatsbyLink } from 'gatsby';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { ListItemAppLink } from '@cieloazul310/gatsby-theme-aoi';
 
-import { useJ1Clubs, useJ2Clubs, useJ3Clubs, useAllYears, Clubs } from '../../utils/graphql-hooks';
+import { useClubsByCategory, useAllYears } from '../../utils/graphql-hooks';
+import { Club } from '../../../types';
 
-interface CategoryLinksProps {
+type CategoryLinksProps = {
   title: string;
-  clubs: Clubs;
-}
+  clubs: { node: Pick<Club, 'href' | 'short_name' | 'name'> }[];
+};
 
-export function CategoryLinks({ title, clubs }: CategoryLinksProps): JSX.Element {
+export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
   const storaged = typeof window === 'object' ? sessionStorage.getItem(`${title}Open`) : null;
   const initialOpen = storaged ? (JSON.parse(storaged) as boolean) : false;
   const [open, setOpen] = React.useState(initialOpen);
@@ -35,9 +36,9 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps): JSX.Element
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {clubs.map(({ node }, index) => (
-            <ListItem key={node.short_name ?? index} button dense component={GatsbyLink} to={`/club/${node.slug}`}>
+            <ListItemAppLink key={node.short_name ?? index} button to={node.href}>
               <ListItemText primary={node.name} />
-            </ListItem>
+            </ListItemAppLink>
           ))}
         </List>
       </Collapse>
@@ -45,7 +46,7 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps): JSX.Element
   );
 }
 
-export function YearsLinks(): JSX.Element {
+export function YearsLinks() {
   const years = useAllYears();
   const storaged = typeof window === 'object' ? sessionStorage.getItem('yearsOpen') : null;
   const initialOpen = storaged ? (JSON.parse(storaged) as boolean) : false;
@@ -65,10 +66,10 @@ export function YearsLinks(): JSX.Element {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {years.map(({ year, id }, index) => (
-            <ListItem key={id ?? index} button dense component={GatsbyLink} to={`/year/${year}`}>
-              <ListItemText primary={year} />
-            </ListItem>
+          {years.map(({ node }) => (
+            <ListItemAppLink key={node.id} button to={node.href}>
+              <ListItemText primary={node.year} />
+            </ListItemAppLink>
           ))}
         </List>
       </Collapse>
@@ -76,15 +77,13 @@ export function YearsLinks(): JSX.Element {
   );
 }
 
-function DrawerLinks(): JSX.Element {
-  const j1clubs = useJ1Clubs();
-  const j2clubs = useJ2Clubs();
-  const j3clubs = useJ3Clubs();
+function DrawerLinks() {
+  const { j1, j2, j3 } = useClubsByCategory();
   return (
     <List subheader={<ListSubheader>経営情報</ListSubheader>}>
-      <CategoryLinks title="J1" clubs={j1clubs} />
-      <CategoryLinks title="J2" clubs={j2clubs} />
-      <CategoryLinks title="J3" clubs={j3clubs} />
+      <CategoryLinks title="J1" clubs={j1.edges} />
+      <CategoryLinks title="J2" clubs={j2.edges} />
+      <CategoryLinks title="J3" clubs={j3.edges} />
       <YearsLinks />
     </List>
   );

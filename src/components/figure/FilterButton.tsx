@@ -1,20 +1,20 @@
 import * as React from 'react';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import CheckIcon from '@material-ui/icons/Check';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { useAppState, useDispatch } from '../../utils/AppStateContext';
-import { FilterCategory } from '../../utils/AppState';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import CheckIcon from '@mui/icons-material/Check';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useAppState, useDispatch } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
+import { FilterCategory } from '../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppState';
 
-interface Props {
+type FilterButtonProps = {
   disabled: boolean;
-}
+};
 
-function FilterButton({ disabled }: Props): JSX.Element {
+function FilterButton({ disabled }: FilterButtonProps) {
   const { filterCategories } = useAppState();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
