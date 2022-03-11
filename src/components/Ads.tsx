@@ -55,7 +55,7 @@ export function AdOne() {
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
-          style={{ display: 'block' }}
+          style={{ display: 'block', textAlign: 'center' }}
           data-ad-client="ca-pub-7323207940463794"
           data-ad-slot="6963353890"
           data-ad-format="auto"
@@ -80,7 +80,7 @@ export function AdTwo() {
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
-          style={{ display: 'block' }}
+          style={{ display: 'block', textAlign: 'center' }}
           data-ad-client="ca-pub-7323207940463794"
           data-ad-slot="5693068398"
           data-ad-format="auto"
@@ -120,7 +120,7 @@ export function AdInFooter() {
       {typeof window === 'object' ? (
         <ins
           className="adsbygoogle"
-          style={{ display: 'block' }}
+          style={{ display: 'block', textAlign: 'center' }}
           data-ad-client="ca-pub-7323207940463794"
           data-ad-slot="3332658358"
           data-ad-format="auto"
