@@ -20,9 +20,11 @@ type LayoutProps = {
   title?: string;
   description?: string;
   headerTitle?: string;
+  previous?: { to: string; title: string } | null;
+  next?: { to: string; title: string } | null;
 };
 
-function Layout({ children, title, description, headerTitle }: LayoutProps) {
+function Layout({ children, title, description, headerTitle, previous, next }: LayoutProps) {
   const trigger = useScrollTrigger();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const setDrawer = (open: boolean) => () => {
@@ -43,7 +45,7 @@ function Layout({ children, title, description, headerTitle }: LayoutProps) {
       >
         <Slide appear={false} direction="down" in={!trigger}>
           <AppBar>
-            <AppBarInner title={headerTitle || title} onLeftButtonClick={toggleDrawer} />
+            <AppBarInner title={headerTitle || title} onLeftButtonClick={toggleDrawer} previous={previous} next={next} />
           </AppBar>
         </Slide>
         <main>
@@ -79,7 +81,7 @@ function Layout({ children, title, description, headerTitle }: LayoutProps) {
           disableBackdropTransition={!iOS}
           disableDiscovery={iOS}
         >
-          <DrawerInner onCloseIconClick={setDrawer(false)} title={title} />
+          <DrawerInner onCloseIconClick={setDrawer(false)} title={title} previous={previous} next={next} />
         </SwipeableDrawer>
       </Box>
     </>
@@ -90,6 +92,8 @@ Layout.defaultProps = {
   title: undefined,
   description: undefined,
   headerTitle: undefined,
+  previous: undefined,
+  next: undefined,
 };
 
 export default Layout;

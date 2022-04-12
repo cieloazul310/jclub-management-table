@@ -17,24 +17,26 @@ import DrawerInner from './DrawerInner';
 import Footer from './Footer';
 
 import { useAppState, useDispatch } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import { Mode, YearPageContext, ClubPageContext } from '../../types';
+// import { Mode, YearPageContext, ClubPageContext } from '../../types';
 
 const iOS = typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-type TemplateLayoutProps<T extends Mode> = {
+type TemplateLayoutProps = {
   title: string;
   headerTitle?: string;
   description?: string;
-  pageContext: T extends 'club' ? ClubPageContext : YearPageContext;
+  // pageContext: T extends 'club' ? ClubPageContext : YearPageContext;
   children: React.ReactNode;
+  previous: { to: string; title: string } | null;
+  next: { to: string; title: string } | null;
 };
 
-function TemplateLayout<T extends Mode>({ children, title, headerTitle, description, pageContext }: TemplateLayoutProps<T>) {
+function TemplateLayout({ children, title, headerTitle, description, previous, next }: TemplateLayoutProps) {
   const { tab } = useAppState();
   const dispatch = useDispatch();
   const trigger = useScrollTriger();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const { previous, next } = pageContext;
+  // const { previous, next } = pageContext;
 
   const handleDrawer = (newValue: boolean | undefined = undefined) => {
     return () => setDrawerOpen(newValue ?? !drawerOpen);

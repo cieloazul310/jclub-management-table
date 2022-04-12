@@ -206,7 +206,8 @@ export type YearPageNeighbor = {
 } | null;
 export type YearPageData = {
   year: Omit<YearBrowser, 'data'>;
-  prevYear: Pick<YearBrowser, 'stats'> | null;
+  previous: Pick<YearBrowser, 'year' | 'href' | 'stats'> | null;
+  next: Pick<YearBrowser, 'year' | 'href'> | null;
   allData: {
     edges: {
       node: DatumBrowser;
@@ -214,13 +215,15 @@ export type YearPageData = {
   };
 };
 export type YearPageContext = {
-  previous: YearPageNeighbor;
-  next: YearPageNeighbor;
+  previous: number | null;
+  next: number | null;
 };
 
 export type ClubPageNeighbor = { mode: Mode; node: Pick<ClubBrowser, 'short_name' | 'name' | 'href'> } | null;
 export type ClubPageData = {
   club: Omit<ClubBrowser, 'data'>;
+  previous: Pick<ClubBrowser, 'name' | 'href'> | null;
+  next: Pick<ClubBrowser, 'name' | 'href'> | null;
   allData: {
     edges: {
       node: DatumBrowser;
@@ -228,10 +231,9 @@ export type ClubPageData = {
   };
 };
 export type ClubPageContext = {
-  previous: ClubPageNeighbor;
-  next: ClubPageNeighbor;
+  previous: string | null;
+  next: string | null;
 };
-export type PageContextNeighbor = ClubPageNeighbor | YearPageNeighbor;
 
 export type DocsQueryData = {
   mdx: {
@@ -252,3 +254,29 @@ export type Statistics = {
   year: number;
   category: string;
 } & YearStats;
+
+export type Frontmatter = {
+  title: string;
+  date: string;
+  lastmod: string | null;
+  club: string | null;
+  draft: boolean;
+};
+
+export type MdxBare = {
+  frontmatter: Frontmatter;
+};
+export type MdxNode = Node & MdxBare;
+
+export type MdxPostBare = Node &
+  Frontmatter & {
+    slug: string;
+    body: string;
+    excerpt: string;
+  };
+
+export type MdxPost = Node &
+  Pick<MdxPostBare, 'title' | 'date' | 'draft' | 'slug' | 'body' | 'excerpt'> & {
+    lastmod: string;
+    club: Club | null;
+  };
