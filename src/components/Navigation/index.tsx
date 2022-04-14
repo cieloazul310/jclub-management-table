@@ -9,7 +9,7 @@ import { Mode, ClubBrowser, YearBrowser } from '../../../types';
 
 type NavigationSectionProps<T extends Mode> = {
   mode: T;
-  item: T extends 'club' ? Omit<ClubBrowser, 'data'> : Omit<YearBrowser, 'data'>;
+  item: T extends 'club' ? Omit<ClubBrowser, 'data' | 'posts'> : Omit<YearBrowser, 'data'>;
   previous: { to: string; title: string } | null;
   next: { to: string; title: string } | null;
 };

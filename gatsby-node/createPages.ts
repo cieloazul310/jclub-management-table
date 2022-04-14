@@ -5,7 +5,9 @@ import { Club, MdxPost, Year } from '../types';
 type GraphQLResult = {
   allClub: {
     edges: {
-      node: Pick<Club, 'slug' | 'href'>;
+      node: Pick<Club, 'slug' | 'href'> & {
+        posts: { totalCount: number };
+      };
     }[];
   };
   allYear: {
@@ -15,13 +17,14 @@ type GraphQLResult = {
   };
   allMdxPost: {
     edges: {
-      node: Pick<MdxPost, 'slug'>;
+      node: Pick<MdxPost, 'slug' | 'draft'>;
     }[];
   };
 };
 
 export default async function createPages({ graphql, actions, reporter }: CreatePagesArgs) {
   const { createPage } = actions;
+  const isProduction = process.env.NODE_ENV === 'production';
   const result = await graphql<GraphQLResult>(`
     query {
       allClub {
@@ -29,8 +32,9 @@ export default async function createPages({ graphql, actions, reporter }: Create
           node {
             slug
             href
-            short_name
-            name
+            posts {
+              totalCount
+            }
           }
         }
       }
@@ -42,10 +46,11 @@ export default async function createPages({ graphql, actions, reporter }: Create
           }
         }
       }
-      allMdxPost(sort: { fields: date, order: ASC }) {
+      allMdxPost(sort: { fields: [date, lastmod, slug], order: [ASC, ASC, ASC] }) {
         edges {
           node {
             slug
+            draft
           }
         }
       }
@@ -57,47 +62,15 @@ export default async function createPages({ graphql, actions, reporter }: Create
   if (!result.data) throw new Error('There are no data');
   const { allClub, allYear, allMdxPost } = result.data;
 
-  allClub.edges
-    .map((data) => ({ ...data, mode: 'club' }))
-    .forEach(({ node }, index, arr) => {
-      const previous = index !== 0 ? arr[index - 1] : null;
-      const next = index !== arr.length - 1 ? arr[index + 1] : null;
+  const postsPerPage = 20;
 
-      createPage({
-        path: node.href,
-        component: path.resolve(`./src/templates/club.tsx`),
-        context: {
-          previous: previous?.node.slug ?? null,
-          next: next?.node.slug ?? null,
-          slug: node.slug,
-        },
-      });
-    });
-
-  allYear.edges
-    .map((data) => ({ ...data, mode: 'year' }))
-    .forEach(({ node }, index, arr) => {
-      const previous = index !== 0 ? arr[index - 1] : null;
-      const next = index !== arr.length - 1 ? arr[index + 1] : null;
-
-      createPage({
-        path: node.href,
-        component: path.resolve(`./src/templates/year.tsx`),
-        context: {
-          previous: previous?.node.year ?? null,
-          next: next?.node.year ?? null,
-          year: node.year,
-        },
-      });
-    });
-
-  allMdxPost.edges.forEach(({ node }, index) => {
-    const previous = index !== 0 ? allMdxPost.edges[index - 1] : null;
-    const next = index !== allMdxPost.edges.length - 1 ? allMdxPost.edges[index + 1] : null;
+  allClub.edges.forEach(({ node }, index) => {
+    const previous = index !== 0 ? allClub.edges[index - 1] : null;
+    const next = index !== allClub.edges.length - 1 ? allClub.edges[index + 1] : null;
 
     createPage({
-      path: node.slug,
-      component: path.resolve('./src/templates/post.tsx'),
+      path: node.href,
+      component: path.resolve(`./src/templates/club.tsx`),
       context: {
         previous: previous?.node.slug ?? null,
         next: next?.node.slug ?? null,
@@ -105,4 +78,62 @@ export default async function createPages({ graphql, actions, reporter }: Create
       },
     });
   });
+
+  allYear.edges.forEach(({ node }, index) => {
+    const previous = index !== 0 ? allYear.edges[index - 1] : null;
+    const next = index !== allYear.edges.length - 1 ? allYear.edges[index + 1] : null;
+
+    createPage({
+      path: node.href,
+      component: path.resolve(`./src/templates/year.tsx`),
+      context: {
+        previous: previous?.node.year ?? null,
+        next: next?.node.year ?? null,
+        year: node.year,
+      },
+    });
+  });
+
+  allMdxPost.edges
+    .filter(({ node }) => !isProduction || !node.draft)
+    .forEach(({ node }, index, arr) => {
+      const previous = index !== 0 ? arr[index - 1] : null;
+      const next = index !== arr.length - 1 ? arr[index + 1] : null;
+
+      createPage({
+        path: node.slug,
+        component: path.resolve('./src/templates/post.tsx'),
+        context: {
+          previous: previous?.node.slug ?? null,
+          next: next?.node.slug ?? null,
+          slug: node.slug,
+        },
+      });
+    });
+  
+  allClub.edges
+    .filter(({ node }) => node.posts.totalCount)
+    .forEach(({ node }) => {
+      const { totalCount } = node.posts;
+      const basePath = `/club/${node.slug}/posts`;
+      const numPages = Math.ceil(totalCount / postsPerPage);
+
+      Array.from({ length: numPages }).forEach((_, i) => {
+        createPage({
+          path: i === 0 ? `${basePath}` : `${basePath}/${i + 1}`,
+          component: path.resolve('./src/templates/postsByClub.tsx'),
+          context: {
+            // previous,
+            // next,
+            slug: node.slug,
+            limit: postsPerPage,
+            skip: i * postsPerPage,
+            numPages,
+            currentPage: i + 1,
+            basePath,
+            totalCount,
+          },
+        });
+      });
+    });
 }

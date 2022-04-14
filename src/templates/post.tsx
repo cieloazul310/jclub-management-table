@@ -4,71 +4,87 @@ import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, SectionDivider, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
+import NoSsr from '@mui/material/NoSsr';
+import { Jumbotron, Section, SectionDivider, Article, PanelLink, Alert } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem, muiComponents } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import Diff from '../components/Diff';
+import { AdInSectionDividerOne } from '../components/Ads';
 import Layout from '../layout';
 import { ClubBrowser, MdxPost } from '../../types';
 
-type PageData = {
-  mdxPost: Pick<MdxPost, 'body' | 'title' | 'lastmod' | 'date' | 'excerpt'> & {
+type PostTemplatePageData = {
+  mdxPost: Pick<MdxPost, 'body' | 'title' | 'lastmod' | 'date' | 'excerpt' | 'draft'> & {
+    lastmodDate: string;
     club: Pick<ClubBrowser, 'short_name' | 'name' | 'href'> | null;
   };
   previous: { to: string; title: string } | null;
   next: { to: string; title: string } | null;
 };
-type PageContext = {
+type PostTemplatePageContext = {
   slug: string;
   previous: string | null;
   next: string | null;
 };
 
-function PostLayout({ data, ...props }: PageProps<PageData, PageContext>) {
-  console.log(props);
+function PostTemplate({ data }: PageProps<PostTemplatePageData, PostTemplatePageContext>) {
   const { mdxPost, previous, next } = data;
+  const { title, body, excerpt, date, lastmod, lastmodDate, club, draft } = mdxPost;
+  const daysFromLastmod = React.useMemo(() => {
+    const today = new Date();
+    return Math.floor((today.valueOf() - new Date(lastmodDate).valueOf()) / (1000 * 60 * 60 * 24));
+  }, [lastmodDate]);
 
   return (
-    <Layout title={mdxPost.title} headerTitle="記事" previous={previous} next={next} description={mdxPost.excerpt}>
+    <Layout title={title} headerTitle="記事" previous={previous} next={next} description={excerpt}>
       <article>
         <header>
           <Jumbotron maxWidth="md">
-            <Typography>{mdxPost.date}</Typography>
+            <Typography>{date}</Typography>
             <Typography variant="h5" component="h2" gutterBottom>
-              {mdxPost.title}
+              {title}
             </Typography>
           </Jumbotron>
         </header>
         <SectionDivider />
         <Section>
           <Article maxWidth="md">
+            <NoSsr>
+              {draft ? <Alert severity="warning">この記事は下書きです。</Alert> : null}
+              {daysFromLastmod > 183 ? <Alert severity="warning">この記事は最終更新日から6ヶ月以上経過しています。</Alert> : null}
+            </NoSsr>
             <MDXProvider components={{ ...muiComponents, Diff }}>
-              <MDXRenderer>{mdxPost.body}</MDXRenderer>
+              <MDXRenderer>{body}</MDXRenderer>
             </MDXProvider>
           </Article>
         </Section>
-        <SectionDivider />
+        <AdInSectionDividerOne />
         <footer>
           <Section>
             <Article maxWidth="md">
               <Typography variant="h6" gutterBottom>
-                {mdxPost.title}
+                {title}
               </Typography>
-              <Typography>日付: {mdxPost.date}</Typography>
-              <Typography>最終更新: {mdxPost.lastmod}</Typography>
-              {mdxPost.club ? <Typography>クラブ: {mdxPost.club.name}</Typography> : null}
+              <Typography>日付: {date}</Typography>
+              <Typography>最終更新日: {lastmod}</Typography>
+              {club ? <Typography>クラブ: {club.name}</Typography> : null}
             </Article>
           </Section>
           <SectionDivider />
-          {mdxPost.club ? (
-            <Section>
-              <Container maxWidth="md" disableGutters>
-                <PanelLink to={mdxPost.club.href} disableBorder disableMargin>
-                  {mdxPost.club.name}の経営情報一覧
-                </PanelLink>
-              </Container>
-            </Section>
+          {club ? (
+            <>
+              <Section>
+                <Container maxWidth="md" disableGutters>
+                  <PanelLink to={`${club.href}posts`} disableBorder disableMargin>
+                    {club.name}の記事一覧
+                  </PanelLink>
+                  <PanelLink to={club.href} disableBorder disableMargin>
+                    {club.name}の経営情報一覧
+                  </PanelLink>
+                </Container>
+              </Section>
+              <SectionDivider />
+            </>
           ) : null}
-          <SectionDivider />
           <Section>
             <PageNavigationContainer>
               <PageNavigationItem to={previous?.to ?? '#'} disabled={!previous}>
@@ -85,7 +101,7 @@ function PostLayout({ data, ...props }: PageProps<PageData, PageContext>) {
   );
 }
 
-export default PostLayout;
+export default PostTemplate;
 
 export const query = graphql`
   query Post($slug: String!, $previous: String, $next: String) {
@@ -93,7 +109,9 @@ export const query = graphql`
       date(formatString: "YYYY年MM月DD日")
       title
       lastmod(formatString: "YYYY年MM月DD日")
+      lastmodDate: lastmod(formatString: "YYYY-MM-DD")
       body
+      draft
       excerpt(truncate: true)
       club {
         short_name

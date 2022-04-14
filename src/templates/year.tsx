@@ -21,7 +21,7 @@ function YearTemplate({ data }: PageProps<YearPageData, YearPageContext>) {
     >
       <FigureSection edges={data.allData.edges} mode="year" />
       <SectionDivider />
-      <SummarySection mode="year" edges={data.allData.edges} item={data.year} prevYear={previous} />
+      <SummarySection mode="year" edges={data.allData.edges} item={data.year} prevYear={previous} posts={null} />
       <SectionDivider />
       <NavigationSection
         mode="year"

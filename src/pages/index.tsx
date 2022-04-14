@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { graphql, PageProps } from 'gatsby';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
 import { useTheme } from '@mui/material/styles';
 import {
   Jumbotron,
@@ -10,14 +12,26 @@ import {
   Paragraph,
   AppLink,
   AppLinkButton,
+  PanelLink,
+  ListItemLink,
   useSiteMetadata,
 } from '@cieloazul310/gatsby-theme-aoi';
 import Layout from '../layout';
 import { J1Link, J2Link, J3Link, YearsLink } from '../components/Links';
 import AttributionDoc from '../components/Article/Attribution';
 import { AdInSectionDividerOne } from '../components/Ads';
+import { MdxPost } from '../../types';
 
-function IndexPage() {
+type IndexPageQueryData = {
+  allMdxPost: {
+    edges: {
+      node: Pick<MdxPost, 'slug' | 'title' | 'date'>;
+    }[];
+  };
+};
+
+function IndexPage({ data }: PageProps<IndexPageQueryData>) {
+  const { allMdxPost } = data;
   const { palette } = useTheme();
   const { title, description } = useSiteMetadata();
   return (
@@ -80,6 +94,28 @@ function IndexPage() {
           </Grid>
         </Article>
       </Section>
+      <SectionDivider />
+      <Section>
+        <Article maxWidth="md">
+          <Typography variant="h6" component="h3" gutterBottom>
+            最新の記事
+          </Typography>
+          <List>
+            {allMdxPost.edges.map(({ node }, index) => (
+              <ListItemLink
+                key={node.slug}
+                to={node.slug}
+                primaryText={node.title}
+                secondaryText={node.date}
+                divider={index !== allMdxPost.edges.length - 1}
+              />
+            ))}
+          </List>
+          <PanelLink to="/" disableMargin>
+            記事一覧へ
+          </PanelLink>
+        </Article>
+      </Section>
       <AdInSectionDividerOne />
       <Section>
         <Article maxWidth="md">
@@ -90,3 +126,17 @@ function IndexPage() {
   );
 }
 export default IndexPage;
+
+export const query = graphql`
+  {
+    allMdxPost(sort: { fields: [date, lastmod, slug], order: [DESC, DESC, DESC] }, limit: 5) {
+      edges {
+        node {
+          slug
+          title
+          date(formatString: "YYYY年MM月DD日")
+        }
+      }
+    }
+  }
+`;

@@ -10,7 +10,7 @@ import { AdInSectionDividerOne } from '../components/Ads';
 import { ClubPageData, ClubPageContext } from '../../types';
 
 function ClubTemplate({ data }: PageProps<ClubPageData, ClubPageContext>) {
-  const { club, previous, next } = data;
+  const { club, previous, next, allMdxPost } = data;
 
   return (
     <TemplateLayout
@@ -22,7 +22,7 @@ function ClubTemplate({ data }: PageProps<ClubPageData, ClubPageContext>) {
     >
       <FigureSection edges={data.allData.edges} mode="club" />
       <SectionDivider />
-      <SummarySection mode="club" edges={data.allData.edges} item={data.club} prevYear={null} />
+      <SummarySection mode="club" edges={data.allData.edges} item={data.club} prevYear={null} posts={allMdxPost.edges} />
       <SectionDivider />
       <NavigationSection
         mode="club"
@@ -88,6 +88,15 @@ export const query = graphql`
             ...expenseFields
             ...attdFields
           }
+        }
+      }
+    }
+    allMdxPost(filter: { club: { slug: { eq: $slug } } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }, limit: 5) {
+      edges {
+        node {
+          slug
+          title
+          date(formatString: "YYYY年MM月DD日")
         }
       }
     }

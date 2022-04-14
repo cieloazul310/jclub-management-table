@@ -21,7 +21,7 @@ export type Club = {
   relatedCompanies: string[] | null;
 };
 export type ClubNode = Node & Club;
-export type ClubBrowser = Club & { data: DatumBrowser[] };
+export type ClubBrowser = Club & { data: DatumBrowser[]; posts: { entries: MdxPost[]; totalCount: number } };
 
 export type Year = {
   id: string;
@@ -221,12 +221,17 @@ export type YearPageContext = {
 
 export type ClubPageNeighbor = { mode: Mode; node: Pick<ClubBrowser, 'short_name' | 'name' | 'href'> } | null;
 export type ClubPageData = {
-  club: Omit<ClubBrowser, 'data'>;
+  club: Omit<ClubBrowser, 'data' | 'posts'>;
   previous: Pick<ClubBrowser, 'name' | 'href'> | null;
   next: Pick<ClubBrowser, 'name' | 'href'> | null;
   allData: {
     edges: {
       node: DatumBrowser;
+    }[];
+  };
+  allMdxPost: {
+    edges: {
+      node: Pick<MdxPost, 'title' | 'slug' | 'date'>;
     }[];
   };
 };
