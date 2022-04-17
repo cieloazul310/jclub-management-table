@@ -28,7 +28,7 @@ export default async function createDataSchema({ actions, schema }: CreateSchema
       slug: String!
       date: Date! @dateformat
       lastmod: Date! @dateformat
-      club: String
+      club: Club
       draft: Boolean!
       body: String!
       excerpt: String!

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import { Section, SectionDivider, Article, ListItemLink, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
+import { Section, SectionDivider, Article } from '@cieloazul310/gatsby-theme-aoi';
 import ClubInfo from './ClubInfo';
 import YearInfo from './YearInfo';
+import PostList from '../PostList';
 import useIsClub from '../../utils/useIsClub';
 
 import { Mode, DatumBrowser, ClubBrowser, YearBrowser, MdxPost } from '../../../types';
@@ -32,6 +31,8 @@ function SummarySection<T extends Mode>({ mode, edges, item, prevYear, posts }: 
           <SectionDivider />
           <Section>
             <Article maxWidth="md">
+              <PostList posts={posts} title="最新の記事" more={{ to: `${item.href}posts/`, title: `${item.name}の記事一覧` }} />
+              {/*
               <Typography variant="h6" component="h3" gutterBottom>
                 最新の記事
               </Typography>
@@ -49,6 +50,7 @@ function SummarySection<T extends Mode>({ mode, edges, item, prevYear, posts }: 
               <PanelLink to={`${item.href}posts/`} disableMargin>
                 {item.name}の記事一覧
               </PanelLink>
+              */}
             </Article>
           </Section>
         </>

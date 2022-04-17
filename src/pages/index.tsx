@@ -2,7 +2,6 @@ import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
 import { useTheme } from '@mui/material/styles';
 import {
   Jumbotron,
@@ -12,11 +11,10 @@ import {
   Paragraph,
   AppLink,
   AppLinkButton,
-  PanelLink,
-  ListItemLink,
   useSiteMetadata,
 } from '@cieloazul310/gatsby-theme-aoi';
 import Layout from '../layout';
+import PostList from '../components/PostList';
 import { J1Link, J2Link, J3Link, YearsLink } from '../components/Links';
 import AttributionDoc from '../components/Article/Attribution';
 import { AdInSectionDividerOne } from '../components/Ads';
@@ -97,23 +95,7 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
       <SectionDivider />
       <Section>
         <Article maxWidth="md">
-          <Typography variant="h6" component="h3" gutterBottom>
-            最新の記事
-          </Typography>
-          <List>
-            {allMdxPost.edges.map(({ node }, index) => (
-              <ListItemLink
-                key={node.slug}
-                to={node.slug}
-                primaryText={node.title}
-                secondaryText={node.date}
-                divider={index !== allMdxPost.edges.length - 1}
-              />
-            ))}
-          </List>
-          <PanelLink to="/" disableMargin>
-            記事一覧へ
-          </PanelLink>
+          <PostList posts={allMdxPost.edges} title="最新の記事" more={{ to: '/', title: '記事一覧' }} />
         </Article>
       </Section>
       <AdInSectionDividerOne />

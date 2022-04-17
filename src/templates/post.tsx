@@ -8,6 +8,7 @@ import NoSsr from '@mui/material/NoSsr';
 import { Jumbotron, Section, SectionDivider, Article, PanelLink, Alert } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem, muiComponents } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import Diff from '../components/Diff';
+import PostList from '../components/PostList';
 import { AdInSectionDividerOne } from '../components/Ads';
 import Layout from '../layout';
 import { ClubBrowser, MdxPost } from '../../types';
@@ -19,15 +20,21 @@ type PostTemplatePageData = {
   };
   previous: { to: string; title: string } | null;
   next: { to: string; title: string } | null;
+  allMdxPost: {
+    edges: {
+      node: Pick<MdxPost, 'title' | 'date' | 'slug'>;
+    }[];
+  };
 };
 type PostTemplatePageContext = {
   slug: string;
   previous: string | null;
   next: string | null;
+  club: string | null;
 };
 
 function PostTemplate({ data }: PageProps<PostTemplatePageData, PostTemplatePageContext>) {
-  const { mdxPost, previous, next } = data;
+  const { mdxPost, previous, next, allMdxPost } = data;
   const { title, body, excerpt, date, lastmod, lastmodDate, club, draft } = mdxPost;
   const daysFromLastmod = React.useMemo(() => {
     const today = new Date();
@@ -73,10 +80,17 @@ function PostTemplate({ data }: PageProps<PostTemplatePageData, PostTemplatePage
           {club ? (
             <>
               <Section>
+                <Article maxWidth="md">
+                  <PostList
+                    posts={allMdxPost.edges}
+                    title={`${club.name}の最新の記事`}
+                    more={{ to: `${club.href}posts`, title: `${club.name}の記事一覧` }}
+                  />
+                </Article>
+              </Section>
+              <SectionDivider />
+              <Section>
                 <Container maxWidth="md" disableGutters>
-                  <PanelLink to={`${club.href}posts`} disableBorder disableMargin>
-                    {club.name}の記事一覧
-                  </PanelLink>
                   <PanelLink to={club.href} disableBorder disableMargin>
                     {club.name}の経営情報一覧
                   </PanelLink>
@@ -104,7 +118,7 @@ function PostTemplate({ data }: PageProps<PostTemplatePageData, PostTemplatePage
 export default PostTemplate;
 
 export const query = graphql`
-  query Post($slug: String!, $previous: String, $next: String) {
+  query Post($slug: String!, $previous: String, $next: String, $club: String) {
     mdxPost(slug: { eq: $slug }) {
       date(formatString: "YYYY年MM月DD日")
       title
@@ -126,6 +140,15 @@ export const query = graphql`
     next: mdxPost(slug: { eq: $next }) {
       to: slug
       title
+    }
+    allMdxPost(filter: { club: { slug: { eq: $club } } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }, limit: 5) {
+      edges {
+        node {
+          title
+          date(formatString: "YYYY年MM月DD日")
+          slug
+        }
+      }
     }
   }
 `;

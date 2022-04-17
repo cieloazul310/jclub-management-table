@@ -17,14 +17,13 @@ type GraphQLResult = {
   };
   allMdxPost: {
     edges: {
-      node: Pick<MdxPost, 'slug' | 'draft'>;
+      node: Pick<MdxPost, 'slug' | 'draft'> & { club: Pick<Club, 'slug'> | null };
     }[];
   };
 };
 
 export default async function createPages({ graphql, actions, reporter }: CreatePagesArgs) {
   const { createPage } = actions;
-  const isProduction = process.env.NODE_ENV === 'production';
   const result = await graphql<GraphQLResult>(`
     query {
       allClub {
@@ -51,6 +50,9 @@ export default async function createPages({ graphql, actions, reporter }: Create
           node {
             slug
             draft
+            club {
+              slug
+            }
           }
         }
       }
@@ -94,23 +96,22 @@ export default async function createPages({ graphql, actions, reporter }: Create
     });
   });
 
-  allMdxPost.edges
-    .filter(({ node }) => !isProduction || !node.draft)
-    .forEach(({ node }, index, arr) => {
-      const previous = index !== 0 ? arr[index - 1] : null;
-      const next = index !== arr.length - 1 ? arr[index + 1] : null;
+  allMdxPost.edges.forEach(({ node }, index, arr) => {
+    const previous = index !== 0 ? arr[index - 1] : null;
+    const next = index !== arr.length - 1 ? arr[index + 1] : null;
 
-      createPage({
-        path: node.slug,
-        component: path.resolve('./src/templates/post.tsx'),
-        context: {
-          previous: previous?.node.slug ?? null,
-          next: next?.node.slug ?? null,
-          slug: node.slug,
-        },
-      });
+    createPage({
+      path: node.slug,
+      component: path.resolve('./src/templates/post.tsx'),
+      context: {
+        previous: previous?.node.slug ?? null,
+        next: next?.node.slug ?? null,
+        slug: node.slug,
+        club: node.club?.slug ?? null,
+      },
     });
-  
+  });
+
   allClub.edges
     .filter(({ node }) => node.posts.totalCount)
     .forEach(({ node }) => {
@@ -123,8 +124,6 @@ export default async function createPages({ graphql, actions, reporter }: Create
           path: i === 0 ? `${basePath}` : `${basePath}/${i + 1}`,
           component: path.resolve('./src/templates/postsByClub.tsx'),
           context: {
-            // previous,
-            // next,
             slug: node.slug,
             limit: postsPerPage,
             skip: i * postsPerPage,

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import { Jumbotron, Section, SectionDivider, Article, PanelLink, ListItemLink } from '@cieloazul310/gatsby-theme-aoi';
+import { Jumbotron, Section, SectionDivider, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
+import PostList from '../components/PostList';
 import { AdInSectionDividerOne } from '../components/Ads';
 import Layout from '../layout';
 import { ClubBrowser, MdxPost } from '../../types';
@@ -38,8 +38,9 @@ type PageContext = {
             totalCount,
 */
 
-function PostsByClubTemplate({ data }: PageProps<PostsByClubPageData, PageContext>) {
+function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageData, PageContext>) {
   const { allMdxPost, club } = data;
+  const { numPages, currentPage, basePath } = pageContext;
 
   return (
     <Layout title={`${club.name}の記事一覧`}>
@@ -52,17 +53,7 @@ function PostsByClubTemplate({ data }: PageProps<PostsByClubPageData, PageContex
       <SectionDivider />
       <Section>
         <Article maxWidth="md">
-          <List>
-            {allMdxPost.edges.map(({ node }, index) => (
-              <ListItemLink
-                key={node.slug}
-                primaryText={node.title}
-                secondaryText={node.date}
-                to={node.slug}
-                divider={index !== allMdxPost.edges.length - 1}
-              />
-            ))}
-          </List>
+          <PostList posts={allMdxPost.edges} />
         </Article>
       </Section>
       <SectionDivider />
@@ -73,19 +64,21 @@ function PostsByClubTemplate({ data }: PageProps<PostsByClubPageData, PageContex
           </PanelLink>
         </Container>
       </Section>
-      <SectionDivider />
-      {/*
+      {currentPage !== 1 || currentPage !== numPages ? (
+        <>
+          <SectionDivider />
           <Section>
-          <PageNavigationContainer>
-            <PageNavigationItem to={previous?.to ?? '#'} disabled={!previous}>
-              <Typography variant="body2">{previous?.title}</Typography>
-            </PageNavigationItem>
-            <PageNavigationItem to={next?.to ?? '#'} disabled={!next} next>
-              <Typography variant="body2">{next?.title}</Typography>
-            </PageNavigationItem>
-          </PageNavigationContainer>
-        </Section>
-      */}
+            <PageNavigationContainer>
+              <PageNavigationItem to={`${basePath}/${currentPage - 1}`} disabled={currentPage === 1}>
+                <Typography variant="body2">{currentPage - 1}</Typography>
+              </PageNavigationItem>
+              <PageNavigationItem to={`${basePath}/${currentPage + 1}`} disabled={currentPage === numPages} next>
+                <Typography variant="body2">{currentPage + 1}</Typography>
+              </PageNavigationItem>
+            </PageNavigationContainer>
+          </Section>
+        </>
+      ) : null}
     </Layout>
   );
 }
