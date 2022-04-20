@@ -15,10 +15,8 @@ export default async function onCreateNode({
 }: CreateNodeArgs) {
   const parentFileNode = getNode(node.parent ?? '');
   const source = parentFileNode?.sourceInstanceName;
-  const isProduction = process.env.NODE_ENV === 'production';
 
   if (isMdxNode(node) && source !== 'docs') {
-    if (isProduction && node.frontmatter.draft) return;
     const value = createFilePath({ node, getNode });
     const slug = `/posts${value}`;
 

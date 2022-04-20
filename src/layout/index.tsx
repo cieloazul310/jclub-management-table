@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Fab from '@mui/material/Fab';
@@ -7,7 +8,7 @@ import Slide from '@mui/material/Slide';
 import Tooltip from '@mui/material/Tooltip';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
-import { SectionDivider } from '@cieloazul310/gatsby-theme-aoi';
+import { Section, SectionDivider, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
 import DrawerInner from './DrawerInner';
@@ -52,6 +53,14 @@ function Layout({ children, title, description, headerTitle, previous, next }: L
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>{children}</Box>
         </main>
         <Box>
+          <SectionDivider />
+          <Section>
+            <Container maxWidth="md" disableGutters>
+              <PanelLink to="/" disableBorder disableMargin>
+                トップページへ
+              </PanelLink>
+            </Container>
+          </Section>
           <SectionDivider />
           <Footer />
         </Box>

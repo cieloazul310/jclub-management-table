@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import MuiTab from '@mui/material/Tab';
@@ -9,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Slide from '@mui/material/Slide';
 import useScrollTriger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
-import { SectionDivider } from '@cieloazul310/gatsby-theme-aoi';
+import { Section, SectionDivider, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
 
 import SEO from './SEO';
 import AppBarInner from './AppBarInner';
@@ -67,6 +68,14 @@ function TemplateLayout({ children, title, headerTitle, description, previous, n
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>{children}</Box>
         </main>
         <Box>
+          <SectionDivider />
+          <Section>
+            <Container maxWidth="md" disableGutters>
+              <PanelLink to="/" disableBorder disableMargin>
+                トップページへ
+              </PanelLink>
+            </Container>
+          </Section>
           <SectionDivider />
           <Footer />
         </Box>

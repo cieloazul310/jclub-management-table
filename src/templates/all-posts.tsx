@@ -7,7 +7,7 @@ import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsb
 import PostList from '../components/PostList';
 import { AdInSectionDividerOne } from '../components/Ads';
 import Layout from '../layout';
-import { ClubBrowser, MdxPost } from '../../types';
+import { MdxPost } from '../../types';
 
 type PostsByClubPageData = {
   allMdxPost: {
@@ -15,10 +15,8 @@ type PostsByClubPageData = {
       node: Pick<MdxPost, 'title' | 'date' | 'slug'>;
     }[];
   };
-  club: Pick<ClubBrowser, 'name' | 'href'>;
 };
 type PageContext = {
-  club: string;
   limit: number;
   skip: number;
   numPages: number;
@@ -26,27 +24,16 @@ type PageContext = {
   basePath: string;
   totalCount: number;
 };
-/*
-// previous,
-            // next,
-            club: node.short_name,
-            limit: postsPerPage,
-            skip: i * postsPerPage,
-            numPages,
-            currentPage: i + 1,
-            basePath,
-            totalCount,
-*/
 
-function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageData, PageContext>) {
-  const { allMdxPost, club } = data;
+function AllPostsTemplate({ data, pageContext }: PageProps<PostsByClubPageData, PageContext>) {
+  const { allMdxPost } = data;
   const { numPages, currentPage, basePath, totalCount } = pageContext;
 
   return (
-    <Layout title={`${club.name}の記事一覧`}>
+    <Layout title="記事一覧">
       <Jumbotron maxWidth="md">
         <Typography variant="h5" component="h2" gutterBottom>
-          {club.name}の記事一覧 ({currentPage}/{numPages})
+          記事一覧 ({currentPage}/{numPages})
         </Typography>
         <Typography>{totalCount} posts</Typography>
       </Jumbotron>
@@ -56,43 +43,38 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
           <PostList posts={allMdxPost.edges} />
         </Article>
       </Section>
-      <SectionDivider />
-      <Section>
-        <Container maxWidth="md" disableGutters>
-          <PanelLink to={club.href} disableBorder disableMargin>
-            {club.name}の経営情報一覧
-          </PanelLink>
-        </Container>
-      </Section>
       {currentPage !== 1 || currentPage !== numPages ? (
         <>
           <SectionDivider />
           <Section>
             <PageNavigationContainer>
               <PageNavigationItem to={currentPage === 2 ? `${basePath}/` : `${basePath}/${currentPage - 1}/`} disabled={currentPage === 1}>
-                <Typography variant="body2">{currentPage - 1}</Typography>
+                <Typography variant="body2">Newer</Typography>
               </PageNavigationItem>
-              <PageNavigationItem to={`${basePath}/${currentPage + 1}`} disabled={currentPage === numPages} next>
-                <Typography variant="body2">{currentPage + 1}</Typography>
+              <PageNavigationItem to={`${basePath}/${currentPage + 1}/`} disabled={currentPage === numPages} next>
+                <Typography variant="body2">Older</Typography>
               </PageNavigationItem>
             </PageNavigationContainer>
           </Section>
         </>
       ) : null}
+      <SectionDivider />
+      <Section>
+        <Container maxWidth="md" disableGutters>
+          <PanelLink to="/post/" disableBorder disableMargin>
+            記事一覧へ
+          </PanelLink>
+        </Container>
+      </Section>
     </Layout>
   );
 }
 
-export default PostsByClubTemplate;
+export default AllPostsTemplate;
 
 export const query = graphql`
-  query PostsByClub($slug: String!, $skip: Int!, $limit: Int!, $draft: Boolean) {
-    allMdxPost(
-      filter: { club: { slug: { eq: $slug } }, draft: { ne: $draft } }
-      sort: { fields: [date, lastmod], order: [DESC, DESC] }
-      limit: $limit
-      skip: $skip
-    ) {
+  query AllPosts($skip: Int!, $limit: Int!, $draft: Boolean) {
+    allMdxPost(filter: { draft: { ne: $draft } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }, limit: $limit, skip: $skip) {
       edges {
         node {
           title
@@ -100,10 +82,6 @@ export const query = graphql`
           slug
         }
       }
-    }
-    club(slug: { eq: $slug }) {
-      name
-      href
     }
   }
 `;

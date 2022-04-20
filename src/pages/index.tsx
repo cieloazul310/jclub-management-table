@@ -95,7 +95,7 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
       <SectionDivider />
       <Section>
         <Article maxWidth="md">
-          <PostList posts={allMdxPost.edges} title="最新の記事" more={{ to: '/', title: '記事一覧' }} />
+          <PostList posts={allMdxPost.edges} title="最新の記事" more={{ to: '/post/', title: '記事一覧' }} />
         </Article>
       </Section>
       <AdInSectionDividerOne />
@@ -110,8 +110,8 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
 export default IndexPage;
 
 export const query = graphql`
-  {
-    allMdxPost(sort: { fields: [date, lastmod, slug], order: [DESC, DESC, DESC] }, limit: 5) {
+  query IndexPage($draft: Boolean) {
+    allMdxPost(filter: { draft: { ne: $draft } }, sort: { fields: [date, lastmod, slug], order: [DESC, DESC, DESC] }, limit: 5) {
       edges {
         node {
           slug

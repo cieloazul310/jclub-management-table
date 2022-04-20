@@ -285,3 +285,12 @@ export type MdxPost = Node &
     lastmod: string;
     club: Club | null;
   };
+
+export type MdxPostByYear = {
+  id: string;
+  year: string;
+  basePath: string;
+  gte: string;
+  lt: string;
+  totalCount: number;
+};

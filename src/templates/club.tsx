@@ -46,7 +46,7 @@ function ClubTemplate({ data }: PageProps<ClubPageData, ClubPageContext>) {
 export default ClubTemplate;
 
 export const query = graphql`
-  query ClubTemplate($slug: String!, $previous: String, $next: String) {
+  query ClubTemplate($slug: String!, $previous: String, $next: String, $draft: Boolean) {
     club(slug: { eq: $slug }) {
       id
       short_name
@@ -91,7 +91,11 @@ export const query = graphql`
         }
       }
     }
-    allMdxPost(filter: { club: { slug: { eq: $slug } } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }, limit: 5) {
+    allMdxPost(
+      filter: { club: { slug: { eq: $slug } }, draft: { ne: $draft } }
+      sort: { fields: [date, lastmod], order: [DESC, DESC] }
+      limit: 5
+    ) {
       edges {
         node {
           slug

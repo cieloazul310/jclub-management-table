@@ -33,6 +33,14 @@ export default async function createDataSchema({ actions, schema }: CreateSchema
       body: String!
       excerpt: String!
     }
+    type MdxPostByYear {
+      id: String!
+      year: String!
+      basePath: String!
+      gte: String!
+      lt: String!
+      totalCount: Int!
+    }
   `);
 
   createTypes(
