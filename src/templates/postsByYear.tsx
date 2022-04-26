@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, SectionDivider, Article } from '@cieloazul310/gatsby-theme-aoi';
+import { Jumbotron, Section, SectionDivider, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import PostList from '../components/PostList';
 import { AdInSectionDividerOne } from '../components/Ads';
@@ -48,6 +49,14 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
             <Typography variant="body2">{previous?.year}年の記事一覧</Typography>
           </PageNavigationItem>
         </PageNavigationContainer>
+      </Section>
+      <AdInSectionDividerOne />
+      <Section>
+        <Container maxWidth="md" disableGutters>
+          <PanelLink to="/post/archive/" disableBorder disableMargin>
+            記事アーカイブへ
+          </PanelLink>
+        </Container>
       </Section>
     </Layout>
   );

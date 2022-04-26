@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Jumbotron, Section, SectionDivider, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
 import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
 import PostList from '../components/PostList';
-import { AdInSectionDividerOne } from '../components/Ads';
+import { AdInSectionDividerTwo } from '../components/Ads';
 import Layout from '../layout';
 import { ClubBrowser, MdxPost } from '../../types';
 
@@ -79,6 +79,14 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
           </Section>
         </>
       ) : null}
+      <AdInSectionDividerTwo />
+      <Section>
+        <Container maxWidth="md" disableGutters>
+          <PanelLink to="/post/" disableBorder disableMargin>
+            記事一覧へ
+          </PanelLink>
+        </Container>
+      </Section>
     </Layout>
   );
 }

@@ -126,7 +126,7 @@ function PostTemplate({ data }: PageProps<PostTemplatePageData, PostTemplatePage
 export default PostTemplate;
 
 export const query = graphql`
-  query Post($slug: String!, $previous: String, $next: String, $club: String) {
+  query Post($slug: String!, $previous: String, $next: String, $club: String, $draft: Boolean) {
     mdxPost(slug: { eq: $slug }) {
       date(formatString: "YYYY年MM月DD日")
       title
@@ -149,7 +149,11 @@ export const query = graphql`
       to: slug
       title
     }
-    allMdxPost(filter: { club: { slug: { eq: $club } } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }, limit: 5) {
+    allMdxPost(
+      filter: { club: { slug: { eq: $club } }, draft: { ne: $draft } }
+      sort: { fields: [date, lastmod], order: [DESC, DESC] }
+      limit: 5
+    ) {
       edges {
         node {
           title

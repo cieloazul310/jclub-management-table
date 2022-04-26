@@ -58,11 +58,11 @@ function AllPostsTemplate({ data, pageContext }: PageProps<PostsByClubPageData, 
           </Section>
         </>
       ) : null}
-      <SectionDivider />
+      <AdInSectionDividerOne />
       <Section>
         <Container maxWidth="md" disableGutters>
-          <PanelLink to="/post/" disableBorder disableMargin>
-            記事一覧へ
+          <PanelLink to="/post/archive/" disableBorder disableMargin>
+            記事アーカイブへ
           </PanelLink>
         </Container>
       </Section>
