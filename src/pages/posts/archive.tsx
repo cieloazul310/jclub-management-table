@@ -40,7 +40,7 @@ function ArchivePage({ data }: PageProps<ArchivePageData>) {
       <SectionDivider />
       <Section>
         <Container maxWidth="md" disableGutters>
-          <PanelLink to="/post/" disableBorder disableMargin>
+          <PanelLink to="/posts/" disableBorder disableMargin>
             記事一覧へ
           </PanelLink>
         </Container>
