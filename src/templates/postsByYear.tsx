@@ -56,8 +56,8 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
 export default PostsByClubTemplate;
 
 export const query = graphql`
-  query PostsByYear($gte: Date!, $lt: Date!) {
-    allMdxPost(filter: { date: { gte: $gte, lt: $lt } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }) {
+  query PostsByYear($gte: Date!, $lt: Date!, $draft: Boolean) {
+    allMdxPost(filter: { date: { gte: $gte, lt: $lt }, draft: { ne: $draft } }, sort: { fields: [date, lastmod], order: [DESC, DESC] }) {
       edges {
         node {
           title

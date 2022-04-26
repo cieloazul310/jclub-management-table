@@ -80,7 +80,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
   if (!result.data) throw new Error('There are no data');
   const { allClub, allYear, allMdxPost, allMdxPostByYears } = result.data;
 
-  const postsPerPage = 2;
+  const postsPerPage = 20;
 
   // クラブ毎の経営情報ページを作成
   allClub.edges.forEach(({ node }, index) => {
@@ -195,6 +195,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
         lt,
         totalCount,
         basePath,
+        draft: isProduction ? true : null,
       },
     });
   });
