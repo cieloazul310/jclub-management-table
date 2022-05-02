@@ -28,7 +28,7 @@ function SummaryTableRow({ label, val, diff, emphasizedIfMinus, ...props }: Summ
         {val}
       </TableCell>
       {diff ? (
-        <TableCell>
+        <TableCell align="right">
           <Diff>{diff}</Diff>
         </TableCell>
       ) : null}

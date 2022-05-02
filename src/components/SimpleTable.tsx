@@ -17,6 +17,8 @@ type SimpleTableProps = {
   rows: string[];
   data: number[][];
   unit?: string;
+  disableUnit?: boolean;
+  customUnits?: (string | null)[];
   emphasizedRows?: number[];
   emphasizedColsIfMinus?: number[];
   diff?: boolean;
@@ -29,6 +31,8 @@ function SimpleTable({
   rows,
   data,
   unit,
+  disableUnit = false,
+  customUnits,
   emphasizedRows = [],
   emphasizedColsIfMinus = [],
   diff,
@@ -49,7 +53,7 @@ function SimpleTable({
             <TableHead>
               <TableRow>
                 <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-                  (単位: {unit ?? '百万円'})
+                  {disableUnit ? '' : `(単位: ${unit ?? '百万円'})`}
                 </TableCell>
                 {cols.map((label) => (
                   <TableCell key={label} component="th" align="right" scope="col" sx={{ lineHeight: 'inherit' }}>
@@ -83,6 +87,7 @@ function SimpleTable({
                       }}
                     >
                       {val(value, separator)}
+                      {customUnits?.[colIndex]}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -92,10 +97,11 @@ function SimpleTable({
               <TableFooter>
                 <TableRow>
                   <TableCell align="right">{diffLabel ?? '差分'}</TableCell>
-                  {diffData.map((value, index) => (
+                  {diffData.map((value, colIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    <TableCell key={`diff-${index}`} align="right">
+                    <TableCell key={`diff-${colIndex}`} align="right" sx={{ whiteSpace: 'nowrap' }}>
                       <Diff>{val(value, separator)}</Diff>
+                      {customUnits?.[colIndex]}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -110,6 +116,8 @@ function SimpleTable({
 
 SimpleTable.defaultProps = {
   unit: undefined,
+  disableUnit: false,
+  customUnits: undefined,
   emphasizedRows: [],
   emphasizedColsIfMinus: [],
   diff: undefined,

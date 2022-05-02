@@ -37,7 +37,7 @@ function Diff({ children }: DiffProps) {
     <Typography
       variant="inherit"
       component="span"
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', whiteSpace: 'nowrap' }}
+      sx={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}
     >
       {icon}
       {val}
