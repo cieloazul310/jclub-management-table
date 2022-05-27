@@ -1,8 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
-import { csvParse } from 'd3';
 import { Club, Dict } from '../types';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const d3 = require('d3').default;
 
 const clubs: Club[] = yaml.parse(fs.readFileSync(path.resolve('./data/frames/clubs.yml'), 'utf8'));
 const dict: Dict = yaml.parse(fs.readFileSync(path.resolve('./data/frames/dict.yml'), 'utf8'));
@@ -11,7 +13,7 @@ const outDir = path.resolve('./data/dataset');
 
 function converter(file: string) {
   const src = fs.readFileSync(file, 'utf8');
-  const data = csvParse(src, (row) => {
+  const data = d3.csvParse(src, (row: Record<string, string>) => {
     const club = clubs[clubs.map(({ id }) => id).indexOf(row.id as string)];
     const obj: Record<string, unknown> = {
       slug: club.slug,
@@ -40,7 +42,7 @@ function converter(file: string) {
 
     return obj;
   });
-  data.forEach((datum) => {
+  data.forEach((datum: Record<string, unknown>) => {
     const { slug, year } = datum;
     const dirPath = path.join(outDir, slug as string);
     if (!fs.existsSync(dirPath)) {
