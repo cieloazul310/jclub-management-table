@@ -40,10 +40,17 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
         </Typography>
         <Paragraph>{description}</Paragraph>
         <span>
-          <AppLinkButton to="/year/2020/" variant="contained" color="primary">
+          <AppLinkButton to="/year/2021/" variant="contained" color="primary">
             最新の経営情報を見る
           </AppLinkButton>
         </span>
+      </Jumbotron>
+      <Jumbotron maxWidth="md" bgcolor={palette.mode === 'light' ? 'primary.light' : 'primary.dark'} height={40}>
+        <AppLink to="/year/2021/" color="inherit">
+          <Typography variant="h6" component="h3" color="inherit">
+            2021年度決算(先行発表)を更新しました
+          </Typography>
+        </AppLink>
       </Jumbotron>
       <SectionDivider />
       <Section>
