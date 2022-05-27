@@ -54,6 +54,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
+    "ts-node": "^10.8.0",
     "typescript": "^4.6.3"
   },
   "keywords": [
@@ -73,6 +74,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build:gatsby-node": "tsc gatsby-node/*.ts --module commonjs --target esnext --outDir gatsby-node-dist --skipLibCheck",
+    "convert": "ts-node ./converter/index.ts",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },

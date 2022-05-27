@@ -478,15 +478,15 @@
   relatedCompanies:
     - NPO法人福島ユナイテッドスポーツクラブ
 
-#- id: "58"
-#  slug: iwakifc
-#  name: いわきFC
-#  fullname: いわきFC
-#  short_name: いわき
-#  company: 株式会社いわきスポーツクラブ
-#  category: J3
-#  hometown: いわき市、広野町、楢葉町、富岡町、川内村、大熊町、双葉町、葛尾村
-#  area: 福島県
+- id: "58"
+  slug: iwakifc
+  name: いわきFC
+  fullname: いわきFC
+  short_name: いわき
+  company: 株式会社いわきスポーツクラブ
+  category: J3
+  hometown: いわき市、広野町、楢葉町、富岡町、川内村、大熊町、双葉町、葛尾村
+  area: 福島県
 
 - id: "45"
   slug: yscc
