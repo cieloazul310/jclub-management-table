@@ -28,42 +28,12 @@ function converter(file: string) {
         obj[key] = parseFloat(row[value] ?? '0');
       }
     });
-    /*
-    for (const key in dict) {
-      if (!row.hasOwnProperty([dict[key]])) continue;
-      if (row[dict[key]] === 'Null') continue;
-      obj[key] = stringFileds.includes(key) ? row[dict[key]] : parseFloat(row[dict[key]]);
-    }
-    */
     obj.id = `${club.slug}${obj.year}`;
     obj.fullname = club.name;
 
     return obj;
   });
-  /*
-  const data = csvParse(src, (row) => {
-    const club = clubs[clubs.map(({ id }) => id).indexOf(row.id as string)];
-    const obj: Record<string, unknown> = {
-      slug: club.slug,
-      name: club.short_name,
-    };
-    const dictList = Object.entries(dict);
-    dictList.forEach(([key, value]) => {
-      if (typeof row?.[value] !== 'string') return;
-      if (row[value] === 'Null') return;
 
-      if (stringFileds.includes(key)) {
-        obj[key] = row[value];
-      } else {
-        obj[key] = parseFloat(row[value] ?? '0');
-      }
-    });
-    obj.id = `${club.slug}${obj.year}`;
-    obj.fullname = club.name;
-
-    return obj;
-  });
-  */
   data.forEach((datum) => {
     const { slug, year } = datum;
     const dirPath = path.join(outDir, slug as string);
