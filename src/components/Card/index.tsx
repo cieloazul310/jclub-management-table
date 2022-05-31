@@ -103,9 +103,9 @@ function Card({ edges, mode }: CardProps) {
     }
   }, [contentWidth]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!ref.current) return;
-    ref.current.scrollTo({ left: 0 });
+    ref.current.scrollTo({ left: mode === 'year' ? 0 : contentWidth * (totalCount - 1) });
   }, [sortAsc, sortKey]);
 
   const handleChange = (newIndex: number) => () => {
