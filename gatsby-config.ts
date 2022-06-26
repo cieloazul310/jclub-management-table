@@ -77,6 +77,7 @@ const config: GatsbyConfig = {
         icon: `src/images/og_twitter.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-twitter`,
     `gatsby-plugin-sitemap`,
   ],
 };

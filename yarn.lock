@@ -9106,6 +9106,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gatsby-plugin-twitter@npm:4.11.1":
+  version: 4.11.1
+  resolution: "gatsby-plugin-twitter@npm:4.11.1"
+  dependencies:
+    "@babel/runtime": ^7.15.4
+  peerDependencies:
+    gatsby: ^4.0.0-next
+  checksum: d6a3f3c3d1f7e702571f5820b316dd5187a350381abe51304f5828bcc2ab1913e4ba554018adea9e9094bcdcd8678661ff9be2bf759dbfd8bdfa4d86b19c7309
+  languageName: node
+  linkType: hard
+
 "gatsby-plugin-typescript@npm:^4.11.1":
   version: 4.11.1
   resolution: "gatsby-plugin-typescript@npm:4.11.1"
@@ -11128,6 +11139,7 @@ __metadata:
     gatsby-plugin-manifest: ^4.11.1
     gatsby-plugin-mdx: ^3.11.1
     gatsby-plugin-sitemap: ^5.11.1
+    gatsby-plugin-twitter: 4.11.1
     gatsby-source-filesystem: ^4.11.1
     gatsby-transformer-yaml: ^4.11.0
     gh-pages: ^3.2.3
