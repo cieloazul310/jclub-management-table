@@ -53,7 +53,7 @@ type CardProps = {
 
 function Card({ edges, mode }: CardProps) {
   const [swiper, setSwiper] = React.useState<SwiperCore | null>(null);
-  // const isMobile = useIsMobile();
+  let timer: NodeJS.Timeout;
   const stateEdges = useStateEdges(edges, mode);
   const { range, totalCount } = useRange(stateEdges, mode);
   const { sortAsc, sortKey } = useAppState();
@@ -71,18 +71,21 @@ function Card({ edges, mode }: CardProps) {
   };
 
   /**
-   * 表示中の年度、クラブをsessionStorage に保存
+   * スクロール終了時に表示中の年度、クラブをsessionStorage に保存
    */
   const onSlideChange = (currentSwiper: SwiperCore) => {
-    const { activeIndex } = currentSwiper;
-    if (rangeIsNumbers(range, mode)) {
-      const currentYear = range[activeIndex];
-      window.sessionStorage.setItem('currentYear', currentYear.toString());
-    }
-    if (rangeIsStrings(range, mode)) {
-      const currentClub = range[activeIndex];
-      window.sessionStorage.setItem('currentClub', currentClub);
-    }
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const { activeIndex } = currentSwiper;
+      if (rangeIsNumbers(range, mode)) {
+        const currentYear = range[activeIndex];
+        window.sessionStorage.setItem('currentYear', currentYear.toString());
+      }
+      if (rangeIsStrings(range, mode)) {
+        const currentClub = range[activeIndex];
+        window.sessionStorage.setItem('currentClub', currentClub);
+      }
+    }, 250);
   };
 
   return (
