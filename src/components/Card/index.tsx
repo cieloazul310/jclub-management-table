@@ -78,12 +78,16 @@ function Card({ edges, mode }: CardProps) {
     timer = setTimeout(() => {
       const { activeIndex } = currentSwiper;
       if (rangeIsNumbers(range, mode)) {
-        const currentYear = range[activeIndex];
-        window.sessionStorage.setItem('currentYear', currentYear.toString());
+        const currentYear = range?.[activeIndex];
+        if (currentYear) {
+          window.sessionStorage.setItem('currentYear', currentYear.toString());
+        }
       }
       if (rangeIsStrings(range, mode)) {
-        const currentClub = range[activeIndex];
-        window.sessionStorage.setItem('currentClub', currentClub);
+        const currentClub = range?.[activeIndex];
+        if (currentClub) {
+          window.sessionStorage.setItem('currentClub', currentClub);
+        }
       }
     }, 250);
   };
