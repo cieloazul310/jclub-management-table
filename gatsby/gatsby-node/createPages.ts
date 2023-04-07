@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { CreatePagesArgs } from 'gatsby';
+import type { Node, CreatePagesArgs } from 'gatsby';
 import type { Club, MdxPost, Year, MdxPostByYear } from '../../types';
 
 type GraphQLResult = {
@@ -18,6 +18,17 @@ type GraphQLResult = {
     })[];
   };
   allMdxPostByYears: MdxPostByYear[];
+  docs: {
+    group: {
+      fieldValue: string;
+      nodes: {
+        fields: {
+          slug: string;
+        };
+        internal: Pick<Node['internal'], 'contentFilePath'>;
+      }[];
+    }[];
+  };
 };
 
 /**
@@ -29,6 +40,7 @@ type GraphQLResult = {
  * 4. 記事一覧のページを作成
  * 5. クラブごとの記事一覧のページを作成
  * 6. 年別の記事一覧のページを作成
+ * 7. 用語解説のページを作成
  */
 export default async function createPages({ graphql, actions, reporter }: CreatePagesArgs) {
   const { createPage } = actions;
@@ -36,7 +48,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
 
   const result = await graphql<GraphQLResult>(
     `
-      query CreatePages($draft: Boolean) {
+      query CreatePages($draft: Boolean, $limit: Int) {
         allClub(sort: { index: ASC }) {
           nodes {
             slug
@@ -52,7 +64,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
             href
           }
         }
-        allMdxPost(limit: 20, filter: { draft: { ne: $draft } }, sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]) {
+        allMdxPost(limit: $limit, filter: { draft: { ne: $draft } }, sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]) {
           nodes {
             slug
             draft
@@ -72,17 +84,34 @@ export default async function createPages({ graphql, actions, reporter }: Create
           totalCount
           year
         }
+        docs: allMdx(sort: { frontmatter: { order: ASC } }, filter: { fields: { slug: { regex: "/docs/" } } }) {
+          group(field: { frontmatter: { group: SELECT } }) {
+            fieldValue
+            nodes {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+              }
+              internal {
+                contentFilePath
+              }
+            }
+          }
+        }
       }
     `,
     {
       draft: isProduction ? true : null,
+      limit: isProduction ? null : 20,
     }
   );
   if (result.errors) {
     reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
   }
   if (!result.data) throw new Error('There are no data');
-  const { allClub, allYear, allMdxPost, allMdxPostByYears } = result.data;
+  const { allClub, allYear, allMdxPost, allMdxPostByYears, docs } = result.data;
 
   const postsPerPage = 20;
 
@@ -209,6 +238,24 @@ export default async function createPages({ graphql, actions, reporter }: Create
         basePath,
         draft: isProduction ? true : null,
       },
+    });
+  });
+
+  // 7. 用語解説のページを作成
+  const docsTemplate = path.resolve('./src/templates/docs/index.tsx');
+  docs.group.forEach((group) => {
+    group.nodes.forEach(({ fields, internal }, index) => {
+      const { slug } = fields;
+      const next = index === group.nodes.length - 1 ? null : group.nodes[index + 1].fields.slug;
+      const { contentFilePath } = internal;
+      createPage({
+        path: slug,
+        component: `${docsTemplate}?__contentFilePath=${contentFilePath}`,
+        context: {
+          slug,
+          next,
+        },
+      });
     });
   });
 }
