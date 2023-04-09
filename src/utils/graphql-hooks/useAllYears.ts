@@ -1,27 +1,27 @@
+import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import type { Year } from '../../../types';
 
 type AllYearsQueryData = {
   allYear: {
-    edges: {
-      node: Pick<Year, 'id' | 'year' | 'href'>;
-    }[];
+    nodes: Pick<Year, 'id' | 'year' | 'href'>[];
   };
 };
 
-export default function useAllYears() {
+export default function useAllYears(sort?: 'asc' | 'desc') {
   const data = useStaticQuery<AllYearsQueryData>(graphql`
     {
-      allYear {
-        edges {
-          node {
-            id
-            year
-            href
-          }
+      allYear(sort: { year: ASC }) {
+        nodes {
+          id
+          year
+          href
         }
       }
     }
   `);
-  return data.allYear.edges;
+  return React.useMemo(() => {
+    if (!sort || sort === 'asc') return data.allYear.nodes;
+    return [...data.allYear.nodes].sort((a, b) => b.year - a.year);
+  }, [data, sort]);
 }

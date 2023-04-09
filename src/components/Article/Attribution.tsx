@@ -1,20 +1,15 @@
 import * as React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { mdxComponents } from '@cieloazul310/gatsby-theme-aoi';
+import Shortcodes from '../Shortcodes';
 import DocContainer from './DocContainer';
-import type { DocsQueryData } from '../../../types';
+import Attribution from '../../../content/docs/attribution.mdx';
 
 function AttributionDoc() {
-  const { mdx } = useStaticQuery<DocsQueryData>(graphql`
-    query {
-      mdx(frontmatter: { id: { eq: "data" } }) {
-        body
-        frontmatter {
-          title
-        }
-      }
-    }
-  `);
-  return <DocContainer mdx={mdx} />;
+  return (
+    <DocContainer title="データについて">
+      <Attribution components={{ ...mdxComponents, ...Shortcodes }} />
+    </DocContainer>
+  );
 }
 
 export default AttributionDoc;

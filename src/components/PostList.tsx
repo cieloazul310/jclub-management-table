@@ -2,15 +2,13 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import { ListItemLink, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
-import type { MdxPost } from '../../types';
+import type { MdxPostListFragment } from '../../types';
 
 type PostListProps = {
-  posts: {
-    node: Pick<MdxPost, 'title' | 'date' | 'slug'>;
-  }[];
+  posts: MdxPostListFragment[];
   title?: string;
   more?: {
-    to: string;
+    href: string;
     title?: string;
   };
 };
@@ -24,18 +22,19 @@ function PostList({ posts, title, more }: PostListProps) {
         </Typography>
       ) : null}
       <List>
-        {posts.map(({ node }, index) => (
+        {posts.map((node, index) => (
           <ListItemLink
             key={node.slug}
-            to={node.slug}
+            href={node.slug}
             primaryText={node.title}
             secondaryText={node.date}
             divider={index !== posts.length - 1}
+            disableGutters
           />
         ))}
       </List>
       {more ? (
-        <PanelLink to={more.to} disableMargin>
+        <PanelLink href={more.href} disableMargin>
           {more.title}
         </PanelLink>
       ) : null}
