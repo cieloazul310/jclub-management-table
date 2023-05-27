@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { navigate } from 'gatsby';
 import NativeSelect from '@mui/material/NativeSelect';
+import NoSsr from '@mui/material/NoSsr';
+import Skeleton from '@mui/material/Skeleton';
 import { AppLinkButton, useIsMobile } from '@cieloazul310/gatsby-theme-aoi';
 import { useClubsByCategory } from '../../utils/graphql-hooks';
 import type { Club, Category } from '../../../types';
@@ -15,31 +17,34 @@ export function CategoryLinkCore({ title, clubs }: CategoryLinkCoreProps) {
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     navigate(event.target.value);
   };
-
-  if (isMobile) {
-    return (
-      <NativeSelect value="" onChange={onChange}>
-        <option disabled value="">
-          {title}
-        </option>
-        {clubs.map(({ id, href, short_name }) => (
-          <option key={id} value={href}>
-            {short_name}
+  const core = React.useMemo(() => {
+    if (isMobile) {
+      return (
+        <NativeSelect value="" onChange={onChange}>
+          <option disabled value="">
+            {title}
           </option>
-        ))}
-      </NativeSelect>
-    );
-  }
+          {clubs.map(({ id, href, short_name }) => (
+            <option key={id} value={href}>
+              {short_name}
+            </option>
+          ))}
+        </NativeSelect>
+      );
+    }
 
-  return (
-    <>
-      {clubs.map((node, index) => (
-        <AppLinkButton key={node.id ?? index} href={node.href} color="inherit">
-          {node.short_name}
-        </AppLinkButton>
-      ))}
-    </>
-  );
+    return (
+      <>
+        {clubs.map((node, index) => (
+          <AppLinkButton key={node.id ?? index} href={node.href} color="inherit">
+            {node.short_name}
+          </AppLinkButton>
+        ))}
+      </>
+    );
+  }, [isMobile, clubs]);
+
+  return <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>;
 }
 
 export function J1Link() {
