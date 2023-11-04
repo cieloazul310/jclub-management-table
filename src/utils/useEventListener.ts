@@ -1,17 +1,29 @@
 // https://usehooks-ts.com/react-hook/use-event-listener
-import * as React from 'react';
+import * as React from "react";
 
-function useEventListener<K extends keyof WindowEventMap>(eventName: K, handler: (event: WindowEventMap[K]) => void): void;
-function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
+function useEventListener<K extends keyof WindowEventMap>(
+  eventName: K,
+  handler: (event: WindowEventMap[K]) => void,
+): void;
+function useEventListener<
+  K extends keyof HTMLElementEventMap,
+  T extends HTMLElement = HTMLDivElement,
+>(
   eventName: K,
   handler: (event: HTMLElementEventMap[K]) => void,
-  element: React.RefObject<T>
+  element: React.RefObject<T>,
 ): void;
 
-function useEventListener<KW extends keyof WindowEventMap, KH extends keyof HTMLElementEventMap, T extends HTMLElement | void = void>(
+function useEventListener<
+  KW extends keyof WindowEventMap,
+  KH extends keyof HTMLElementEventMap,
+  T extends HTMLElement | void = void,
+>(
   eventName: KW | KH,
-  handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event) => void,
-  element?: React.RefObject<T>
+  handler: (
+    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event,
+  ) => void,
+  element?: React.RefObject<T>,
 ) {
   // Create a ref that stores handler
   const savedHandler = React.useRef<typeof handler>();

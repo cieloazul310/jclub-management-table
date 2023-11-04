@@ -1,16 +1,16 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableFooter from '@mui/material/TableFooter';
-import { useTheme } from '@mui/material/styles';
-import Diff from './Diff';
-import val from '../utils/val';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableFooter from "@mui/material/TableFooter";
+import { useTheme } from "@mui/material/styles";
+import Diff from "./Diff";
+import val from "../utils/val";
 
 type SimpleTableProps = {
   cols: string[];
@@ -42,8 +42,15 @@ function SimpleTable({
   decimal = 0,
 }: SimpleTableProps) {
   const { palette } = useTheme();
-  const minusColor = palette.mode === 'light' ? palette.error.dark : palette.error.light;
-  const diffData = React.useMemo(() => data[data.length - 1].map((value, index) => value - data[data.length - 2][index]), [data]);
+  const minusColor =
+    palette.mode === "light" ? palette.error.dark : palette.error.light;
+  const diffData = React.useMemo(
+    () =>
+      data[data.length - 1].map(
+        (value, index) => value - data[data.length - 2][index],
+      ),
+    [data],
+  );
 
   return (
     <Box my={4}>
@@ -52,11 +59,17 @@ function SimpleTable({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-                  {disableUnit ? '' : `(単位: ${unit ?? '百万円'})`}
+                <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                  {disableUnit ? "" : `(単位: ${unit ?? "百万円"})`}
                 </TableCell>
                 {cols.map((label) => (
-                  <TableCell key={label} component="th" align="right" scope="col" sx={{ lineHeight: 'inherit' }}>
+                  <TableCell
+                    key={label}
+                    component="th"
+                    align="right"
+                    scope="col"
+                    sx={{ lineHeight: "inherit" }}
+                  >
                     {label}
                   </TableCell>
                 ))}
@@ -64,13 +77,18 @@ function SimpleTable({
             </TableHead>
             <TableBody>
               {rows.map((label, rowIndex) => (
-                <TableRow key={label} selected={emphasizedRows.includes(rowIndex + 1)}>
+                <TableRow
+                  key={label}
+                  selected={emphasizedRows.includes(rowIndex + 1)}
+                >
                   <TableCell
                     align="right"
                     component="th"
                     scope="row"
                     sx={{
-                      fontWeight: emphasizedRows.includes(rowIndex + 1) ? 'bold' : undefined,
+                      fontWeight: emphasizedRows.includes(rowIndex + 1)
+                        ? "bold"
+                        : undefined,
                     }}
                   >
                     {label}
@@ -81,9 +99,15 @@ function SimpleTable({
                       key={`${rowIndex}-${colIndex}`}
                       align="right"
                       sx={{
-                        fontWeight: emphasizedRows.includes(rowIndex + 1) ? 'bold' : undefined,
-                        color: emphasizedColsIfMinus.includes(colIndex + 1) && value < 0 ? minusColor : undefined,
-                        whiteSpace: 'nowrap',
+                        fontWeight: emphasizedRows.includes(rowIndex + 1)
+                          ? "bold"
+                          : undefined,
+                        color:
+                          emphasizedColsIfMinus.includes(colIndex + 1) &&
+                          value < 0
+                            ? minusColor
+                            : undefined,
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {val(value, separator, decimal)}
@@ -96,10 +120,14 @@ function SimpleTable({
             {diff ? (
               <TableFooter>
                 <TableRow>
-                  <TableCell align="right">{diffLabel ?? '差分'}</TableCell>
+                  <TableCell align="right">{diffLabel ?? "差分"}</TableCell>
                   {diffData.map((value, colIndex) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <TableCell key={`diff-${colIndex}`} align="right" sx={{ whiteSpace: 'nowrap' }}>
+                    <TableCell
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={`diff-${colIndex}`}
+                      align="right"
+                      sx={{ whiteSpace: "nowrap" }}
+                    >
                       <Diff>{val(value, separator, decimal)}</Diff>
                       {customUnits?.[colIndex]}
                     </TableCell>

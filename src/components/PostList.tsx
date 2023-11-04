@@ -1,8 +1,8 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import { ListItemLink, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
-import type { MdxPostListFragment } from '../../types';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import { ListItemLink, PanelLink } from "@cieloazul310/gatsby-theme-aoi";
+import type { MdxPostListFragment } from "../../types";
 
 type PostListProps = {
   posts: MdxPostListFragment[];

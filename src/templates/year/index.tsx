@@ -1,21 +1,24 @@
-import * as React from 'react';
-import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import Typography from '@mui/material/Typography';
-import { Section, Article } from '@cieloazul310/gatsby-theme-aoi';
-import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
-import Layout from '../../layout';
-import Seo from '../../components/Seo';
-import YearSummary from './Summary';
-import { YearsLink } from '../../components/Links';
-import Tab from '../components/Tab';
-import FigureSection from '../components/Figure';
-import { AdInSectionDividerOne } from '../../components/Ads';
-import type { Year, AllDataFieldsFragment } from '../../../types';
+import * as React from "react";
+import { graphql, type PageProps, type HeadProps } from "gatsby";
+import Typography from "@mui/material/Typography";
+import { Section, Article } from "@cieloazul310/gatsby-theme-aoi";
+import {
+  PageNavigationContainer,
+  PageNavigationItem,
+} from "@cieloazul310/gatsby-theme-aoi-blog-components";
+import Layout from "../../layout";
+import Seo from "../../components/Seo";
+import YearSummary from "./Summary";
+import { YearsLink } from "../../components/Links";
+import Tab from "../components/Tab";
+import FigureSection from "../components/Figure";
+import { AdInSectionDividerOne } from "../../components/Ads";
+import type { Year, AllDataFieldsFragment } from "../../../types";
 
 export type YearPageData = {
-  year: Pick<Year, 'id' | 'year' | 'href' | 'categories' | 'stats'>;
-  right: Pick<Year, 'year' | 'href'> | null;
-  left: Pick<Year, 'year' | 'href' | 'stats'> | null;
+  year: Pick<Year, "id" | "year" | "href" | "categories" | "stats">;
+  right: Pick<Year, "year" | "href"> | null;
+  left: Pick<Year, "year" | "href" | "stats"> | null;
   allData: {
     nodes: (AllDataFieldsFragment & { previousData: AllDataFieldsFragment })[];
   };
@@ -31,24 +34,40 @@ function YearTemplate({ data }: PageProps<YearPageData, YearPageContext>) {
     () => (
       <Section>
         <PageNavigationContainer>
-          <PageNavigationItem href={left?.href ?? '#'} disabled={!left}>
+          <PageNavigationItem href={left?.href ?? "#"} disabled={!left}>
             <Typography variant="body2">{left?.year}</Typography>
           </PageNavigationItem>
-          <PageNavigationItem href={right?.href ?? '#'} disabled={!right} right>
+          <PageNavigationItem href={right?.href ?? "#"} disabled={!right} right>
             <Typography variant="body2">{right?.year}</Typography>
           </PageNavigationItem>
         </PageNavigationContainer>
       </Section>
     ),
-    [left, right]
+    [left, right],
   );
 
   return (
     <Layout
       title={`${year.year}年Jクラブ経営情報`}
       appBarPosition="relative"
-      right={right ? { href: right.href, title: `${right.year}年度`, secondaryText: 'Next' } : null}
-      left={left ? { href: left.href, title: `${left.year}年度`, secondaryText: 'Previous' } : null}
+      right={
+        right
+          ? {
+              href: right.href,
+              title: `${right.year}年度`,
+              secondaryText: "Next",
+            }
+          : null
+      }
+      left={
+        left
+          ? {
+              href: left.href,
+              title: `${left.year}年度`,
+              secondaryText: "Previous",
+            }
+          : null
+      }
       tabs={<Tab />}
       tabSticky
     >

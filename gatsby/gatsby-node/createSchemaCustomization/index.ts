@@ -1,8 +1,8 @@
-import type { CreateSchemaCustomizationArgs } from 'gatsby';
-import createClubSchema from './club';
-import createDataSchema from './data';
-import createPostSchema from './post';
-import createYearSchema from './year';
+import type { CreateSchemaCustomizationArgs } from "gatsby";
+import createClubSchema from "./club";
+import createDataSchema from "./data";
+import createPostSchema from "./post";
+import createYearSchema from "./year";
 
 /**
  * createSchemaCustomization で何をするか
@@ -12,7 +12,9 @@ import createYearSchema from './year';
  * 3. Data のノードを拡張
  * 4. MdxPost のノードを拡張
  */
-export default async function createSchemaCustomization(args: CreateSchemaCustomizationArgs) {
+export default async function createSchemaCustomization(
+  args: CreateSchemaCustomizationArgs,
+) {
   // 1. Club のノードを拡張
   await createClubSchema(args);
 

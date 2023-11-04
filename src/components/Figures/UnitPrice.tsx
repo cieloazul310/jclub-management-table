@@ -1,8 +1,8 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { useTheme, alpha } from '@mui/material/styles';
-import FigureWrapper from './Wrapper';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { useTheme, alpha } from "@mui/material/styles";
+import FigureWrapper from "./Wrapper";
 
 type UnitPriceContainerProps = {
   width: number;
@@ -11,7 +11,12 @@ type UnitPriceContainerProps = {
   title: string;
 };
 
-function UnitPriceContainer({ children, width, height, title }: UnitPriceContainerProps) {
+function UnitPriceContainer({
+  children,
+  width,
+  height,
+  title,
+}: UnitPriceContainerProps) {
   const { palette } = useTheme();
   return (
     <FigureWrapper caption={title}>
@@ -25,7 +30,14 @@ function UnitPriceContainer({ children, width, height, title }: UnitPriceContain
           </Box>
         </Box>
         <Box display="flex" flexDirection="column" width={width}>
-          <Box height={height} sx={{ borderLeft: 1, borderBottom: 1, borderColor: 'text.secondary' }}>
+          <Box
+            height={height}
+            sx={{
+              borderLeft: 1,
+              borderBottom: 1,
+              borderColor: "text.secondary",
+            }}
+          >
             <svg width={width} height={height}>
               <defs>
                 <marker
@@ -61,8 +73,19 @@ export function UnitPrice() {
   const x1 = 80;
   const demandOne = (x: number) => height - (-x + 180);
   return (
-    <UnitPriceContainer width={width} height={height} title="客単価と入場者数の関係">
-      <line x1={20} x2={220} y1={demandOne(20)} y2={demandOne(220)} stroke={palette.primary.main} strokeWidth={2} />
+    <UnitPriceContainer
+      width={width}
+      height={height}
+      title="客単価と入場者数の関係"
+    >
+      <line
+        x1={20}
+        x2={220}
+        y1={demandOne(20)}
+        y2={demandOne(220)}
+        stroke={palette.primary.main}
+        strokeWidth={2}
+      />
       <line
         x1={0}
         x2={x1}
@@ -72,7 +95,15 @@ export function UnitPrice() {
         strokeWidth={1}
         markerEnd="url(#triangle)"
       />
-      <line x1={x1} x2={x1} y1={demandOne(x1)} y2={height} stroke={palette.secondary.main} strokeWidth={1} markerEnd="url(#triangle)" />
+      <line
+        x1={x1}
+        x2={x1}
+        y1={demandOne(x1)}
+        y2={height}
+        stroke={palette.secondary.main}
+        strokeWidth={1}
+        markerEnd="url(#triangle)"
+      />
       <rect
         x={0}
         y={demandOne(x1)}
@@ -104,14 +135,46 @@ export function UnitPriceTwo() {
   const demandTwo = (x: number) => height - (-x + 220);
 
   return (
-    <UnitPriceContainer width={width} height={height} title="需要曲線のシフトによる入場料収入の増大">
+    <UnitPriceContainer
+      width={width}
+      height={height}
+      title="需要曲線のシフトによる入場料収入の増大"
+    >
       <g strokeDasharray="4, 2" opacity={0.4}>
-        <line x1={20} x2={220} y1={demandOne(20)} y2={demandOne(220)} stroke={palette.primary.main} strokeWidth={2} />
-        <line x1={0} x2={x1} y1={demandOne(x1)} y2={demandOne(x1)} stroke={palette.secondary.main} strokeWidth={1} />
-        <line x1={x1} x2={x1} y1={demandOne(x1)} y2={height} stroke={palette.secondary.main} strokeWidth={1} />
+        <line
+          x1={20}
+          x2={220}
+          y1={demandOne(20)}
+          y2={demandOne(220)}
+          stroke={palette.primary.main}
+          strokeWidth={2}
+        />
+        <line
+          x1={0}
+          x2={x1}
+          y1={demandOne(x1)}
+          y2={demandOne(x1)}
+          stroke={palette.secondary.main}
+          strokeWidth={1}
+        />
+        <line
+          x1={x1}
+          x2={x1}
+          y1={demandOne(x1)}
+          y2={height}
+          stroke={palette.secondary.main}
+          strokeWidth={1}
+        />
       </g>
       <g>
-        <line x1={20} x2={220} y1={demandTwo(20)} y2={demandTwo(220)} stroke={palette.primary.main} strokeWidth={2} />
+        <line
+          x1={20}
+          x2={220}
+          y1={demandTwo(20)}
+          y2={demandTwo(220)}
+          stroke={palette.primary.main}
+          strokeWidth={2}
+        />
         <line
           x1={0}
           x2={x2}
@@ -121,7 +184,15 @@ export function UnitPriceTwo() {
           strokeWidth={1}
           markerEnd="url(#triangle)"
         />
-        <line x1={x2} x2={x2} y1={demandTwo(x2)} y2={height} stroke={palette.secondary.main} strokeWidth={1} markerEnd="url(#triangle)" />
+        <line
+          x1={x2}
+          x2={x2}
+          y1={demandTwo(x2)}
+          y2={height}
+          stroke={palette.secondary.main}
+          strokeWidth={1}
+          markerEnd="url(#triangle)"
+        />
         <rect
           x={0}
           y={demandTwo(x2)}

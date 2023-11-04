@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { initialAppState, type AppState, type Action } from './AppState';
+import * as React from "react";
+import { initialAppState, type AppState, type Action } from "./AppState";
 
 const AppStateContext = React.createContext<{
   state: AppState;
@@ -24,6 +24,6 @@ export function useDispatch(): React.Dispatch<Action> {
     (action: Action) => {
       dispatch(action);
     },
-    [dispatch]
+    [dispatch],
   );
 }

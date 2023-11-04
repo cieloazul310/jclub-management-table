@@ -1,12 +1,12 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { Ul, Li, SubParagraph } from '@cieloazul310/gatsby-theme-aoi';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import { Ul, Li, SubParagraph } from "@cieloazul310/gatsby-theme-aoi";
 
 export function LicenseTokureiOlder() {
   return (
@@ -17,14 +17,14 @@ export function LicenseTokureiOlder() {
             minWidth: 1200,
             borderTop: 1,
             borderLeft: 1,
-            borderColor: 'divider',
-            '& th': {
+            borderColor: "divider",
+            "& th": {
               borderRight: 1,
-              borderColor: 'divider',
+              borderColor: "divider",
             },
-            '& td': {
+            "& td": {
               borderRight: 1,
-              borderColor: 'divider',
+              borderColor: "divider",
             },
           }}
         >
@@ -65,13 +65,17 @@ export function LicenseTokureiOlder() {
             <TableRow>
               <TableCell colSpan={2}>
                 <Ul>
-                  <Li>債務超過、3期連続赤字をライセンス交付の判定対象としない</Li>
+                  <Li>
+                    債務超過、3期連続赤字をライセンス交付の判定対象としない
+                  </Li>
                   <Li>対象年度に新たに債務超過に陥っても判定対象としない</Li>
                 </Ul>
               </TableCell>
               <TableCell colSpan={2}>
                 <Ul>
-                  <Li>債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない</Li>
+                  <Li>
+                    債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない
+                  </Li>
                   <Li>新たに債務超過に陥ってはいけない</Li>
                   <Li>3期連続赤字のカウントをスタートする</Li>
                 </Ul>
@@ -79,7 +83,9 @@ export function LicenseTokureiOlder() {
               <TableCell colSpan={2}>
                 <Ul>
                   <Li>債務超過が解消されていなければならない</Li>
-                  <Li>赤字が継続しているクラブは、3期連続赤字に抵触する可能性がある</Li>
+                  <Li>
+                    赤字が継続しているクラブは、3期連続赤字に抵触する可能性がある
+                  </Li>
                 </Ul>
               </TableCell>
             </TableRow>
@@ -100,14 +106,14 @@ export function LicenseTokureiNewer() {
             minWidth: 1400,
             borderTop: 1,
             borderLeft: 1,
-            borderColor: 'divider',
-            '& th': {
+            borderColor: "divider",
+            "& th": {
               borderRight: 1,
-              borderColor: 'divider',
+              borderColor: "divider",
             },
-            '& td': {
+            "& td": {
               borderRight: 1,
-              borderColor: 'divider',
+              borderColor: "divider",
             },
           }}
         >
@@ -155,13 +161,17 @@ export function LicenseTokureiNewer() {
             <TableRow>
               <TableCell colSpan={2}>
                 <Ul>
-                  <Li>債務超過、3期連続赤字をライセンス交付の判定対象としない</Li>
+                  <Li>
+                    債務超過、3期連続赤字をライセンス交付の判定対象としない
+                  </Li>
                   <Li>対象年度に新たに債務超過に陥っても判定対象としない</Li>
                 </Ul>
               </TableCell>
               <TableCell>
                 <Ul>
-                  <Li>債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない</Li>
+                  <Li>
+                    債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない
+                  </Li>
                   <Li>新たに債務超過に陥ってはいけない</Li>
                   <Li>
                     <s>3期連続赤字のカウントをスタートする</s>
@@ -170,13 +180,17 @@ export function LicenseTokureiNewer() {
               </TableCell>
               <TableCell>
                 <Ul>
-                  <Li>債務超過、3期連続赤字をライセンス交付の判定対象としない</Li>
+                  <Li>
+                    債務超過、3期連続赤字をライセンス交付の判定対象としない
+                  </Li>
                   <Li>対象年度に新たに債務超過に陥っても判定対象としない</Li>
                 </Ul>
               </TableCell>
               <TableCell>
                 <Ul>
-                  <Li>債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない</Li>
+                  <Li>
+                    債務超過が解消されていなくてもよいが、前年度より債務超過額が増加してはいけない
+                  </Li>
                   <Li>新たに債務超過に陥ってはいけない</Li>
                   <Li>3期連続赤字のカウントをスタートする</Li>
                 </Ul>
@@ -189,7 +203,9 @@ export function LicenseTokureiNewer() {
               <TableCell>
                 <Ul>
                   <Li>債務超過が解消されていなければならない</Li>
-                  <Li>赤字が継続しているクラブは、3期連続赤字に抵触する可能性がある</Li>
+                  <Li>
+                    赤字が継続しているクラブは、3期連続赤字に抵触する可能性がある
+                  </Li>
                 </Ul>
               </TableCell>
             </TableRow>

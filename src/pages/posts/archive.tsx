@@ -1,15 +1,21 @@
-import * as React from 'react';
-import { graphql, type PageProps } from 'gatsby';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import { Jumbotron, Section, Article, PanelLink, ListItemLink } from '@cieloazul310/gatsby-theme-aoi';
-import Layout from '../../layout';
-import Seo from '../../components/Seo';
-import type { MdxPostByYear } from '../../../types';
+import * as React from "react";
+import { graphql, type PageProps } from "gatsby";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import {
+  Jumbotron,
+  Section,
+  Article,
+  PanelLink,
+  ListItemLink,
+} from "@cieloazul310/gatsby-theme-aoi";
+import Layout from "../../layout";
+import Seo from "../../components/Seo";
+import type { MdxPostByYear } from "../../../types";
 
 type ArchivePageData = {
-  allMdxPostByYears: Pick<MdxPostByYear, 'basePath' | 'year'>[];
+  allMdxPostByYears: Pick<MdxPostByYear, "basePath" | "year">[];
 };
 
 function ArchivePage({ data }: PageProps<ArchivePageData>) {

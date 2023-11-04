@@ -1,14 +1,22 @@
-import * as React from 'react';
-import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
-import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
-import Seo from '../components/Seo';
-import PostList from '../components/PostList';
-import { AdInSectionDividerOne } from '../components/Ads';
-import Layout from '../layout';
-import type { MdxPostListFragment } from '../../types';
+import * as React from "react";
+import { graphql, type PageProps, type HeadProps } from "gatsby";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import {
+  Jumbotron,
+  Section,
+  Article,
+  PanelLink,
+} from "@cieloazul310/gatsby-theme-aoi";
+import {
+  PageNavigationContainer,
+  PageNavigationItem,
+} from "@cieloazul310/gatsby-theme-aoi-blog-components";
+import Seo from "../components/Seo";
+import PostList from "../components/PostList";
+import { AdInSectionDividerOne } from "../components/Ads";
+import Layout from "../layout";
+import type { MdxPostListFragment } from "../../types";
 
 type AllPostsTemplateData = {
   allMdxPost: {
@@ -24,7 +32,10 @@ type AllPostsTemplateContext = {
   totalCount: number;
 };
 
-function AllPostsTemplate({ data, pageContext }: PageProps<AllPostsTemplateData, AllPostsTemplateContext>) {
+function AllPostsTemplate({
+  data,
+  pageContext,
+}: PageProps<AllPostsTemplateData, AllPostsTemplateContext>) {
   const { allMdxPost } = data;
   const { numPages, currentPage, basePath, totalCount } = pageContext;
 
@@ -44,10 +55,21 @@ function AllPostsTemplate({ data, pageContext }: PageProps<AllPostsTemplateData,
       {currentPage !== 1 || currentPage !== numPages ? (
         <Section component="nav">
           <PageNavigationContainer>
-            <PageNavigationItem href={currentPage === 2 ? `${basePath}/` : `${basePath}/${currentPage - 1}/`} disabled={currentPage === 1}>
+            <PageNavigationItem
+              href={
+                currentPage === 2
+                  ? `${basePath}/`
+                  : `${basePath}/${currentPage - 1}/`
+              }
+              disabled={currentPage === 1}
+            >
               <Typography variant="body2">Newer</Typography>
             </PageNavigationItem>
-            <PageNavigationItem href={`${basePath}/${currentPage + 1}/`} disabled={currentPage === numPages} right>
+            <PageNavigationItem
+              href={`${basePath}/${currentPage + 1}/`}
+              disabled={currentPage === numPages}
+              right
+            >
               <Typography variant="body2">Older</Typography>
             </PageNavigationItem>
           </PageNavigationContainer>
@@ -67,7 +89,9 @@ function AllPostsTemplate({ data, pageContext }: PageProps<AllPostsTemplateData,
 
 export default AllPostsTemplate;
 
-export function Head({ pageContext }: HeadProps<AllPostsTemplateData, AllPostsTemplateContext>) {
+export function Head({
+  pageContext,
+}: HeadProps<AllPostsTemplateData, AllPostsTemplateContext>) {
   const { numPages, currentPage } = pageContext;
   const title = `記事一覧 (${currentPage}/${numPages})`;
   return <Seo title={title} />;
@@ -75,7 +99,12 @@ export function Head({ pageContext }: HeadProps<AllPostsTemplateData, AllPostsTe
 
 export const query = graphql`
   query AllPosts($skip: Int!, $limit: Int!, $draft: Boolean) {
-    allMdxPost(filter: { draft: { ne: $draft } }, sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }], limit: $limit, skip: $skip) {
+    allMdxPost(
+      filter: { draft: { ne: $draft } }
+      sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]
+      limit: $limit
+      skip: $skip
+    ) {
       nodes {
         ...mdxPostList
       }

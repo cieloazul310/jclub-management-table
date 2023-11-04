@@ -1,11 +1,11 @@
-import * as React from 'react';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { alpha } from '@mui/material/styles';
-import useHasJ3 from './useHasJ3';
-import valToOku from '../../../utils/valToOku';
-import Diff from '../../../components/Diff';
-import type { Year, YearStats, StatsValues } from '../../../../types';
+import * as React from "react";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import { alpha } from "@mui/material/styles";
+import useHasJ3 from "./useHasJ3";
+import valToOku from "../../../utils/valToOku";
+import Diff from "../../../components/Diff";
+import type { Year, YearStats, StatsValues } from "../../../../types";
 
 type TableCellAverageProps = {
   statsValues: StatsValues;
@@ -14,10 +14,17 @@ type TableCellAverageProps = {
   unit?: string;
 };
 
-function TableCellAverage({ statsValues, prev, oku = true, unit = '億円' }: TableCellAverageProps) {
+function TableCellAverage({
+  statsValues,
+  prev,
+  oku = true,
+  unit = "億円",
+}: TableCellAverageProps) {
   const diff = React.useMemo(() => {
     if (!prev) return null;
-    const diffValue = oku ? valToOku(statsValues.average - prev.average) : statsValues.average - prev.average;
+    const diffValue = oku
+      ? valToOku(statsValues.average - prev.average)
+      : statsValues.average - prev.average;
     return (
       <span>
         <Diff>{diffValue}</Diff>
@@ -40,19 +47,24 @@ function TableCellAverage({ statsValues, prev, oku = true, unit = '億円' }: Ta
 
 TableCellAverage.defaultProps = {
   oku: true,
-  unit: '億円',
+  unit: "億円",
 };
 
 type TableCellValueProps = {
   statsValues: StatsValues;
-  mode: 'min' | 'max';
+  mode: "min" | "max";
   oku?: boolean;
   unit?: string;
 };
 
-function TableCellValue({ statsValues, mode, oku = true, unit = '億円' }: TableCellValueProps) {
+function TableCellValue({
+  statsValues,
+  mode,
+  oku = true,
+  unit = "億円",
+}: TableCellValueProps) {
   const { values } = statsValues;
-  const index = mode === 'min' ? 0 : values.length - 1;
+  const index = mode === "min" ? 0 : values.length - 1;
   const item = values[index];
   const value = oku ? valToOku(item.value) : item.value;
 
@@ -68,19 +80,26 @@ function TableCellValue({ statsValues, mode, oku = true, unit = '億円' }: Tabl
 
 TableCellValue.defaultProps = {
   oku: true,
-  unit: '億円',
+  unit: "億円",
 };
 
 type TableSetProps = {
   title: string;
   statsKey: keyof YearStats;
-  year: Pick<Year, 'year' | 'stats'>;
-  prevYear: Pick<Year, 'stats'> | null;
+  year: Pick<Year, "year" | "stats">;
+  prevYear: Pick<Year, "stats"> | null;
   oku?: boolean;
   unit?: string;
 };
 
-function TableSet({ title, statsKey, year, prevYear, oku, unit }: TableSetProps) {
+function TableSet({
+  title,
+  statsKey,
+  year,
+  prevYear,
+  oku,
+  unit,
+}: TableSetProps) {
   const J1 = year.stats.J1[statsKey];
   const J2 = year.stats.J2[statsKey];
   const J3 = year.stats.J3?.[statsKey];
@@ -93,7 +112,10 @@ function TableSet({ title, statsKey, year, prevYear, oku, unit }: TableSetProps)
         <TableCell
           component="th"
           colSpan={colSpan}
-          sx={{ bgcolor: ({ palette }) => alpha(palette.primary.dark, palette.action.hoverOpacity) }}
+          sx={{
+            bgcolor: ({ palette }) =>
+              alpha(palette.primary.dark, palette.action.hoverOpacity),
+          }}
         >
           {title}
         </TableCell>
@@ -102,9 +124,26 @@ function TableSet({ title, statsKey, year, prevYear, oku, unit }: TableSetProps)
         <TableCell component="th" scope="row" sx={{ pl: 4 }}>
           平均
         </TableCell>
-        <TableCellAverage statsValues={J1} prev={prevYear?.stats.J1[statsKey]} oku={oku} unit={unit} />
-        <TableCellAverage statsValues={J2} prev={prevYear?.stats.J2[statsKey]} oku={oku} unit={unit} />
-        {hasJ3 ? <TableCellAverage statsValues={J3} prev={prevYear?.stats.J3?.[statsKey]} oku={oku} unit={unit} /> : null}
+        <TableCellAverage
+          statsValues={J1}
+          prev={prevYear?.stats.J1[statsKey]}
+          oku={oku}
+          unit={unit}
+        />
+        <TableCellAverage
+          statsValues={J2}
+          prev={prevYear?.stats.J2[statsKey]}
+          oku={oku}
+          unit={unit}
+        />
+        {hasJ3 ? (
+          <TableCellAverage
+            statsValues={J3}
+            prev={prevYear?.stats.J3?.[statsKey]}
+            oku={oku}
+            unit={unit}
+          />
+        ) : null}
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row" sx={{ pl: 4 }}>
@@ -112,7 +151,9 @@ function TableSet({ title, statsKey, year, prevYear, oku, unit }: TableSetProps)
         </TableCell>
         <TableCellValue statsValues={J1} mode="max" oku={oku} unit={unit} />
         <TableCellValue statsValues={J2} mode="max" oku={oku} unit={unit} />
-        {hasJ3 ? <TableCellValue statsValues={J3} mode="max" oku={oku} unit={unit} /> : null}
+        {hasJ3 ? (
+          <TableCellValue statsValues={J3} mode="max" oku={oku} unit={unit} />
+        ) : null}
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row" sx={{ pl: 4 }}>
@@ -120,7 +161,9 @@ function TableSet({ title, statsKey, year, prevYear, oku, unit }: TableSetProps)
         </TableCell>
         <TableCellValue statsValues={J1} mode="min" oku={oku} unit={unit} />
         <TableCellValue statsValues={J2} mode="min" oku={oku} unit={unit} />
-        {hasJ3 ? <TableCellValue statsValues={J3} mode="min" oku={oku} unit={unit} /> : null}
+        {hasJ3 ? (
+          <TableCellValue statsValues={J3} mode="min" oku={oku} unit={unit} />
+        ) : null}
       </TableRow>
     </>
   );

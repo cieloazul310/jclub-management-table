@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { navigate } from 'gatsby';
-import NativeSelect from '@mui/material/NativeSelect';
-import NoSsr from '@mui/material/NoSsr';
-import Skeleton from '@mui/material/Skeleton';
-import { AppLinkButton, useIsMobile } from '@cieloazul310/gatsby-theme-aoi';
-import { useClubsByCategory } from '../../utils/graphql-hooks';
-import type { Club, Category } from '../../../types';
+import * as React from "react";
+import { navigate } from "gatsby";
+import NativeSelect from "@mui/material/NativeSelect";
+import NoSsr from "@mui/material/NoSsr";
+import Skeleton from "@mui/material/Skeleton";
+import { AppLinkButton, useIsMobile } from "@cieloazul310/gatsby-theme-aoi";
+import { useClubsByCategory } from "../../utils/graphql-hooks";
+import type { Club, Category } from "../../../types";
 
 type CategoryLinkCoreProps = {
   title: string;
-  clubs: Pick<Club, 'id' | 'short_name' | 'href'>[];
+  clubs: Pick<Club, "id" | "short_name" | "href">[];
 };
 
 export function CategoryLinkCore({ title, clubs }: CategoryLinkCoreProps) {
@@ -36,7 +36,11 @@ export function CategoryLinkCore({ title, clubs }: CategoryLinkCoreProps) {
     return (
       <>
         {clubs.map((node, index) => (
-          <AppLinkButton key={node.id ?? index} href={node.href} color="inherit">
+          <AppLinkButton
+            key={node.id ?? index}
+            href={node.href}
+            color="inherit"
+          >
             {node.short_name}
           </AppLinkButton>
         ))}
@@ -44,7 +48,9 @@ export function CategoryLinkCore({ title, clubs }: CategoryLinkCoreProps) {
     );
   }, [isMobile, clubs]);
 
-  return <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>;
+  return (
+    <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>
+  );
 }
 
 export function J1Link() {
@@ -63,8 +69,8 @@ export function J3Link() {
 }
 
 export function CategoryLink({ category }: { category: Category }) {
-  if (category === 'J1') return <J1Link />;
-  if (category === 'J2') return <J2Link />;
-  if (category === 'J3') return <J3Link />;
+  if (category === "J1") return <J1Link />;
+  if (category === "J2") return <J2Link />;
+  if (category === "J3") return <J3Link />;
   return null;
 }

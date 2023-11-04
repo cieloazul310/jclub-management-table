@@ -1,14 +1,22 @@
-import * as React from 'react';
-import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
-import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
-import Seo from '../components/Seo';
-import PostList from '../components/PostList';
-import { AdInSectionDividerOne } from '../components/Ads';
-import Layout from '../layout';
-import type { MdxPostListFragment, MdxPostByYear } from '../../types';
+import * as React from "react";
+import { graphql, type PageProps, type HeadProps } from "gatsby";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import {
+  Jumbotron,
+  Section,
+  Article,
+  PanelLink,
+} from "@cieloazul310/gatsby-theme-aoi";
+import {
+  PageNavigationContainer,
+  PageNavigationItem,
+} from "@cieloazul310/gatsby-theme-aoi-blog-components";
+import Seo from "../components/Seo";
+import PostList from "../components/PostList";
+import { AdInSectionDividerOne } from "../components/Ads";
+import Layout from "../layout";
+import type { MdxPostListFragment, MdxPostByYear } from "../../types";
 
 type PostsByClubPageData = {
   allMdxPost: {
@@ -20,7 +28,10 @@ type PostsByClubPageContext = MdxPostByYear & {
   next: MdxPostByYear | null;
 };
 
-function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageData, PostsByClubPageContext>) {
+function PostsByClubTemplate({
+  data,
+  pageContext,
+}: PageProps<PostsByClubPageData, PostsByClubPageContext>) {
   const { allMdxPost } = data;
   const { totalCount, year, previous, next } = pageContext;
 
@@ -39,11 +50,17 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
       </Section>
       <Section>
         <PageNavigationContainer>
-          <PageNavigationItem href={next?.basePath ?? '#'} disabled={!next}>
+          <PageNavigationItem href={next?.basePath ?? "#"} disabled={!next}>
             <Typography variant="body2">{next?.year}年の記事一覧</Typography>
           </PageNavigationItem>
-          <PageNavigationItem href={previous?.basePath ?? '#'} disabled={!previous} right>
-            <Typography variant="body2">{previous?.year}年の記事一覧</Typography>
+          <PageNavigationItem
+            href={previous?.basePath ?? "#"}
+            disabled={!previous}
+            right
+          >
+            <Typography variant="body2">
+              {previous?.year}年の記事一覧
+            </Typography>
           </PageNavigationItem>
         </PageNavigationContainer>
       </Section>
@@ -61,14 +78,19 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
 
 export default PostsByClubTemplate;
 
-export function Head({ pageContext }: HeadProps<PostsByClubPageData, PostsByClubPageContext>) {
+export function Head({
+  pageContext,
+}: HeadProps<PostsByClubPageData, PostsByClubPageContext>) {
   const { year } = pageContext;
   return <Seo title={`${year}年の記事一覧`} />;
 }
 
 export const query = graphql`
   query PostsByYear($year: String!, $draft: Boolean) {
-    allMdxPost(filter: { year: { eq: $year }, draft: { ne: $draft } }, sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]) {
+    allMdxPost(
+      filter: { year: { eq: $year }, draft: { ne: $draft } }
+      sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]
+    ) {
       nodes {
         ...mdxPostList
       }

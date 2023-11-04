@@ -1,5 +1,5 @@
-import type { Mode } from '../../types';
+import type { Mode } from "../../types";
 
 export default function useIsClub<T>(mode: Mode) {
-  return (item: unknown): item is T => mode === 'club';
+  return (item: unknown): item is T => mode === "club";
 }

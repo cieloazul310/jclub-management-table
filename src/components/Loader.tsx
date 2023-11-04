@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 
 type LoaderProps = {
   height?: number;
@@ -8,7 +8,15 @@ type LoaderProps = {
 
 function Loader({ height = 120 }: LoaderProps) {
   return (
-    <Box sx={{ height, display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Box
+      sx={{
+        height,
+        display: "flex",
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <CircularProgress color="secondary" />
     </Box>
   );

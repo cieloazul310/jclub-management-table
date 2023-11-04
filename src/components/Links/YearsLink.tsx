@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { navigate } from 'gatsby';
-import NativeSelect from '@mui/material/NativeSelect';
-import NoSsr from '@mui/material/NoSsr';
-import Skeleton from '@mui/material/Skeleton';
-import { AppLinkButton, useIsMobile } from '@cieloazul310/gatsby-theme-aoi';
-import { useAllYears } from '../../utils/graphql-hooks';
+import * as React from "react";
+import { navigate } from "gatsby";
+import NativeSelect from "@mui/material/NativeSelect";
+import NoSsr from "@mui/material/NoSsr";
+import Skeleton from "@mui/material/Skeleton";
+import { AppLinkButton, useIsMobile } from "@cieloazul310/gatsby-theme-aoi";
+import { useAllYears } from "../../utils/graphql-hooks";
 
 export function YearsLink() {
   const isMobile = useIsMobile();
-  const years = useAllYears(isMobile ? 'desc' : 'asc');
+  const years = useAllYears(isMobile ? "desc" : "asc");
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     navigate(event.target.value);
   };
@@ -30,7 +30,11 @@ export function YearsLink() {
     return (
       <>
         {years.map((node) => (
-          <AppLinkButton key={node.year.toString()} href={node.href} color="inherit">
+          <AppLinkButton
+            key={node.year.toString()}
+            href={node.href}
+            color="inherit"
+          >
             {node.year}
           </AppLinkButton>
         ))}
@@ -38,7 +42,9 @@ export function YearsLink() {
     );
   }, [isMobile, years]);
 
-  return <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>;
+  return (
+    <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>
+  );
 }
 
 export default YearsLink;

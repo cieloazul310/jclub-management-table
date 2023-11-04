@@ -1,13 +1,22 @@
-import type { CreateSchemaCustomizationArgs } from 'gatsby';
-import type { GraphQLFieldResolver, GraphQLResolveInfo, GraphQLObjectType } from 'gatsby/graphql';
+import type { CreateSchemaCustomizationArgs } from "gatsby";
+import type {
+  GraphQLFieldResolver,
+  GraphQLResolveInfo,
+  GraphQLObjectType,
+} from "gatsby/graphql";
 // import { GatsbyIterable,} from 'gatsby/dist/datastore/common/iterable';
-import type { GatsbyGraphQLContext } from '../graphql';
-import type { Mdx, MdxPost } from '../../../types';
+import type { GatsbyGraphQLContext } from "../graphql";
+import type { Mdx, MdxPost } from "../../../types";
 
-function mdxResolverPassthrough(fieldName: string): GraphQLFieldResolver<Mdx<'node'>, GatsbyGraphQLContext> {
+function mdxResolverPassthrough(
+  fieldName: string,
+): GraphQLFieldResolver<Mdx<"node">, GatsbyGraphQLContext> {
   return async (source, args, context, info) => {
-    const type = info.schema.getType(`Mdx`) as GraphQLObjectType<Mdx<'node'>, GatsbyGraphQLContext>;
-    const mdxNode = context.nodeModel.getNodeById<Mdx<'node'>>({
+    const type = info.schema.getType(`Mdx`) as GraphQLObjectType<
+      Mdx<"node">,
+      GatsbyGraphQLContext
+    >;
+    const mdxNode = context.nodeModel.getNodeById<Mdx<"node">>({
       id: source.parent as string,
     });
     const resolver = type?.getFields()[fieldName].resolve;
@@ -20,7 +29,10 @@ function mdxResolverPassthrough(fieldName: string): GraphQLFieldResolver<Mdx<'no
   };
 }
 
-export default async function createDataSchema({ actions, schema }: CreateSchemaCustomizationArgs) {
+export default async function createDataSchema({
+  actions,
+  schema,
+}: CreateSchemaCustomizationArgs) {
   const { createTypes } = actions;
 
   createTypes(`
@@ -50,15 +62,20 @@ export default async function createDataSchema({ actions, schema }: CreateSchema
       fields: {
         year: {
           type: `String!`,
-          resolve: (source: MdxPost<'node'>) => new Date(source.date).getFullYear().toString(),
+          resolve: (source: MdxPost<"node">) =>
+            new Date(source.date).getFullYear().toString(),
         },
         lastmod: {
           type: `Date!`,
-          resolve: (source: MdxPost<'node'>) => source.lastmod ?? source.date,
+          resolve: (source: MdxPost<"node">) => source.lastmod ?? source.date,
         },
         club: {
           type: `[Club]`,
-          resolve: async (source: MdxPost<'node'>, args: unknown, context: GatsbyGraphQLContext) => {
+          resolve: async (
+            source: MdxPost<"node">,
+            args: unknown,
+            context: GatsbyGraphQLContext,
+          ) => {
             if (!source.club) return null;
             const { entries } = await context.nodeModel.findAll({
               type: `Club`,
@@ -80,6 +97,6 @@ export default async function createDataSchema({ actions, schema }: CreateSchema
           resolve: mdxResolverPassthrough(`excerpt`),
         },
       },
-    })
+    }),
   );
 }

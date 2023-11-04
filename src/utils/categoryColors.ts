@@ -1,4 +1,4 @@
-import { red, green, blue, grey } from '@mui/material/colors';
+import { red, green, blue, grey } from "@mui/material/colors";
 
 export const j1color = red;
 export const j2color = green;

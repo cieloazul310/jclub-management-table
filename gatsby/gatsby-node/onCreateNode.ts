@@ -1,9 +1,9 @@
-import * as path from 'path';
-import type { CreateNodeArgs, Node } from 'gatsby';
-import { createFilePath } from 'gatsby-source-filesystem';
-import type { Mdx } from '../../types';
+import * as path from "path";
+import type { CreateNodeArgs, Node } from "gatsby";
+import { createFilePath } from "gatsby-source-filesystem";
+import type { Mdx } from "../../types";
 
-function isMdx(node: Node & Record<string, unknown>): node is Mdx<'node'> {
+function isMdx(node: Node & Record<string, unknown>): node is Mdx<"node"> {
   return node.internal.type === `Mdx`;
 }
 
@@ -20,18 +20,18 @@ export default async function onCreateNode({
   createNodeId,
   createContentDigest,
 }: CreateNodeArgs) {
-  const parentFileNode = getNode(node.parent ?? '');
+  const parentFileNode = getNode(node.parent ?? "");
   const source = parentFileNode?.sourceInstanceName;
 
-  if (isMdx(node) && source === 'docs') {
+  if (isMdx(node) && source === "docs") {
     const value = createFilePath({ node, getNode });
-    const slug = path.join('/docs', value);
-    createNodeField({ node, name: 'slug', value: slug });
+    const slug = path.join("/docs", value);
+    createNodeField({ node, name: "slug", value: slug });
   }
 
-  if (isMdx(node) && source !== 'docs') {
+  if (isMdx(node) && source !== "docs") {
     const value = createFilePath({ node, getNode });
-    const slug = path.join('/posts', value);
+    const slug = path.join("/posts", value);
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`);
     const mdxPostNode = getNode(mdxPostId);

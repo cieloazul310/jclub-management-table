@@ -1,13 +1,13 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { AppLink } from '@cieloazul310/gatsby-theme-aoi';
-import { useClubsByCategory, useAllYears } from '../../../utils/graphql-hooks';
-import type { Club } from '../../../../types';
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { AppLink } from "@cieloazul310/gatsby-theme-aoi";
+import { useClubsByCategory, useAllYears } from "../../../utils/graphql-hooks";
+import type { Club } from "../../../../types";
 
 type CategoryLinksProps = {
   title: string;
-  clubs: Pick<Club, 'short_name' | 'href'>[];
+  clubs: Pick<Club, "short_name" | "href">[];
 };
 
 function CategoryLinks({ title, clubs }: CategoryLinksProps) {
@@ -18,7 +18,12 @@ function CategoryLinks({ title, clubs }: CategoryLinksProps) {
       </Typography>
       <Typography sx={{ p: 0, m: 0 }} component="ul">
         {clubs.map((node) => (
-          <Typography sx={{ p: 0, mr: 1, my: 0, ml: 0, display: 'inline-block' }} key={node.short_name} variant="body2" component="li">
+          <Typography
+            sx={{ p: 0, mr: 1, my: 0, ml: 0, display: "inline-block" }}
+            key={node.short_name}
+            variant="body2"
+            component="li"
+          >
             <AppLink href={node.href} color="inherit">
               {node.short_name}
             </AppLink>
@@ -39,7 +44,12 @@ function YearsLinks() {
       </Typography>
       <Typography sx={{ p: 0, m: 0 }} component="ul">
         {years.map((node) => (
-          <Typography sx={{ p: 0, mr: 1, my: 0, ml: 0, display: 'inline-block' }} key={node.id} variant="body2" component="li">
+          <Typography
+            sx={{ p: 0, mr: 1, my: 0, ml: 0, display: "inline-block" }}
+            key={node.id}
+            variant="body2"
+            component="li"
+          >
             <AppLink href={node.href} color="inherit">
               {node.year}
             </AppLink>

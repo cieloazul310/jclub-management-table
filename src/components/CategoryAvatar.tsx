@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Typograhy from '@mui/material/Typography';
-import useCategoryColor from '../utils/useCategoryColor';
+import * as React from "react";
+import Typograhy from "@mui/material/Typography";
+import useCategoryColor from "../utils/useCategoryColor";
 
 function CategoryLabel({ category }: { category: string }) {
   const { color, contrastText } = useCategoryColor(category);
@@ -11,9 +11,9 @@ function CategoryLabel({ category }: { category: string }) {
         bgcolor: color,
         color: contrastText,
         px: 1,
-        fontSize: 'inherit',
+        fontSize: "inherit",
         borderRadius: 1,
-        fontWeight: 'bold',
+        fontWeight: "bold",
       }}
     >
       {category}

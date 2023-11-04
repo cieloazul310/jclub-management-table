@@ -1,12 +1,29 @@
-import * as React from 'react';
-import { Section, Article, AppLink, H2, Ul, Li } from '@cieloazul310/gatsby-theme-aoi';
+import * as React from "react";
+import {
+  Section,
+  Article,
+  AppLink,
+  H2,
+  Ul,
+  Li,
+} from "@cieloazul310/gatsby-theme-aoi";
 
-import Chart from '../components/Chart';
-import { AllDataFieldsFragment, Club } from '../../../types';
+import Chart from "../components/Chart";
+import { AllDataFieldsFragment, Club } from "../../../types";
 
 type ClubSummaryProps = {
   nodes: AllDataFieldsFragment[];
-  club: Pick<Club, 'name' | 'fullname' | 'company' | 'category' | 'hometown' | 'settlement' | 'relatedCompanies' | 'annotation'>;
+  club: Pick<
+    Club,
+    | "name"
+    | "fullname"
+    | "company"
+    | "category"
+    | "hometown"
+    | "settlement"
+    | "relatedCompanies"
+    | "annotation"
+  >;
 };
 
 function ClubSummary({ nodes, club }: ClubSummaryProps) {
@@ -22,10 +39,15 @@ function ClubSummary({ nodes, club }: ClubSummaryProps) {
           <Li>ホームタウン: {club.hometown}</Li>
           {club.settlement ? (
             <Li>
-              経営情報: <AppLink href={club.settlement}>{decodeURIComponent(club.settlement)}</AppLink>
+              経営情報:{" "}
+              <AppLink href={club.settlement}>
+                {decodeURIComponent(club.settlement)}
+              </AppLink>
             </Li>
           ) : null}
-          {club.relatedCompanies ? <Li>関連する法人: {club.relatedCompanies.join(', ')}</Li> : null}
+          {club.relatedCompanies ? (
+            <Li>関連する法人: {club.relatedCompanies.join(", ")}</Li>
+          ) : null}
           {club.annotation ? (
             <Li>
               注釈:

@@ -1,20 +1,20 @@
-import * as path from 'path';
-import type { Node, CreatePagesArgs } from 'gatsby';
-import type { Club, MdxPost, Year, MdxPostByYear } from '../../types';
+import * as path from "path";
+import type { Node, CreatePagesArgs } from "gatsby";
+import type { Club, MdxPost, Year, MdxPostByYear } from "../../types";
 
 type GraphQLResult = {
   allClub: {
-    nodes: (Pick<Club, 'slug' | 'href'> & {
+    nodes: (Pick<Club, "slug" | "href"> & {
       posts: { totalCount: number };
     })[];
   };
   allYear: {
-    nodes: Pick<Year, 'year' | 'href'>[];
+    nodes: Pick<Year, "year" | "href">[];
   };
   allMdxPost: {
-    nodes: (Pick<MdxPost, 'slug' | 'draft'> & {
-      club: Pick<Club, 'slug'>[] | null;
-      internal: Pick<MdxPost['internal'], 'contentFilePath'>;
+    nodes: (Pick<MdxPost, "slug" | "draft"> & {
+      club: Pick<Club, "slug">[] | null;
+      internal: Pick<MdxPost["internal"], "contentFilePath">;
     })[];
   };
   allMdxPostByYears: MdxPostByYear[];
@@ -25,7 +25,7 @@ type GraphQLResult = {
         fields: {
           slug: string;
         };
-        internal: Pick<Node['internal'], 'contentFilePath'>;
+        internal: Pick<Node["internal"], "contentFilePath">;
       }[];
     }[];
   };
@@ -42,9 +42,13 @@ type GraphQLResult = {
  * 6. 年別の記事一覧のページを作成
  * 7. 用語解説のページを作成
  */
-export default async function createPages({ graphql, actions, reporter }: CreatePagesArgs) {
+export default async function createPages({
+  graphql,
+  actions,
+  reporter,
+}: CreatePagesArgs) {
   const { createPage } = actions;
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === "production";
   const draft = isProduction ? true : null;
 
   const result = await graphql<GraphQLResult>(
@@ -65,7 +69,11 @@ export default async function createPages({ graphql, actions, reporter }: Create
             href
           }
         }
-        allMdxPost(limit: $limit, filter: { draft: { ne: $draft } }, sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]) {
+        allMdxPost(
+          limit: $limit
+          filter: { draft: { ne: $draft } }
+          sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]
+        ) {
           nodes {
             slug
             draft
@@ -83,7 +91,10 @@ export default async function createPages({ graphql, actions, reporter }: Create
           totalCount
           year
         }
-        docs: allMdx(sort: { frontmatter: { order: ASC } }, filter: { fields: { slug: { regex: "/docs/" } } }) {
+        docs: allMdx(
+          sort: { frontmatter: { order: ASC } }
+          filter: { fields: { slug: { regex: "/docs/" } } }
+        ) {
           group(field: { frontmatter: { group: SELECT } }) {
             fieldValue
             nodes {
@@ -104,12 +115,12 @@ export default async function createPages({ graphql, actions, reporter }: Create
     {
       draft,
       limit: isProduction ? 9999 : 20,
-    }
+    },
   );
   if (result.errors) {
     reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
   }
-  if (!result.data) throw new Error('There are no data');
+  if (!result.data) throw new Error("There are no data");
   const { allClub, allYear, allMdxPost, allMdxPostByYears, docs } = result.data;
 
   const postsPerPage = 20;
@@ -118,7 +129,8 @@ export default async function createPages({ graphql, actions, reporter }: Create
   const clubTemplate = path.resolve(`./src/templates/club/index.tsx`);
   allClub.nodes.forEach((node, index) => {
     const left = index !== 0 ? allClub.nodes[index - 1] : null;
-    const right = index !== allClub.nodes.length - 1 ? allClub.nodes[index + 1] : null;
+    const right =
+      index !== allClub.nodes.length - 1 ? allClub.nodes[index + 1] : null;
 
     createPage({
       path: node.href,
@@ -136,7 +148,8 @@ export default async function createPages({ graphql, actions, reporter }: Create
   const yearTemplate = path.resolve(`./src/templates/year/index.tsx`);
   allYear.nodes.forEach((node, index) => {
     const left = index !== 0 ? allYear.nodes[index - 1] : null;
-    const right = index !== allYear.nodes.length - 1 ? allYear.nodes[index + 1] : null;
+    const right =
+      index !== allYear.nodes.length - 1 ? allYear.nodes[index + 1] : null;
 
     createPage({
       path: node.href,
@@ -150,11 +163,12 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // 3. 記事ごとのページを作成
-  const mdxPostTempalte = path.resolve('./src/templates/post/index.tsx');
+  const mdxPostTempalte = path.resolve("./src/templates/post/index.tsx");
   allMdxPost.nodes.forEach((node, index, arr) => {
     const newer = index !== 0 ? arr[index - 1] : null;
     const older = index !== arr.length - 1 ? arr[index + 1] : null;
-    const specifiedClub = node.club && node.club.length === 1 ? node.club[0].slug : null;
+    const specifiedClub =
+      node.club && node.club.length === 1 ? node.club[0].slug : null;
 
     createPage({
       path: node.slug,
@@ -172,12 +186,15 @@ export default async function createPages({ graphql, actions, reporter }: Create
 
   // 4. 記事一覧のページを作成
   const numAllPostsPages = Math.ceil(allMdxPost.nodes.length / postsPerPage);
-  const allPostsBasePath = '/posts';
+  const allPostsBasePath = "/posts";
   Array.from({ length: numAllPostsPages }).forEach((_, i) => {
-    const pagePath = i === 0 ? allPostsBasePath : path.join(allPostsBasePath, (i + 1).toString());
+    const pagePath =
+      i === 0
+        ? allPostsBasePath
+        : path.join(allPostsBasePath, (i + 1).toString());
     createPage({
       path: pagePath,
-      component: path.resolve('./src/templates/all-posts.tsx'),
+      component: path.resolve("./src/templates/all-posts.tsx"),
       context: {
         limit: postsPerPage,
         skip: postsPerPage * i,
@@ -195,15 +212,16 @@ export default async function createPages({ graphql, actions, reporter }: Create
     .filter((node) => node.posts.totalCount)
     .forEach((node) => {
       const { totalCount } = node.posts;
-      const basePath = path.join('/club', node.slug, 'posts');
+      const basePath = path.join("/club", node.slug, "posts");
       const numPages = Math.ceil(totalCount / postsPerPage);
 
       Array.from({ length: numPages }).forEach((_, i) => {
-        const pagePath = i === 0 ? basePath : path.join(basePath, (i + 1).toString());
+        const pagePath =
+          i === 0 ? basePath : path.join(basePath, (i + 1).toString());
 
         createPage({
           path: pagePath,
-          component: path.resolve('./src/templates/postsByClub.tsx'),
+          component: path.resolve("./src/templates/postsByClub.tsx"),
           context: {
             slug: node.slug,
             limit: postsPerPage,
@@ -221,11 +239,14 @@ export default async function createPages({ graphql, actions, reporter }: Create
   // 6. 年別の記事一覧のページを作成
   allMdxPostByYears.forEach(({ year, basePath, totalCount }, index) => {
     const older = index === 0 ? null : allMdxPostByYears[index - 1];
-    const newer = index === allMdxPostByYears.length - 1 ? null : allMdxPostByYears[index + 1];
+    const newer =
+      index === allMdxPostByYears.length - 1
+        ? null
+        : allMdxPostByYears[index + 1];
 
     createPage({
       path: basePath,
-      component: path.resolve('./src/templates/postsByYear.tsx'),
+      component: path.resolve("./src/templates/postsByYear.tsx"),
       context: {
         older,
         newer,
@@ -238,11 +259,14 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // 7. 用語解説のページを作成
-  const docsTemplate = path.resolve('./src/templates/docs/index.tsx');
+  const docsTemplate = path.resolve("./src/templates/docs/index.tsx");
   docs.group.forEach((group) => {
     group.nodes.forEach(({ fields, internal }, index) => {
       const { slug } = fields;
-      const next = index === group.nodes.length - 1 ? null : group.nodes[index + 1].fields.slug;
+      const next =
+        index === group.nodes.length - 1
+          ? null
+          : group.nodes[index + 1].fields.slug;
       const { contentFilePath } = internal;
       createPage({
         path: slug,
