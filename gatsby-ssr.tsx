@@ -15,7 +15,7 @@ const HeadComponents = [
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7323207940463794"
   />,
 ];
-// eslint-disable-next-line import/prefer-default-export
+
 export function onRenderBody({ setHeadComponents }: RenderBodyArgs) {
   setHeadComponents(HeadComponents);
 }

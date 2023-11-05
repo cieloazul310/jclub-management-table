@@ -1,4 +1,3 @@
-/* eslint import/no-extraneous-dependencies: warn */
 /* eslint global-require: warn */
 import type { GatsbyConfig } from 'gatsby';
 

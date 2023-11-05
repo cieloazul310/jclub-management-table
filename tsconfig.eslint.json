@@ -4,7 +4,7 @@
     "src/**/*",
     "gatsby/**/*",
     "types.d.ts",
-    ".eslintrc.js",
+    ".eslintrc.cjs",
     "gatsby-config.ts",
     "gatsby-node.ts",
     "gatsby-ssr.tsx",
