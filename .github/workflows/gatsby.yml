@@ -100,9 +100,8 @@ jobs:
 
       - name: Move to content collection
         run: |
-          rm -rf src/content
-          mv ${{ env.CLONED_PATH }}/content src/content
-          ls src/content
+          rm -rf content
+          mv ${{ env.CLONED_PATH }}/content content
 
       - name: Build with Gatsby
         env:
