@@ -1,7 +1,7 @@
-import * as React from 'react';
-import type { Category, SortableKeys, Tab } from '../../../../types';
+import * as React from "react";
+import type { Category, SortableKeys, Tab } from "../../../../types";
 
-export type FilterCategory = Category | 'others';
+export type FilterCategory = Category | "others";
 
 export type AppState = {
   sortKey: SortableKeys;
@@ -13,60 +13,62 @@ export type AppState = {
 };
 
 export const initialAppState: AppState = {
-  sortKey: 'revenue',
+  sortKey: "revenue",
   sortAsc: false,
-  filterCategories: ['J1', 'J2', 'J3', 'others'],
+  filterCategories: ["J1", "J2", "J3", "others"],
   displayFullAttd: false,
   listMode: false,
-  tab: 'pl',
+  tab: "pl",
 };
 
 export type Action =
-  | { type: 'TOGGLE_FULL_ATTD' }
-  | { type: 'CHANGE_SORTKEY'; sortKey: SortableKeys }
-  | { type: 'TOGGLE_SORTASC' }
-  | { type: 'TOGGLE_FILTERCATEGORY'; category: FilterCategory }
-  | { type: 'TOGGLE_LISTMODE' }
-  | { type: 'SET_TAB'; tab: Tab }
-  | { type: 'RESET' };
+  | { type: "TOGGLE_FULL_ATTD" }
+  | { type: "CHANGE_SORTKEY"; sortKey: SortableKeys }
+  | { type: "TOGGLE_SORTASC" }
+  | { type: "TOGGLE_FILTERCATEGORY"; category: FilterCategory }
+  | { type: "TOGGLE_LISTMODE" }
+  | { type: "SET_TAB"; tab: Tab }
+  | { type: "RESET" };
 
 export default function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'TOGGLE_FULL_ATTD':
+    case "TOGGLE_FULL_ATTD":
       return {
         ...state,
         displayFullAttd: !state.displayFullAttd,
       };
-    case 'CHANGE_SORTKEY':
+    case "CHANGE_SORTKEY":
       return {
         ...state,
         sortKey: action.sortKey,
-        sortAsc: action.sortKey === 'rank',
+        sortAsc: action.sortKey === "rank",
       };
-    case 'TOGGLE_SORTASC':
+    case "TOGGLE_SORTASC":
       return {
         ...state,
         sortAsc: !state.sortAsc,
       };
-    case 'TOGGLE_FILTERCATEGORY':
+    case "TOGGLE_FILTERCATEGORY":
       return {
         ...state,
         filterCategories: state.filterCategories.includes(action.category)
-          ? state.filterCategories.filter((category) => category !== action.category)
+          ? state.filterCategories.filter(
+              (category) => category !== action.category,
+            )
           : [...state.filterCategories, action.category],
       };
-    case 'TOGGLE_LISTMODE':
+    case "TOGGLE_LISTMODE":
       return {
         ...state,
         listMode: !state.listMode,
       };
-    case 'SET_TAB':
+    case "SET_TAB":
       return {
         ...state,
         tab: action.tab,
       };
-    case 'RESET': {
-      const isMobile = window.matchMedia('(max-width: 600px)').matches;
+    case "RESET": {
+      const isMobile = window.matchMedia("(max-width: 600px)").matches;
       return {
         ...initialAppState,
         listMode: isMobile,
@@ -77,10 +79,13 @@ export default function reducer(state: AppState, action: Action): AppState {
   }
 }
 
-export function useInitialAppState(dispatch: React.Dispatch<Action>, isMobile: boolean) {
+export function useInitialAppState(
+  dispatch: React.Dispatch<Action>,
+  isMobile: boolean,
+) {
   React.useEffect(() => {
     if (isMobile) {
-      dispatch({ type: 'TOGGLE_LISTMODE' });
+      dispatch({ type: "TOGGLE_LISTMODE" });
     }
   }, []);
 }

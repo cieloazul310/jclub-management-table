@@ -1,9 +1,9 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { useLocation } from '@reach/router';
-import InView from './InView';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { useLocation } from "@reach/router";
+import InView from "./InView";
 
 declare global {
   interface Window {
@@ -11,9 +11,16 @@ declare global {
   }
 }
 
-export function AdInSectionDividerWrapper({ children }: React.PropsWithChildren<Record<string, unknown>>) {
+export function AdInSectionDividerWrapper({
+  children,
+}: React.PropsWithChildren<Record<string, unknown>>) {
   return (
-    <Box px={1} py={2} bgcolor={({ palette }) => (palette.mode === 'light' ? '#fafafa' : '#000')} color="text.secondary">
+    <Box
+      px={1}
+      py={2}
+      bgcolor={({ palette }) => (palette.mode === "light" ? "#fafafa" : "#000")}
+      color="text.secondary"
+    >
       <InView>{children}</InView>
     </Box>
   );
@@ -32,11 +39,11 @@ export function AdInArticle() {
       <Typography variant="caption" color="text.secondary">
         [Advertisement]
       </Typography>
-      {typeof window === 'object' ? (
+      {typeof window === "object" ? (
         <ins
           className="adsbygoogle"
           key={pathname}
-          style={{ display: 'block', textAlign: 'center' }}
+          style={{ display: "block", textAlign: "center" }}
           data-ad-layout="in-article"
           data-ad-format="fluid"
           data-ad-client="ca-pub-7323207940463794"
@@ -59,11 +66,11 @@ function Ad({ slot }: { slot: string }) {
   return (
     <Box overflow="hidden">
       <Typography variant="caption">[Advertisement]</Typography>
-      {typeof window === 'object' ? (
+      {typeof window === "object" ? (
         <ins
           key={pathname}
           className="adsbygoogle"
-          style={{ display: 'block', textAlign: 'center' }}
+          style={{ display: "block", textAlign: "center" }}
           data-ad-client="ca-pub-7323207940463794"
           data-ad-slot={slot}
           data-ad-format="auto"

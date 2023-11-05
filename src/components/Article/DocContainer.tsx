@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { H2, SubParagraph } from '@cieloazul310/gatsby-theme-aoi';
+import * as React from "react";
+import { H2, SubParagraph } from "@cieloazul310/gatsby-theme-aoi";
 
 type DocContainerProps = {
   title: string;

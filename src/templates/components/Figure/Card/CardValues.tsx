@@ -1,11 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
-import { useAppState, useDispatch } from '../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import { UpIcon, DownIcon } from '../../../../icons';
-import val from '../../../../utils/val';
-import type { General, PL, BS, Revenue, Expense, Attd, Mode } from '../../../../../types';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import ButtonBase from "@mui/material/ButtonBase";
+import {
+  useAppState,
+  useDispatch,
+} from "../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext";
+import { UpIcon, DownIcon } from "../../../../icons";
+import val from "../../../../utils/val";
+import type {
+  General,
+  PL,
+  BS,
+  Revenue,
+  Expense,
+  Attd,
+  Mode,
+} from "../../../../../types";
 
 type CardValueProps<T> = {
   label: string;
@@ -30,21 +41,28 @@ function diffIcon(diffval: number | null) {
 }
 
 function CardValueCore<T>(node: T & General, prev: T | null, mode: Mode) {
-  return function CardValue({ label, property, emphasized = false, strong = false, separator = false, inset = false }: CardValueProps<T>) {
+  return function CardValue({
+    label,
+    property,
+    emphasized = false,
+    strong = false,
+    separator = false,
+    inset = false,
+  }: CardValueProps<T>) {
     const { sortKey } = useAppState();
     const dispatch = useDispatch();
     const value = node[property];
     const prevValue = prev?.[property] ?? null;
-    if (typeof value !== 'number') return null;
-    const diffval = typeof prevValue === 'number' ? value - prevValue : null;
-    const selected = mode === 'year' && sortKey === property;
-    const sortable = mode === 'year';
+    if (typeof value !== "number") return null;
+    const diffval = typeof prevValue === "number" ? value - prevValue : null;
+    const selected = mode === "year" && sortKey === property;
+    const sortable = mode === "year";
     const onClick = () => {
       if (!sortable) return;
       if (selected) {
-        dispatch({ type: 'TOGGLE_SORTASC' });
+        dispatch({ type: "TOGGLE_SORTASC" });
       } else {
-        dispatch({ type: 'CHANGE_SORTKEY', sortKey: property });
+        dispatch({ type: "CHANGE_SORTKEY", sortKey: property });
       }
     };
 
@@ -54,12 +72,12 @@ function CardValueCore<T>(node: T & General, prev: T | null, mode: Mode) {
           p: 0.5,
           bgcolor: ({ palette }) => {
             if (!emphasized) return undefined;
-            return palette.mode === 'light' ? 'grey.100' : 'grey.800';
+            return palette.mode === "light" ? "grey.100" : "grey.800";
           },
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: 'body2.fontSize',
+          display: "flex",
+          alignItems: "center",
+          fontSize: "body2.fontSize",
         }}
       >
         <Box
@@ -70,28 +88,37 @@ function CardValueCore<T>(node: T & General, prev: T | null, mode: Mode) {
         >
           <ButtonBase
             sx={{
-              color: selected ? 'secondary.main' : 'inherit',
-              fontSize: 'body2.fontSize',
-              '&:hover': {
-                textDecoration: mode === 'year' ? 'underline' : undefined,
+              color: selected ? "secondary.main" : "inherit",
+              fontSize: "body2.fontSize",
+              "&:hover": {
+                textDecoration: mode === "year" ? "underline" : undefined,
               },
             }}
             disableRipple
-            disabled={mode === 'club'}
+            disabled={mode === "club"}
             onClick={onClick}
           >
             {label}
           </ButtonBase>
         </Box>
         <Typography
-          sx={{ fontWeight: emphasized || strong || selected ? 'bold' : undefined }}
+          sx={{
+            fontWeight: emphasized || strong || selected ? "bold" : undefined,
+          }}
           component="span"
-          color={property === 'net_worth' && value < 0 ? 'error.main' : undefined}
+          color={
+            property === "net_worth" && value < 0 ? "error.main" : undefined
+          }
         >
           {val(value, separator)}
         </Typography>
         <Typography
-          sx={{ width: '6em', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+          sx={{
+            width: "6em",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
           color="text.secondary"
           component="span"
         >
@@ -109,7 +136,11 @@ type CardValuesProps<T> = {
   mode: Mode;
 };
 
-export function PLCardValues<T extends PL>({ node, previous, mode }: CardValuesProps<T>) {
+export function PLCardValues<T extends PL>({
+  node,
+  previous,
+  mode,
+}: CardValuesProps<T>) {
   const CardValue = CardValueCore(node, previous, mode);
   return (
     <>
@@ -121,7 +152,11 @@ export function PLCardValues<T extends PL>({ node, previous, mode }: CardValuesP
       <CardValue label="経常利益" property="ordinary_profit" emphasized />
       <CardValue label="特別利益" property="sp_rev" inset />
       <CardValue label="特別損失" property="sp_exp" inset />
-      <CardValue label="税引前当期利益" property="profit_before_tax" emphasized />
+      <CardValue
+        label="税引前当期利益"
+        property="profit_before_tax"
+        emphasized
+      />
       <CardValue label="法人税および住民税等" property="tax" inset />
       <CardValue label="当期純利益" property="profit" emphasized />
       <CardValue label="(関連する法人の営業収入)" property="related_revenue" />
@@ -129,7 +164,11 @@ export function PLCardValues<T extends PL>({ node, previous, mode }: CardValuesP
   );
 }
 
-export function BSCardValues<T extends BS>({ node, previous, mode }: CardValuesProps<T>) {
+export function BSCardValues<T extends BS>({
+  node,
+  previous,
+  mode,
+}: CardValuesProps<T>) {
   const CardValue = CardValueCore(node, previous, mode);
   return (
     <>
@@ -148,7 +187,11 @@ export function BSCardValues<T extends BS>({ node, previous, mode }: CardValuesP
   );
 }
 
-export function RevenueCardValues<T extends Revenue>({ node, previous, mode }: CardValuesProps<T>) {
+export function RevenueCardValues<T extends Revenue>({
+  node,
+  previous,
+  mode,
+}: CardValuesProps<T>) {
   const CardValue = CardValueCore(node, previous, mode);
   return (
     <>
@@ -165,13 +208,21 @@ export function RevenueCardValues<T extends Revenue>({ node, previous, mode }: C
   );
 }
 
-export function ExpenseCardValues<T extends Expense>({ node, previous, mode }: CardValuesProps<T>) {
+export function ExpenseCardValues<T extends Expense>({
+  node,
+  previous,
+  mode,
+}: CardValuesProps<T>) {
   const CardValue = CardValueCore(node, previous, mode);
   return (
     <>
       <CardValue label="営業費用" property="expense" emphasized />
       <CardValue label="チーム人件費" property="salary" inset />
-      <CardValue label="事業費(チーム人件費を除く)" property="manage_exp" inset />
+      <CardValue
+        label="事業費(チーム人件費を除く)"
+        property="manage_exp"
+        inset
+      />
       <CardValue label="試合関連経費" property="game_exp" inset />
       <CardValue label="トップチーム運営経費" property="team_exp" inset />
       <CardValue label="アカデミー関連経費" property="academy_exp" inset />
@@ -183,16 +234,35 @@ export function ExpenseCardValues<T extends Expense>({ node, previous, mode }: C
   );
 }
 
-export function AttdCardValues<T extends Attd>({ node, previous, mode }: CardValuesProps<T>) {
+export function AttdCardValues<T extends Attd>({
+  node,
+  previous,
+  mode,
+}: CardValuesProps<T>) {
   const CardValue = CardValueCore(node, previous, mode);
   return (
     <>
       <CardValue label="入場料収入" property="ticket" emphasized />
-      <CardValue label="リーグ戦平均入場者数" property="average_attd" strong separator />
+      <CardValue
+        label="リーグ戦平均入場者数"
+        property="average_attd"
+        strong
+        separator
+      />
       <CardValue label="客単価" property="unit_price" strong />
-      <CardValue label="年間総入場者数" property="all_attd" separator emphasized />
+      <CardValue
+        label="年間総入場者数"
+        property="all_attd"
+        separator
+        emphasized
+      />
       <CardValue label="リーグ戦" property="league_attd" inset separator />
-      <CardValue label="リーグカップ" property="leaguecup_attd" inset separator />
+      <CardValue
+        label="リーグカップ"
+        property="leaguecup_attd"
+        inset
+        separator
+      />
       <CardValue label="ACL" property="acl_attd" inset separator />
       <CardValue label="プレーオフ" property="po_attd" inset separator />
       <CardValue label="U-23" property="second_attd" inset separator />

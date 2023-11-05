@@ -1,23 +1,36 @@
-import * as React from 'react';
-import { graphql, type PageProps } from 'gatsby';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { TabPane, Section, Article, useIsMobile } from '@cieloazul310/gatsby-theme-aoi';
-import Layout from '../layout';
-import Seo from '../components/Seo';
-import ItemFilter from '../components/Download/ItemFilter';
-import FieldFilter from '../components/Download/FieldFilter';
-import Preview from '../components/Download/Preview';
-import AttributionDoc from '../components/Article/Attribution';
-import { AdInSectionDividerOne } from '../components/Ads';
-import allFields from '../utils/allFields';
-import { useDictionary } from '../utils/graphql-hooks';
-import type { Club, Year, Dict, DownloadDatum, AllDataFieldsFragment } from '../../types';
+import * as React from "react";
+import { graphql, type PageProps } from "gatsby";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import {
+  TabPane,
+  Section,
+  Article,
+  useIsMobile,
+} from "@cieloazul310/gatsby-theme-aoi";
+import Layout from "../layout";
+import Seo from "../components/Seo";
+import ItemFilter from "../components/Download/ItemFilter";
+import FieldFilter from "../components/Download/FieldFilter";
+import Preview from "../components/Download/Preview";
+import AttributionDoc from "../components/Article/Attribution";
+import { AdInSectionDividerOne } from "../components/Ads";
+import allFields from "../utils/allFields";
+import { useDictionary } from "../utils/graphql-hooks";
+import type {
+  Club,
+  Year,
+  Dict,
+  DownloadDatum,
+  AllDataFieldsFragment,
+} from "../../types";
 
 function getCategory(category: string | number | null) {
-  return category === 'J1' || category === 'J2' || category === 'J3' ? category : 'others';
+  return category === "J1" || category === "J2" || category === "J3"
+    ? category
+    : "others";
 }
 
 type DownloadPageData = {
@@ -25,16 +38,16 @@ type DownloadPageData = {
     nodes: AllDataFieldsFragment[];
   };
   j1: {
-    nodes: Pick<Club, 'name' | 'slug'>[];
+    nodes: Pick<Club, "name" | "slug">[];
   };
   j2: {
-    nodes: Pick<Club, 'name' | 'slug'>[];
+    nodes: Pick<Club, "name" | "slug">[];
   };
   j3: {
-    nodes: Pick<Club, 'name' | 'slug'>[];
+    nodes: Pick<Club, "name" | "slug">[];
   };
   allYear: {
-    nodes: Pick<Year, 'year'>[];
+    nodes: Pick<Year, "year">[];
   };
 };
 
@@ -42,17 +55,24 @@ function DownloadPage({ data }: PageProps<DownloadPageData>) {
   const { allData, j1, j2, j3, allYear } = data;
   const isMobile = useIsMobile();
   const dictionary = useDictionary();
-  const allCategories = ['J1', 'J2', 'J3', 'others'];
-  const slugs = [...j1.nodes, ...j2.nodes, ...j3.nodes].map((node) => node.slug);
+  const allCategories = ["J1", "J2", "J3", "others"];
+  const slugs = [...j1.nodes, ...j2.nodes, ...j3.nodes].map(
+    (node) => node.slug,
+  );
   const years = allYear.nodes.map((node) => node.year);
 
   const [tab, setTab] = React.useState(0);
   const [clubsFilter, setClubsFilter] = React.useState(slugs);
-  const [yearsFilter, setYearsFilter] = React.useState([years[years.length - 1]]);
+  const [yearsFilter, setYearsFilter] = React.useState([
+    years[years.length - 1],
+  ]);
   const [categoriesFilter, setCategoriesFilter] = React.useState(allCategories);
   const [fields, setFields] = React.useState<string[]>(allFields);
 
-  const handleTabChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleTabChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number,
+  ) => {
     setTab(value);
   };
   React.useEffect(() => {
@@ -83,24 +103,38 @@ function DownloadPage({ data }: PageProps<DownloadPageData>) {
       })
       .sort(
         (a, b) =>
-          a['年'] - b['年'] ||
-          allCategories.indexOf(getCategory(a['所属'])) - allCategories.indexOf(getCategory(b['所属'])) ||
-          slugs.indexOf(a.id) - slugs.indexOf(b.id)
+          a["年"] - b["年"] ||
+          allCategories.indexOf(getCategory(a["所属"])) -
+            allCategories.indexOf(getCategory(b["所属"])) ||
+          slugs.indexOf(a.id) - slugs.indexOf(b.id),
       );
   }, [allData, clubsFilter, yearsFilter, fields]);
 
   return (
     <Layout title="データダウンロード">
       <Box display="flex" flexGrow={1}>
-        <Box display="flex" flexDirection={{ xs: 'column-reverse', sm: 'column' }} flex={1}>
+        <Box
+          display="flex"
+          flexDirection={{ xs: "column-reverse", sm: "column" }}
+          flex={1}
+        >
           <Box flexShrink={0}>
-            <Tabs value={tab} textColor="secondary" indicatorColor="secondary" onChange={handleTabChange}>
+            <Tabs
+              value={tab}
+              textColor="secondary"
+              indicatorColor="secondary"
+              onChange={handleTabChange}
+            >
               <Tab label="フィルタ" value={0} />
               <Tab label="項目" value={1} />
               {isMobile ? <Tab label="プレビュー" value={2} /> : null}
             </Tabs>
           </Box>
-          <Box flexGrow={1} height={{ xs: 'calc(100vh - 104px)', sm: 'calc(100vh - 112px)' }} overflow="auto">
+          <Box
+            flexGrow={1}
+            height={{ xs: "calc(100vh - 104px)", sm: "calc(100vh - 112px)" }}
+            overflow="auto"
+          >
             <TabPane index={0} currentTab={tab}>
               <ItemFilter
                 clubsFilter={clubsFilter}

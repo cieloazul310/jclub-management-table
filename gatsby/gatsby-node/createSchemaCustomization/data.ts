@@ -1,8 +1,11 @@
-import type { CreateSchemaCustomizationArgs } from 'gatsby';
-import type { GatsbyGraphQLContext } from '../graphql';
-import type { Datum } from '../../../types';
+import type { CreateSchemaCustomizationArgs } from "gatsby";
+import type { GatsbyGraphQLContext } from "../graphql";
+import type { Datum } from "../../../types";
 
-export default async function createDataSchema({ actions, schema }: CreateSchemaCustomizationArgs) {
+export default async function createDataSchema({
+  actions,
+  schema,
+}: CreateSchemaCustomizationArgs) {
   const { createTypes } = actions;
 
   createTypes(`
@@ -84,28 +87,36 @@ export default async function createDataSchema({ actions, schema }: CreateSchema
       fields: {
         average_attd: {
           type: `Int!`,
-          resolve: (source: Datum<'bare'>) => Math.round(source.league_attd / source.league_games),
+          resolve: (source: Datum<"bare">) =>
+            Math.round(source.league_attd / source.league_games),
         },
         unit_price: {
           type: `Int`,
-          resolve: (source: Datum<'bare'>) => {
+          resolve: (source: Datum<"bare">) => {
             if (!source.ticket) return null;
             return Math.round((source.ticket * 1000000) / source.all_attd);
           },
         },
         previousData: {
           type: `Data`,
-          resolve: async (source: Datum<'bare'>, args, context: GatsbyGraphQLContext) => {
+          resolve: async (
+            source: Datum<"bare">,
+            args,
+            context: GatsbyGraphQLContext,
+          ) => {
             const node = await context.nodeModel.findOne({
               type: `Data`,
               query: {
-                filter: { year: { eq: source.year - 1 }, slug: { eq: source.slug } },
+                filter: {
+                  year: { eq: source.year - 1 },
+                  slug: { eq: source.slug },
+                },
               },
             });
             return node;
           },
         },
       },
-    })
+    }),
   );
 }

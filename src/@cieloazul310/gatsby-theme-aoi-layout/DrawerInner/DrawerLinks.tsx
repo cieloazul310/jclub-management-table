@@ -1,21 +1,21 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListSubheader from '@mui/material/ListSubheader';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { ListItemAppLink, withoutPrefix } from '@cieloazul310/gatsby-theme-aoi';
-import { useLocation } from '@reach/router';
+import * as React from "react";
+import List from "@mui/material/List";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { ListItemAppLink, withoutPrefix } from "@cieloazul310/gatsby-theme-aoi";
+import { useLocation } from "@reach/router";
 
-import { useClubsByCategory, useAllYears } from '../../../utils/graphql-hooks';
-import type { Club } from '../../../../types';
+import { useClubsByCategory, useAllYears } from "../../../utils/graphql-hooks";
+import type { Club } from "../../../../types";
 
 type CategoryLinksProps = {
   title: string;
-  clubs: Pick<Club, 'href' | 'short_name' | 'name'>[];
+  clubs: Pick<Club, "href" | "short_name" | "name">[];
 };
 
 export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
@@ -25,9 +25,12 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
     setOpen(!open);
   };
   React.useEffect(() => {
-    const storaged = typeof window === 'object' ? sessionStorage.getItem(`${title}Open`) : null;
+    const storaged =
+      typeof window === "object"
+        ? sessionStorage.getItem(`${title}Open`)
+        : null;
     const initialOpen = storaged ? JSON.parse(storaged) : false;
-    if (typeof initialOpen === 'boolean' && initialOpen) {
+    if (typeof initialOpen === "boolean" && initialOpen) {
       setOpen(true);
     }
   }, []);
@@ -46,7 +49,11 @@ export function CategoryLinks({ title, clubs }: CategoryLinksProps) {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {clubs.map(({ name, short_name, href }) => (
-            <ListItemAppLink key={short_name} href={href} selected={href === withoutPrefix(pathname)}>
+            <ListItemAppLink
+              key={short_name}
+              href={href}
+              selected={href === withoutPrefix(pathname)}
+            >
               <ListItemText primary={name} />
             </ListItemAppLink>
           ))}
@@ -64,14 +71,15 @@ export function YearsLinks() {
     setOpen(!open);
   };
   React.useEffect(() => {
-    const storaged = typeof window === 'object' ? sessionStorage.getItem('yearsOpen') : null;
+    const storaged =
+      typeof window === "object" ? sessionStorage.getItem("yearsOpen") : null;
     const initialOpen = storaged ? JSON.parse(storaged) : false;
-    if (typeof initialOpen === 'boolean' && initialOpen) {
+    if (typeof initialOpen === "boolean" && initialOpen) {
       setOpen(true);
     }
   }, []);
   React.useEffect(() => {
-    sessionStorage.setItem('yearsOpen', JSON.stringify(open));
+    sessionStorage.setItem("yearsOpen", JSON.stringify(open));
   }, [open]);
 
   return (
@@ -85,7 +93,11 @@ export function YearsLinks() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {years.map((node) => (
-            <ListItemAppLink key={node.id} href={node.href} selected={node.href === withoutPrefix(pathname)}>
+            <ListItemAppLink
+              key={node.id}
+              href={node.href}
+              selected={node.href === withoutPrefix(pathname)}
+            >
               <ListItemText primary={node.year} />
             </ListItemAppLink>
           ))}

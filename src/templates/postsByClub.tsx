@@ -1,20 +1,28 @@
-import * as React from 'react';
-import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import { Jumbotron, Section, Article, PanelLink } from '@cieloazul310/gatsby-theme-aoi';
-import { PageNavigationContainer, PageNavigationItem } from '@cieloazul310/gatsby-theme-aoi-blog-components';
-import Seo from '../components/Seo';
-import PostList from '../components/PostList';
-import { AdInSectionDividerTwo } from '../components/Ads';
-import Layout from '../layout';
-import type { Club, MdxPostListFragment } from '../../types';
+import * as React from "react";
+import { graphql, type PageProps, type HeadProps } from "gatsby";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import {
+  Jumbotron,
+  Section,
+  Article,
+  PanelLink,
+} from "@cieloazul310/gatsby-theme-aoi";
+import {
+  PageNavigationContainer,
+  PageNavigationItem,
+} from "@cieloazul310/gatsby-theme-aoi-blog-components";
+import Seo from "../components/Seo";
+import PostList from "../components/PostList";
+import { AdInSectionDividerTwo } from "../components/Ads";
+import Layout from "../layout";
+import type { Club, MdxPostListFragment } from "../../types";
 
 type PostsByClubPageData = {
   allMdxPost: {
     nodes: MdxPostListFragment[];
   };
-  club: Pick<Club, 'name' | 'href'>;
+  club: Pick<Club, "name" | "href">;
 };
 type PageContext = {
   club: string;
@@ -26,7 +34,10 @@ type PageContext = {
   totalCount: number;
 };
 
-function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageData, PageContext>) {
+function PostsByClubTemplate({
+  data,
+  pageContext,
+}: PageProps<PostsByClubPageData, PageContext>) {
   const { allMdxPost, club } = data;
   const { numPages, currentPage, basePath, totalCount } = pageContext;
 
@@ -53,10 +64,21 @@ function PostsByClubTemplate({ data, pageContext }: PageProps<PostsByClubPageDat
       {currentPage !== 1 || currentPage !== numPages ? (
         <Section component="nav">
           <PageNavigationContainer>
-            <PageNavigationItem href={currentPage === 2 ? `${basePath}/` : `${basePath}/${currentPage - 1}/`} disabled={currentPage === 1}>
+            <PageNavigationItem
+              href={
+                currentPage === 2
+                  ? `${basePath}/`
+                  : `${basePath}/${currentPage - 1}/`
+              }
+              disabled={currentPage === 1}
+            >
               <Typography variant="body2">{currentPage - 1}</Typography>
             </PageNavigationItem>
-            <PageNavigationItem href={`${basePath}/${currentPage + 1}`} disabled={currentPage === numPages} right>
+            <PageNavigationItem
+              href={`${basePath}/${currentPage + 1}`}
+              disabled={currentPage === numPages}
+              right
+            >
               <Typography variant="body2">{currentPage + 1}</Typography>
             </PageNavigationItem>
           </PageNavigationContainer>
@@ -82,9 +104,17 @@ export function Head({ data }: HeadProps<PostsByClubPageData>) {
 }
 
 export const query = graphql`
-  query PostsByClub($slug: String!, $skip: Int!, $limit: Int!, $draft: Boolean) {
+  query PostsByClub(
+    $slug: String!
+    $skip: Int!
+    $limit: Int!
+    $draft: Boolean
+  ) {
     allMdxPost(
-      filter: { club: { elemMatch: { slug: { eq: $slug } } }, draft: { ne: $draft } }
+      filter: {
+        club: { elemMatch: { slug: { eq: $slug } } }
+        draft: { ne: $draft }
+      }
       sort: [{ date: DESC }, { lastmod: DESC }, { slug: DESC }]
       limit: $limit
       skip: $skip

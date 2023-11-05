@@ -1,38 +1,43 @@
-import * as React from 'react';
-import { graphql, type PageProps } from 'gatsby';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Button from '@mui/material/Button';
-import NativeSelect from '@mui/material/NativeSelect';
-import Snackbar from '@mui/material/Snackbar';
-import Tooltip from '@mui/material/Tooltip';
-import { alpha } from '@mui/material/styles';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { Section, Article } from '@cieloazul310/gatsby-theme-aoi';
-import Layout from '../layout';
-import Seo from '../components/Seo';
-import AttributionDoc from '../components/Article/Attribution';
-import { AdInSectionDividerOne } from '../components/Ads';
-import { allSortableFields } from '../utils/allFields';
-import { j1color, j2color, j3color, othersColor } from '../utils/categoryColors';
-import useCopy from '../utils/useCopy';
-import { useDictionary } from '../utils/graphql-hooks';
-import type { Datum, Club, Year, SortableKeys } from '../../types';
+import * as React from "react";
+import { graphql, type PageProps } from "gatsby";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
+import NativeSelect from "@mui/material/NativeSelect";
+import Snackbar from "@mui/material/Snackbar";
+import Tooltip from "@mui/material/Tooltip";
+import { alpha } from "@mui/material/styles";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import CheckIcon from "@mui/icons-material/Check";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Section, Article } from "@cieloazul310/gatsby-theme-aoi";
+import Layout from "../layout";
+import Seo from "../components/Seo";
+import AttributionDoc from "../components/Article/Attribution";
+import { AdInSectionDividerOne } from "../components/Ads";
+import { allSortableFields } from "../utils/allFields";
+import {
+  j1color,
+  j2color,
+  j3color,
+  othersColor,
+} from "../utils/categoryColors";
+import useCopy from "../utils/useCopy";
+import { useDictionary } from "../utils/graphql-hooks";
+import type { Datum, Club, Year, SortableKeys } from "../../types";
 
 function isFields(input: string): input is SortableKeys {
   return allSortableFields.includes(input as SortableKeys);
@@ -49,29 +54,32 @@ function CategoryTableCell({ datum, field }: CategoryTableCellProps) {
       align="right"
       sx={{
         borderRight: 1,
-        borderColor: 'divider',
+        borderColor: "divider",
         bgcolor: ({ palette }) => {
           if (!datum) return undefined;
           const { category } = datum;
-          if (category === 'J1') return alpha(j1color[600], palette.action.activatedOpacity);
-          if (category === 'J2') return alpha(j2color[600], palette.action.activatedOpacity);
-          if (category === 'J3') return alpha(j3color[600], palette.action.activatedOpacity);
+          if (category === "J1")
+            return alpha(j1color[600], palette.action.activatedOpacity);
+          if (category === "J2")
+            return alpha(j2color[600], palette.action.activatedOpacity);
+          if (category === "J3")
+            return alpha(j3color[600], palette.action.activatedOpacity);
           return alpha(othersColor[600], palette.action.activatedOpacity);
         },
         py: 1,
       }}
     >
-      {datum ? datum[field] : ''}
+      {datum ? datum[field] : ""}
     </TableCell>
   );
 }
 
 type SeriesPageData = {
   allClub: {
-    nodes: Pick<Club, 'short_name' | 'slug' | 'data'>[];
+    nodes: Pick<Club, "short_name" | "slug" | "data">[];
   };
   allYear: {
-    nodes: Pick<Year, 'year'>[];
+    nodes: Pick<Year, "year">[];
   };
 };
 
@@ -79,9 +87,12 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
   const { allClub, allYear } = data;
   const dict = useDictionary();
   const slugs = allClub.nodes.map((node) => node.slug);
-  const yearsRange = [allYear.nodes[0].year, allYear.nodes[allYear.nodes.length - 1].year];
-  const [field, setField] = React.useState<SortableKeys>('revenue');
-  const [sortField, setSortField] = React.useState<SortableKeys>('revenue');
+  const yearsRange = [
+    allYear.nodes[0].year,
+    allYear.nodes[allYear.nodes.length - 1].year,
+  ];
+  const [field, setField] = React.useState<SortableKeys>("revenue");
+  const [sortField, setSortField] = React.useState<SortableKeys>("revenue");
   const [clubFilter, setClubFilter] = React.useState(slugs);
   const [sortIndex, setSortIndex] = React.useState(allYear.nodes.length - 1);
   const [sortAsc, setSortAsc] = React.useState(false);
@@ -104,14 +115,19 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
           ],
         };
       }),
-    [allClub]
+    [allClub],
   );
   const statedClubs = React.useMemo(
     () =>
       allClubValues
         .filter(({ slug }) => clubFilter.includes(slug))
-        .sort((a, b) => (sortAsc ? 1 : -1) * ((a.data[sortIndex]?.[sortField] ?? 0) - (b.data[sortIndex]?.[sortField] ?? 0))),
-    [allClubValues, clubFilter, sortIndex, sortField, sortAsc]
+        .sort(
+          (a, b) =>
+            (sortAsc ? 1 : -1) *
+            ((a.data[sortIndex]?.[sortField] ?? 0) -
+              (b.data[sortIndex]?.[sortField] ?? 0)),
+        ),
+    [allClubValues, clubFilter, sortIndex, sortField, sortAsc],
   );
 
   const handleClose = () => {
@@ -149,12 +165,14 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
       setClubFilter([]);
     }
   };
-  const onFieldChange = (event: React.ChangeEvent<{ name?: string; value: string }>) => {
+  const onFieldChange = (
+    event: React.ChangeEvent<{ name?: string; value: string }>,
+  ) => {
     if (isFields(event.target.value)) {
       setField(event.target.value);
     }
   };
-  const tableId = 'series-table';
+  const tableId = "series-table";
   const onCopy = useCopy(tableId, () => {
     setOpen(true);
   });
@@ -164,39 +182,63 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
       <Box
         display="flex"
         sx={{
-          flexDirection: { xs: 'column-reverse', sm: 'column' },
-          height: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' },
+          flexDirection: { xs: "column-reverse", sm: "column" },
+          height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" },
         }}
       >
         <Container maxWidth="lg" sx={{ flexShrink: 0 }}>
           <Box display="flex" flexDirection="column">
-            <Box display="flex" justifyContent={{ xs: 'flex-start', sm: 'center' }} alignItems="center" py={2}>
+            <Box
+              display="flex"
+              justifyContent={{ xs: "flex-start", sm: "center" }}
+              alignItems="center"
+              py={2}
+            >
               <NativeSelect value={field} onChange={onFieldChange}>
                 {allSortableFields.map((fieldName) => (
                   <option value={fieldName} key={fieldName}>
                     {(() => {
                       if (dict && dict[fieldName]) return dict[fieldName];
-                      return '';
+                      return "";
                     })()}
                   </option>
                 ))}
               </NativeSelect>
               <Tooltip title="フィルタ">
-                <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={handleMenuClick}>
+                <IconButton
+                  aria-controls="filter-menu"
+                  aria-haspopup="true"
+                  onClick={handleMenuClick}
+                >
                   <FilterListIcon />
                 </IconButton>
               </Tooltip>
-              <Menu id="filter-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMenuClose}>
+              <Menu
+                id="filter-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
                 <MenuItem onClick={setAllFilter(true)}>全て選択</MenuItem>
                 <MenuItem onClick={setAllFilter(false)}>全て解除</MenuItem>
                 {allClub.nodes.map((node) => (
-                  <MenuItem key={node.slug} onClick={onMenuItemClick(node.slug ?? '')}>
-                    <ListItemIcon>{clubFilter.includes(node.slug ?? '') ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>
+                  <MenuItem
+                    key={node.slug}
+                    onClick={onMenuItemClick(node.slug ?? "")}
+                  >
+                    <ListItemIcon>
+                      {clubFilter.includes(node.slug ?? "") ? (
+                        <CheckIcon />
+                      ) : (
+                        <RemoveIcon />
+                      )}
+                    </ListItemIcon>
                     {node.short_name}
                   </MenuItem>
                 ))}
               </Menu>
-              <Box display={{ xs: 'none', sm: 'block' }}>
+              <Box display={{ xs: "none", sm: "block" }}>
                 <Tooltip title="表をクリップボードにコピー">
                   <IconButton onClick={onCopy}>
                     <FileCopyIcon />
@@ -205,11 +247,20 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
               </Box>
             </Box>
             <Box>
-              <Typography variant="body2" sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
+              <Typography
+                variant="body2"
+                sx={{ textAlign: { xs: "left", sm: "right" } }}
+              >
                 単位: 百万円
               </Typography>
-              <Typography variant="body2" sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
-                ソート: {`${dict[sortField]}(${allYear.nodes[sortIndex].year}) ${sortAsc ? '少ない順' : '多い順'}`}
+              <Typography
+                variant="body2"
+                sx={{ textAlign: { xs: "left", sm: "right" } }}
+              >
+                ソート:{" "}
+                {`${dict[sortField]}(${allYear.nodes[sortIndex].year}) ${
+                  sortAsc ? "少ない順" : "多い順"
+                }`}
               </Typography>
             </Box>
           </Box>
@@ -218,24 +269,24 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
           maxWidth="lg"
           disableGutters
           sx={{
-            overflowY: 'auto',
-            display: 'flex',
+            overflowY: "auto",
+            display: "flex",
             flexGrow: 1,
             pb: 1,
           }}
         >
-          <TableContainer sx={{ scrollSnapType: 'both mandatory' }}>
+          <TableContainer sx={{ scrollSnapType: "both mandatory" }}>
             <Table id={tableId} stickyHeader sx={{ minWidth: 1000 }}>
               <TableHead>
                 <TableRow>
                   <TableCell
                     sx={{
-                      fontWeight: 'bold',
-                      fontSize: 'caption.fontSize',
+                      fontWeight: "bold",
+                      fontSize: "caption.fontSize",
                       py: 1,
                       lineHeight: 1.2,
                       zIndex: 3,
-                      position: 'sticky',
+                      position: "sticky",
                       left: 0,
                     }}
                   >
@@ -246,12 +297,22 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
                       key={node.year.toString()}
                       component="th"
                       align="center"
-                      sx={{ fontWeight: 'bold', fontSize: 'caption.fontSize', p: 1, lineHeight: 1.2, zIndex: 2 }}
-                      sortDirection={sortIndex !== index && sortAsc ? 'asc' : 'desc'}
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "caption.fontSize",
+                        p: 1,
+                        lineHeight: 1.2,
+                        zIndex: 2,
+                      }}
+                      sortDirection={
+                        sortIndex !== index && sortAsc ? "asc" : "desc"
+                      }
                     >
                       <TableSortLabel
                         active={field === sortField && sortIndex === index}
-                        direction={sortIndex === index && sortAsc ? 'asc' : 'desc'}
+                        direction={
+                          sortIndex === index && sortAsc ? "asc" : "desc"
+                        }
                         onClick={onLabelClicked(index)}
                       >
                         {node.year}
@@ -268,22 +329,26 @@ function SeriesPage({ data }: PageProps<SeriesPageData>) {
                       scope="row"
                       align="right"
                       sx={{
-                        fontWeight: 'bold',
-                        fontSize: 'caption.fontSize',
+                        fontWeight: "bold",
+                        fontSize: "caption.fontSize",
                         py: 1,
                         lineHeight: 1.2,
-                        position: 'sticky',
+                        position: "sticky",
                         left: 0,
                         zIndex: 1,
-                        bgcolor: 'background.default',
-                        minWidth: '8em',
+                        bgcolor: "background.default",
+                        minWidth: "8em",
                       }}
                     >
                       {short_name}
                     </TableCell>
                     {club.data.map((datum, index) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <CategoryTableCell key={`${slug}-${index}`} datum={datum} field={field} />
+                      <CategoryTableCell
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={`${slug}-${index}`}
+                        datum={datum}
+                        field={field}
+                      />
                     ))}
                   </TableRow>
                 ))}

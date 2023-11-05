@@ -1,6 +1,6 @@
-import { useAppState } from '../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import { useDictionary } from './graphql-hooks';
-import type { SortableKeys } from '../../types';
+import { useAppState } from "../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext";
+import { useDictionary } from "./graphql-hooks";
+import type { SortableKeys } from "../../types";
 
 type SortStateString = {
   field: string | null | undefined;
@@ -14,9 +14,9 @@ export function useSortStateString(): SortStateString {
 
   const field = dictionary[sortKey];
 
-  const rankSort = sortAsc ? '高い順' : '低い順';
-  const valueSort = sortAsc ? '少ない順' : '多い順';
-  const sortType = sortKey === 'rank' ? rankSort : valueSort;
+  const rankSort = sortAsc ? "高い順" : "低い順";
+  const valueSort = sortAsc ? "少ない順" : "多い順";
+  const sortType = sortKey === "rank" ? rankSort : valueSort;
 
   return {
     field,
@@ -29,7 +29,11 @@ export function useFilterStateString(): string {
   const { filterCategories } = useAppState();
 
   return `フィルタ: ${
-    filterCategories.length === 4 ? 'なし' : filterCategories.map((category) => (category === 'others' ? 'その他' : category)).join(',')
+    filterCategories.length === 4
+      ? "なし"
+      : filterCategories
+          .map((category) => (category === "others" ? "その他" : category))
+          .join(",")
   }`;
 }
 

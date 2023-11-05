@@ -1,11 +1,21 @@
-import * as React from 'react';
-import TableRow from '@mui/material/TableRow';
-import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { TableBodyLabel } from './TableLabel';
-import CategoryLabel from '../../../../components/CategoryAvatar';
-import { useAppState } from '../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import val from '../../../../utils/val';
-import type { Tab, Mode, General, PL, BS, Revenue, Expense, Attd, AllDataFieldsFragment } from '../../../../../types';
+import * as React from "react";
+import TableRow from "@mui/material/TableRow";
+import TableCell, { type TableCellProps } from "@mui/material/TableCell";
+import { TableBodyLabel } from "./TableLabel";
+import CategoryLabel from "../../../../components/CategoryAvatar";
+import { useAppState } from "../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext";
+import val from "../../../../utils/val";
+import type {
+  Tab,
+  Mode,
+  General,
+  PL,
+  BS,
+  Revenue,
+  Expense,
+  Attd,
+  AllDataFieldsFragment,
+} from "../../../../../types";
 
 type DataTableCellProps = {
   value: number | null;
@@ -13,21 +23,31 @@ type DataTableCellProps = {
   separator?: boolean;
   strong?: boolean;
   red?: boolean;
-} & Omit<TableCellProps, 'children'>;
+} & Omit<TableCellProps, "children">;
 
-function DataTableCell({ value, emphasized = false, strong = false, separator = false, red = false, ...props }: DataTableCellProps) {
+function DataTableCell({
+  value,
+  emphasized = false,
+  strong = false,
+  separator = false,
+  red = false,
+  ...props
+}: DataTableCellProps) {
   return (
     <TableCell
-      align={props.align ?? 'right'}
+      align={props.align ?? "right"}
       sx={{
-        color: red && typeof value === 'number' && value < 0 ? 'error.main' : undefined,
+        color:
+          red && typeof value === "number" && value < 0
+            ? "error.main"
+            : undefined,
         borderRight: 1,
-        borderColor: 'divider',
+        borderColor: "divider",
         bgcolor: ({ palette }) => {
           if (!emphasized) return undefined;
-          return palette.mode === 'light' ? 'grey.100' : 'background.paper';
+          return palette.mode === "light" ? "grey.100" : "background.paper";
         },
-        fontWeight: strong || emphasized ? 'bold' : undefined,
+        fontWeight: strong || emphasized ? "bold" : undefined,
       }}
       {...props}
     >
@@ -43,7 +63,7 @@ DataTableCell.defaultProps = {
 };
 
 type TableRowProps<T> = {
-  node: Pick<General, 'year'> & T;
+  node: Pick<General, "year"> & T;
 };
 
 export function PLTableRow({ node }: TableRowProps<PL>) {
@@ -85,7 +105,10 @@ export function BSTableRow({ node }: TableRowProps<BS>) {
 
 export function RevenueTableRow({ node }: TableRowProps<Revenue>) {
   const otherRevs = (year: number) => {
-    if (year <= 2010) return <DataTableCell value={node.other_revs} align="center" colSpan={4} />;
+    if (year <= 2010)
+      return (
+        <DataTableCell value={node.other_revs} align="center" colSpan={4} />
+      );
     if (year <= 2015)
       return (
         <>
@@ -216,30 +239,43 @@ type TableBodyRowProps = {
   selected?: boolean;
 };
 
-function TableBodyRow({ index, mode, node, selected = false }: TableBodyRowProps) {
+function TableBodyRow({
+  index,
+  mode,
+  node,
+  selected = false,
+}: TableBodyRowProps) {
   const { tab } = useAppState();
   const rowData = (currentTab: Tab) => {
-    if (currentTab === 'pl') return <PLTableRow node={node} />;
-    if (currentTab === 'bs') return <BSTableRow node={node} />;
-    if (currentTab === 'revenue') return <RevenueTableRow node={node} />;
-    if (currentTab === 'expense') return <ExpenseTableRow node={node} />;
+    if (currentTab === "pl") return <PLTableRow node={node} />;
+    if (currentTab === "bs") return <BSTableRow node={node} />;
+    if (currentTab === "revenue") return <RevenueTableRow node={node} />;
+    if (currentTab === "expense") return <ExpenseTableRow node={node} />;
     return <AttdTableRow node={node} />;
   };
 
   return (
     <TableRow selected={selected} hover>
       <TableBodyLabel mode={mode} node={node} index={index} />
-      <TableCell sx={{ fontSize: 'body2.fontSize', color: 'text.secondary', width: 80 }} align="center" padding="none">
-        <CategoryLabel category={node.category ?? ''} />
+      <TableCell
+        sx={{ fontSize: "body2.fontSize", color: "text.secondary", width: 80 }}
+        align="center"
+        padding="none"
+      >
+        <CategoryLabel category={node.category ?? ""} />
       </TableCell>
       <TableCell
         sx={{
-          fontWeight: node.elevation ? 'bold' : undefined,
+          fontWeight: node.elevation ? "bold" : undefined,
           width: 80,
           borderRight: (theme) => `1px solid ${theme.palette.divider}`,
           color: ({ palette }) => {
-            if (node.elevation === '昇格') return palette.mode === 'light' ? 'success.main' : 'success.light';
-            if (node.elevation === '降格') return palette.mode === 'light' ? 'error.main' : 'error.light';
+            if (node.elevation === "昇格")
+              return palette.mode === "light"
+                ? "success.main"
+                : "success.light";
+            if (node.elevation === "降格")
+              return palette.mode === "light" ? "error.main" : "error.light";
             return undefined;
           },
         }}

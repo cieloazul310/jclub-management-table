@@ -1,6 +1,9 @@
-import * as React from 'react';
-import { Layout as AoiLayout, type LayoutProps as AoiLayoutProps } from '@cieloazul310/gatsby-theme-aoi';
-import { DrawerPageNavigation } from '@cieloazul310/gatsby-theme-aoi-blog-components';
+import * as React from "react";
+import {
+  Layout as AoiLayout,
+  type LayoutProps as AoiLayoutProps,
+} from "@cieloazul310/gatsby-theme-aoi";
+import { DrawerPageNavigation } from "@cieloazul310/gatsby-theme-aoi-blog-components";
 
 type LayoutProps = AoiLayoutProps<{
   left?: { href: string; title: string; secondaryText?: string } | null;
@@ -9,9 +12,9 @@ type LayoutProps = AoiLayoutProps<{
 
 function Layout({
   children,
-  componentViewports = { fab: 'lgDown', swipeableDrawer: 'lgDown' },
+  componentViewports = { fab: "lgDown", swipeableDrawer: "lgDown" },
   disableBottomNav = true,
-  appBarPosition = 'fixed',
+  appBarPosition = "fixed",
   drawerContents,
   left,
   right,

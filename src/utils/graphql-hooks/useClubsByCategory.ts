@@ -1,15 +1,15 @@
-import { useStaticQuery, graphql } from 'gatsby';
-import type { Club } from '../../../types';
+import { useStaticQuery, graphql } from "gatsby";
+import type { Club } from "../../../types";
 
 type UseClubsByCategoryQueryData = {
   j1: {
-    nodes: Pick<Club, 'id' | 'href' | 'name' | 'short_name' | 'slug'>[];
+    nodes: Pick<Club, "id" | "href" | "name" | "short_name" | "slug">[];
   };
   j2: {
-    nodes: Pick<Club, 'id' | 'href' | 'name' | 'short_name' | 'slug'>[];
+    nodes: Pick<Club, "id" | "href" | "name" | "short_name" | "slug">[];
   };
   j3: {
-    nodes: Pick<Club, 'id' | 'href' | 'name' | 'short_name' | 'slug'>[];
+    nodes: Pick<Club, "id" | "href" | "name" | "short_name" | "slug">[];
   };
 };
 

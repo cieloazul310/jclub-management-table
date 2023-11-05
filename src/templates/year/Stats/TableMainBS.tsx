@@ -1,10 +1,10 @@
-import * as React from 'react';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableSet from './TableSet';
-import useHasJ3 from './useHasJ3';
-import Diff from '../../../components/Diff';
-import type { Year, StatsValues } from '../../../../types';
+import * as React from "react";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableSet from "./TableSet";
+import useHasJ3 from "./useHasJ3";
+import Diff from "../../../components/Diff";
+import type { Year, StatsValues } from "../../../../types";
 
 type TableCellCountProps = {
   statsValues: StatsValues;
@@ -34,22 +34,38 @@ function TableCellCount({ statsValues, prev }: TableCellCountProps) {
 }
 
 type TableMainBSProps = {
-  year: Pick<Year, 'year' | 'stats'>;
-  prevYear: Pick<Year, 'stats'> | null;
+  year: Pick<Year, "year" | "stats">;
+  prevYear: Pick<Year, "stats"> | null;
 };
 
 function TableMainBS({ year, prevYear }: TableMainBSProps) {
   const hasJ3 = useHasJ3(year.stats.J3?.net_worth);
   return (
     <>
-      <TableSet title="純資産" statsKey="net_worth" year={year} prevYear={prevYear} />
+      <TableSet
+        title="純資産"
+        statsKey="net_worth"
+        year={year}
+        prevYear={prevYear}
+      />
       <TableRow>
         <TableCell component="th" scope="row">
           債務超過
         </TableCell>
-        <TableCellCount statsValues={year.stats.J1.net_worth} prev={prevYear?.stats.J1.net_worth} />
-        <TableCellCount statsValues={year.stats.J2.net_worth} prev={prevYear?.stats.J2.net_worth} />
-        {hasJ3 ? <TableCellCount statsValues={year.stats.J1.net_worth} prev={prevYear?.stats.J1.net_worth} /> : null}
+        <TableCellCount
+          statsValues={year.stats.J1.net_worth}
+          prev={prevYear?.stats.J1.net_worth}
+        />
+        <TableCellCount
+          statsValues={year.stats.J2.net_worth}
+          prev={prevYear?.stats.J2.net_worth}
+        />
+        {hasJ3 ? (
+          <TableCellCount
+            statsValues={year.stats.J1.net_worth}
+            prev={prevYear?.stats.J1.net_worth}
+          />
+        ) : null}
       </TableRow>
     </>
   );

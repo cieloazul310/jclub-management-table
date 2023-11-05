@@ -1,16 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 
 function AlphaCell({ children }: { children: React.ReactNode }) {
   return (
-    <TableCell sx={{ fontFamily: "'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'" }} align="center">
+    <TableCell
+      sx={{
+        fontFamily:
+          "'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'",
+      }}
+      align="center"
+    >
       <code>{children}</code>
     </TableCell>
   );
@@ -18,7 +24,12 @@ function AlphaCell({ children }: { children: React.ReactNode }) {
 
 function CalcCell({ children }: { children: React.ReactNode }) {
   return (
-    <TableCell sx={{ fontFamily: "'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'" }}>
+    <TableCell
+      sx={{
+        fontFamily:
+          "'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'",
+      }}
+    >
       <code>{children}</code>
     </TableCell>
   );

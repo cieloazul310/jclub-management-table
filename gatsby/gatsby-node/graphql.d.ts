@@ -1,5 +1,5 @@
-import type { Node } from 'gatsby';
-import type { GatsbyIterable } from 'gatsby/dist/datastore/common/iterable';
+import type { Node } from "gatsby";
+import type { GatsbyIterable } from "gatsby/dist/datastore/common/iterable";
 
 export type GatsbyNodeModelFindArgs = {
   query?: {
@@ -12,15 +12,21 @@ export type PageDependencies = { path: string; connectionType?: string };
 export type GatsbyNodeModel = {
   findAll: <T extends Node>(
     args: GatsbyNodeModelFindArgs,
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ) => Promise<{
     entries: GatsbyIterable<T>;
     totalCount: () => Promise<number>;
   }>;
 
-  findOne: <T extends Node>(args: GatsbyNodeModelFindArgs, pageDependencies?: PageDependencies) => Promise<T | null>;
+  findOne: <T extends Node>(
+    args: GatsbyNodeModelFindArgs,
+    pageDependencies?: PageDependencies,
+  ) => Promise<T | null>;
 
-  findRootNodeAncestor: <T extends Node>(source: Node, predicate?: (node: Node) => boolean) => T | null;
+  findRootNodeAncestor: <T extends Node>(
+    source: Node,
+    predicate?: (node: Node) => boolean,
+  ) => T | null;
 
   /**
    * @deprecated
@@ -28,10 +34,16 @@ export type GatsbyNodeModel = {
    */
   getAllNodes: <T extends Node>(args: { type: string }) => T[];
 
-  getNodeById: <T extends Node>(args: Partial<{ id: string; type: string }>, pageDependencies?: PageDependencies) => T | null;
+  getNodeById: <T extends Node>(
+    args: Partial<{ id: string; type: string }>,
+    pageDependencies?: PageDependencies,
+  ) => T | null;
 
   /** @deprecated */
-  runQuery: <T extends Node>(args: { type: string; query: { [key: string]: unknown } }) => Promise<T[]>;
+  runQuery: <T extends Node>(args: {
+    type: string;
+    query: { [key: string]: unknown };
+  }) => Promise<T[]>;
 };
 
 export type GatsbyGraphQLContext = {

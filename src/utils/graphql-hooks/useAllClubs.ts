@@ -1,11 +1,21 @@
-import { useStaticQuery, graphql } from 'gatsby';
-import type { Club } from '../../../types';
+import { useStaticQuery, graphql } from "gatsby";
+import type { Club } from "../../../types";
 
 type AllClubsQueryData = {
   allClub: {
     nodes: Pick<
       Club,
-      'id' | 'slug' | 'href' | 'name' | 'short_name' | 'fullname' | 'category' | 'company' | 'hometown' | 'realatedCompanies' | 'settlement'
+      | "id"
+      | "slug"
+      | "href"
+      | "name"
+      | "short_name"
+      | "fullname"
+      | "category"
+      | "company"
+      | "hometown"
+      | "realatedCompanies"
+      | "settlement"
     >[];
   };
 };

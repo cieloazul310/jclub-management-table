@@ -1,24 +1,36 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListSubheader from '@mui/material/ListSubheader';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Checkbox from '@mui/material/Checkbox';
-import Collapse from '@mui/material/Collapse';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { generalFields, plFields, bsFields, revenueFields, expenseFields, attdFields } from '../../utils/allFields';
-import { useDictionary } from '../../utils/graphql-hooks';
-import type { Dict } from '../../../types';
+import * as React from "react";
+import List from "@mui/material/List";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Checkbox from "@mui/material/Checkbox";
+import Collapse from "@mui/material/Collapse";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import {
+  generalFields,
+  plFields,
+  bsFields,
+  revenueFields,
+  expenseFields,
+  attdFields,
+} from "../../utils/allFields";
+import { useDictionary } from "../../utils/graphql-hooks";
+import type { Dict } from "../../../types";
 
 type FieldTypeListProps = FieldFilterProps & {
   title: string;
   items: string[];
 };
 
-function FieldTypeList({ title, fields, setFields, items }: FieldTypeListProps) {
+function FieldTypeList({
+  title,
+  fields,
+  setFields,
+  items,
+}: FieldTypeListProps) {
   const dictionary = useDictionary();
   const [open, setOpen] = React.useState(false);
   const allSelected = items.every((item) => fields.includes(item));
@@ -28,7 +40,11 @@ function FieldTypeList({ title, fields, setFields, items }: FieldTypeListProps) 
     setOpen(!open);
   };
   const toggleField = (newField: string) => () => {
-    setFields(fields.includes(newField) ? fields.filter((field) => field !== newField) : [...fields, newField]);
+    setFields(
+      fields.includes(newField)
+        ? fields.filter((field) => field !== newField)
+        : [...fields, newField],
+    );
   };
   const setAllFields = () => {
     setFields(Array.from(new Set([...fields, ...items])));
@@ -41,7 +57,13 @@ function FieldTypeList({ title, fields, setFields, items }: FieldTypeListProps) 
       <ListItem disablePadding>
         <ListItemButton onClick={toggleOpen}>
           <ListItemIcon>
-            <Checkbox disableRipple checked={!allEmpty} indeterminate={!allSelected && !allEmpty} edge="start" color="secondary" />
+            <Checkbox
+              disableRipple
+              checked={!allEmpty}
+              indeterminate={!allSelected && !allEmpty}
+              edge="start"
+              color="secondary"
+            />
           </ListItemIcon>
           <ListItemText primary={title} />
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -62,7 +84,11 @@ function FieldTypeList({ title, fields, setFields, items }: FieldTypeListProps) 
           <ListItem key={item} disablePadding dense>
             <ListItemButton onClick={toggleField(item)}>
               <ListItemIcon>
-                <Checkbox checked={fields.includes(item)} edge="start" color="secondary" />
+                <Checkbox
+                  checked={fields.includes(item)}
+                  edge="start"
+                  color="secondary"
+                />
               </ListItemIcon>
               <ListItemText primary={dictionary[item as keyof Dict]} />
             </ListItemButton>
@@ -81,12 +107,42 @@ type FieldFilterProps = {
 function FieldFilter({ fields, setFields }: FieldFilterProps) {
   return (
     <List subheader={<ListSubheader>項目</ListSubheader>}>
-      <FieldTypeList items={generalFields} fields={fields} setFields={setFields} title="一般" />
-      <FieldTypeList items={plFields} fields={fields} setFields={setFields} title="損益計算書" />
-      <FieldTypeList items={bsFields} fields={fields} setFields={setFields} title="貸借対照表" />
-      <FieldTypeList items={revenueFields} fields={fields} setFields={setFields} title="営業収入" />
-      <FieldTypeList items={expenseFields} fields={fields} setFields={setFields} title="営業費用" />
-      <FieldTypeList items={attdFields} fields={fields} setFields={setFields} title="入場者数" />
+      <FieldTypeList
+        items={generalFields}
+        fields={fields}
+        setFields={setFields}
+        title="一般"
+      />
+      <FieldTypeList
+        items={plFields}
+        fields={fields}
+        setFields={setFields}
+        title="損益計算書"
+      />
+      <FieldTypeList
+        items={bsFields}
+        fields={fields}
+        setFields={setFields}
+        title="貸借対照表"
+      />
+      <FieldTypeList
+        items={revenueFields}
+        fields={fields}
+        setFields={setFields}
+        title="営業収入"
+      />
+      <FieldTypeList
+        items={expenseFields}
+        fields={fields}
+        setFields={setFields}
+        title="営業費用"
+      />
+      <FieldTypeList
+        items={attdFields}
+        fields={fields}
+        setFields={setFields}
+        title="入場者数"
+      />
     </List>
   );
 }

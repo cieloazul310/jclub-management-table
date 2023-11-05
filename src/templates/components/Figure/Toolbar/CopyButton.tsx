@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Snackbar from '@mui/material/Snackbar';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import useTableId from '../../../../utils/useTableId';
-import useCopy from '../../../../utils/useCopy';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Snackbar from "@mui/material/Snackbar";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import useTableId from "../../../../utils/useTableId";
+import useCopy from "../../../../utils/useCopy";
 
 type CopyButtonProps = {
   disabled: boolean;

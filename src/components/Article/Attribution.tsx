@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { mdxComponents } from '@cieloazul310/gatsby-theme-aoi';
-import Shortcodes from '../Shortcodes';
-import DocContainer from './DocContainer';
-import Attribution from '../../../content/docs/attribution.mdx';
+import * as React from "react";
+import { mdxComponents } from "@cieloazul310/gatsby-theme-aoi";
+import Shortcodes from "../Shortcodes";
+import DocContainer from "./DocContainer";
+import Attribution from "../../../content/docs/attribution.mdx";
 
 function AttributionDoc() {
   return (

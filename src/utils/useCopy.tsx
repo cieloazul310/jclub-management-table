@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 function useCopy(tableId: string, callback?: () => void) {
   return React.useCallback(() => {
@@ -19,7 +19,7 @@ function useCopy(tableId: string, callback?: () => void) {
 
       const string = selection?.toString();
       if (string && navigator.clipboard) {
-        navigator.clipboard.writeText(string.replace(/,/g, '')).then(callback);
+        navigator.clipboard.writeText(string.replace(/,/g, "")).then(callback);
       }
       selection?.removeAllRanges();
     }

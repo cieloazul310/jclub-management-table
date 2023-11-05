@@ -1,15 +1,15 @@
-import * as React from 'react';
-import TableRow from '@mui/material/TableRow';
-import { TableHeadLabel } from './TableLabel';
-import TableHeadCell from './TableHeadCell';
-import { useAppState } from '../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext';
-import type { Tab, Mode } from '../../../../../types';
+import * as React from "react";
+import TableRow from "@mui/material/TableRow";
+import { TableHeadLabel } from "./TableLabel";
+import TableHeadCell from "./TableHeadCell";
+import { useAppState } from "../../../../@cieloazul310/gatsby-theme-aoi-top-layout/utils/AppStateContext";
+import type { Tab, Mode } from "../../../../../types";
 
 type TableHeadRowProps = {
   mode: Mode;
 };
 
-export function PLTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
+export function PLTableHeadRow({ mode }: Pick<TableHeadRowProps, "mode">) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="revenue">
@@ -52,7 +52,7 @@ export function PLTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   );
 }
 
-export function BSTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
+export function BSTableHeadRow({ mode }: Pick<TableHeadRowProps, "mode">) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="assets">
@@ -92,7 +92,7 @@ export function BSTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   );
 }
 
-export function RevenueTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
+export function RevenueTableHeadRow({ mode }: Pick<TableHeadRowProps, "mode">) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="revenue">
@@ -126,7 +126,7 @@ export function RevenueTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   );
 }
 
-export function ExpenseTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
+export function ExpenseTableHeadRow({ mode }: Pick<TableHeadRowProps, "mode">) {
   return (
     <>
       <TableHeadCell mode={mode} sortableKey="expense">
@@ -159,7 +159,7 @@ export function ExpenseTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
   );
 }
 
-export function AttdTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
+export function AttdTableHeadRow({ mode }: Pick<TableHeadRowProps, "mode">) {
   const { displayFullAttd } = useAppState();
   return (
     <>
@@ -195,10 +195,10 @@ export function AttdTableHeadRow({ mode }: Pick<TableHeadRowProps, 'mode'>) {
 function TableHeadRow({ mode }: TableHeadRowProps) {
   const { tab } = useAppState();
   const tableHeadLabels = (currentTab: Tab) => {
-    if (currentTab === 'pl') return <PLTableHeadRow mode={mode} />;
-    if (currentTab === 'bs') return <BSTableHeadRow mode={mode} />;
-    if (currentTab === 'revenue') return <RevenueTableHeadRow mode={mode} />;
-    if (currentTab === 'expense') return <ExpenseTableHeadRow mode={mode} />;
+    if (currentTab === "pl") return <PLTableHeadRow mode={mode} />;
+    if (currentTab === "bs") return <BSTableHeadRow mode={mode} />;
+    if (currentTab === "revenue") return <RevenueTableHeadRow mode={mode} />;
+    if (currentTab === "expense") return <ExpenseTableHeadRow mode={mode} />;
     return <AttdTableHeadRow mode={mode} />;
   };
 

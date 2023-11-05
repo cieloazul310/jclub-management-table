@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useInView } from 'react-intersection-observer';
-import Loader from './Loader';
+import * as React from "react";
+import { useInView } from "react-intersection-observer";
+import Loader from "./Loader";
 
 type InViewProps = {
   children: React.ReactNode;
