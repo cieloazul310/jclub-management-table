@@ -70,8 +70,6 @@ yarn-error.log
 
 graphql-types.ts
 
-content/post/
-
 # Logs
 logs
 *.log
