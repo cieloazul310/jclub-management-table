@@ -1,0 +1,69 @@
+# ref: https://zenn.dev/mizchi/articles/3117b92a834531361fc8
+
+name: Update gatsby-theme-aoi
+
+on:
+  repository_dispatch:
+    types: [update-gatsby-theme-aoi]
+  
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  update-packages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: ./package-lock.json
+      
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      
+      - name: Upgrade gatsby-theme-aoi
+        run: npx npm-check-updates @cieloazul310/gatsby-theme-aoi @cieloazul310/gatsby-theme-aoi-blog-components --upgrade --install always
+      
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'update @cieloazul310/gatsby-theme-aoi'
+          base: main
+          branch: update_package
+          branch-suffix: short-commit-hash
+          delete-branch: true
+          title: 'update gatsby-theme-aoi'
+  
