@@ -6,6 +6,7 @@ import {
   Alert,
   SubParagraph,
   PanelLink,
+  Details,
 } from "@cieloazul310/gatsby-theme-aoi";
 import Diff from "./Diff";
 import SimpleTable from "./SimpleTable";
@@ -71,4 +72,5 @@ export default {
   PanelLink,
   WorkInProgress,
   Written,
+  Details,
 };
