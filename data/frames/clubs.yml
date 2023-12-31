@@ -73,7 +73,7 @@
   fullname: 東京ヴェルディ1969
   short_name: 東京V
   company: 東京ヴェルディ株式会社
-  category: J2
+  category: J1
   hometown: 東京都
   area: 東京都
   website: https://www.verdy.co.jp
@@ -86,7 +86,7 @@
   fullname: FC町田ゼルビア
   short_name: 町田
   company: 株式会社ゼルビア
-  category: J2
+  category: J1
   hometown: 町田市
   area: 東京都
   website: https://www.zelvia.co.jp
@@ -153,7 +153,7 @@
   fullname: ジュビロ磐田
   short_name: 磐田
   company: 株式会社ジュビロ
-  category: J2
+  category: J1
   hometown: 御前崎市、菊川市、掛川市、袋井市、森町、磐田市、浜松市、湖西市
   area: 静岡県
   website: https://www.jubilo-iwata.co.jp
@@ -362,7 +362,7 @@
   fullname: 横浜FC
   short_name: 横浜FC
   company: 株式会社横浜フリエスポーツクラブ
-  category: J1
+  category: J2
   hometown: 横浜市
   area: 神奈川県
   website: https://www.yokohamafc.com
@@ -456,7 +456,7 @@
   fullname: 愛媛FC
   short_name: 愛媛
   company: 株式会社愛媛FC
-  category: J3
+  category: J2
   hometown: 松山市を中心とする全県
   area: 愛媛県
   website: https://www.ehimefc.com
@@ -505,7 +505,7 @@
   fullname: 鹿児島ユナイテッドFC
   short_name: 鹿児島
   company: 株式会社鹿児島プロスポーツプロジェクト
-  category: J3
+  category: J2
   hometown: 鹿児島市
   area: 鹿児島県
   website: https://www.kufc.co.jp
@@ -558,7 +558,7 @@
   fullname: 大宮アルディージャ
   short_name: 大宮
   company: エヌ・ティ・ティ・スポーツコミュニティ株式会社
-  category: J2
+  category: J3
   hometown: さいたま市
   area: 埼玉県
   website: https://www.ardija.co.jp
@@ -635,7 +635,7 @@
   fullname: ツエーゲン金沢
   short_name: 金沢
   company: 株式会社石川ツエーゲン
-  category: J2
+  category: J3
   hometown: 金沢市、白山市、野々市市、かほく市、津幡町、内灘町を中心とする全県
   area: 石川県
   website: https://www.zweigen-kanazawa.jp
