@@ -12,11 +12,9 @@ import {
   PageNavigationContainer,
   PageNavigationItem,
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
-import Seo from "../components/Seo";
-import PostList from "../components/PostList";
-import { AdInSectionDividerOne } from "../components/Ads";
-import Layout from "../layout";
-import type { MdxPostListFragment } from "../../types";
+import type { MdxPostListFragment } from "types";
+import { Seo, PostList, AdInSectionDividerOne } from "@/components";
+import Layout from "@/layout";
 
 type AllPostsTemplateData = {
   allMdxPost: {

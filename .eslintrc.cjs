@@ -1,3 +1,4 @@
+/** @type {import("eslint").Linter.Config} */
 module.exports = {
   globals: {
     __PATH_PREFIX__: true,
@@ -20,6 +21,13 @@ module.exports = {
   },
   rules: {
     "react/jsx-props-no-spreading": "warn",
+    "import/extensions": [
+      "warn",
+      "never",
+      {
+        ignorePackages: true,
+      }
+    ],
   },
   overrides: [
     {

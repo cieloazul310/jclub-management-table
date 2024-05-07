@@ -46,6 +46,7 @@
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-mdx": "^5.13.1",
     "gatsby-plugin-sitemap": "^6.13.1",
+    "gatsby-plugin-tsconfig-paths": "^1.0.6",
     "gatsby-plugin-twitter": "5.13.1",
     "gatsby-source-filesystem": "^5.13.1",
     "gatsby-transformer-yaml": "^5.13.1",

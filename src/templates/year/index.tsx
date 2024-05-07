@@ -6,14 +6,12 @@ import {
   PageNavigationContainer,
   PageNavigationItem,
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
-import Layout from "../../layout";
-import Seo from "../../components/Seo";
-import YearSummary from "./Summary";
-import { YearsLink } from "../../components/Links";
-import Tab from "../components/Tab";
+import type { Year, AllDataFieldsFragment } from "types";
+import Layout from "@/layout";
+import { Seo, YearsLink, AdInSectionDividerOne } from "@/components";
+import YearSummary from "./summary";
+import Tab from "../components/tab";
 import FigureSection from "../components/Figure";
-import { AdInSectionDividerOne } from "../../components/Ads";
-import type { Year, AllDataFieldsFragment } from "../../../types";
 
 export type YearPageData = {
   year: Pick<Year, "id" | "year" | "href" | "categories" | "stats">;

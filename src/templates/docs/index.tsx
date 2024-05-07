@@ -10,10 +10,9 @@ import {
   PanelLink,
   mdxComponents,
 } from "@cieloazul310/gatsby-theme-aoi";
-import { AdInSectionDividerOne } from "../../components/Ads";
-import shortcodes from "../../components/Shortcodes";
-import DocsMenu from "./DocsMenu";
-import Layout from "../../layout";
+import { AdInSectionDividerOne, shortcodes } from "@/components";
+import Layout from "@/layout";
+import DocsMenu from "./docs-menu";
 
 type DocsTemplateData = {
   mdx: {

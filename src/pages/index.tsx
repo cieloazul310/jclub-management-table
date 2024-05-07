@@ -9,14 +9,19 @@ import {
   Paragraph,
   useSiteMetadata,
 } from "@cieloazul310/gatsby-theme-aoi";
-import Layout from "../layout";
-import Seo from "../components/Seo";
-import GridItemMenu from "../components/GridItemMenu";
-import PostList from "../components/PostList";
-import { J1Link, J2Link, J3Link, YearsLink } from "../components/Links";
-import AttributionDoc from "../components/Article/Attribution";
-import { AdInSectionDividerOne } from "../components/Ads";
-import type { MdxPostListFragment } from "../../types";
+import type { MdxPostListFragment } from "types";
+import Layout from "@/layout";
+import {
+  Seo,
+  GridItemMenu,
+  PostList,
+  J1Link,
+  J2Link,
+  J3Link,
+  YearsLink,
+  AttributionDoc,
+  AdInSectionDividerOne,
+} from "@/components";
 
 type IndexPageQueryData = {
   allMdxPost: {

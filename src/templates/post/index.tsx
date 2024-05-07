@@ -17,12 +17,9 @@ import {
   PageNavigationContainer,
   PageNavigationItem,
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
-import Seo from "../../components/Seo";
-import PostList from "../../components/PostList";
-import shortcodes from "../../components/Shortcodes";
-import { AdInSectionDividerOne } from "../../components/Ads";
-import Layout from "../../layout";
-import type { Club, MdxPost, MdxPostListFragment } from "../../../types";
+import type { Club, MdxPost, MdxPostListFragment } from "types";
+import { Seo, PostList, shortcodes, AdInSectionDividerOne } from "@/components";
+import Layout from "@/layout";
 
 type PostTemplatePageData = {
   mdxPost: Pick<MdxPost, "title" | "lastmod" | "date" | "excerpt" | "draft"> & {

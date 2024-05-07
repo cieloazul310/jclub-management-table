@@ -10,22 +10,23 @@ import {
   Article,
   useIsMobile,
 } from "@cieloazul310/gatsby-theme-aoi";
-import Layout from "../layout";
-import Seo from "../components/Seo";
-import ItemFilter from "../components/Download/ItemFilter";
-import FieldFilter from "../components/Download/FieldFilter";
-import Preview from "../components/Download/Preview";
-import AttributionDoc from "../components/Article/Attribution";
-import { AdInSectionDividerOne } from "../components/Ads";
-import allFields from "../utils/allFields";
-import { useDictionary } from "../utils/graphql-hooks";
 import type {
   Club,
   Year,
   Dict,
   DownloadDatum,
   AllDataFieldsFragment,
-} from "../../types";
+} from "types";
+import Layout from "@/layout";
+import {
+  Seo,
+  ItemFilter,
+  FieldFilter,
+  Preview,
+  AttributionDoc,
+  AdInSectionDividerOne,
+} from "@/components";
+import { allFields, useDictionary } from "@/utils";
 
 function getCategory(category: string | number | null) {
   return category === "J1" || category === "J2" || category === "J3"
@@ -97,6 +98,7 @@ function DownloadPage({ data }: PageProps<DownloadPageData>) {
         for (let i = 0; i < selectedFields.length; i += 1) {
           const field = selectedFields[i] as keyof Dict;
           const fieldName = dictionary[field];
+          // @ts-expect-error
           obj[fieldName] = node[field] ?? null;
         }
         return obj;

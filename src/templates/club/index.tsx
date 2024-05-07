@@ -6,15 +6,17 @@ import {
   PageNavigationContainer,
   PageNavigationItem,
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
-import Layout from "../../layout";
-import Seo from "../../components/Seo";
-import PostList from "../../components/PostList";
-import { CategoryLink } from "../../components/Links";
-import Tab from "../components/Tab";
-import FigureSection from "../components/Figure";
-import ClubSummary from "./Summary";
-import { AdInSectionDividerOne } from "../../components/Ads";
-import type { Club, AllDataFieldsFragment, MdxPost } from "../../../types";
+import type { Club, AllDataFieldsFragment, MdxPost } from "types";
+import Layout from "@/layout";
+import {
+  Seo,
+  PostList,
+  CategoryLink,
+  AdInSectionDividerOne,
+} from "@/components";
+import Tab from "../components/tab";
+import FigureSection from "../components/figure";
+import ClubSummary from "./summary";
 
 export type ClubPageData = {
   club: Pick<

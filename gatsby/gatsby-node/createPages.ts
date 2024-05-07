@@ -221,7 +221,7 @@ export default async function createPages({
 
         createPage({
           path: pagePath,
-          component: path.resolve("./src/templates/postsByClub.tsx"),
+          component: path.resolve("./src/templates/posts-by-club.tsx"),
           context: {
             slug: node.slug,
             limit: postsPerPage,
@@ -246,7 +246,7 @@ export default async function createPages({
 
     createPage({
       path: basePath,
-      component: path.resolve("./src/templates/postsByYear.tsx"),
+      component: path.resolve("./src/templates/posts-by-year.tsx"),
       context: {
         older,
         newer,
