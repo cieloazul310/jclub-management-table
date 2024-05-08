@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
-import FigureWrapper from "./Wrapper";
+import FigureWrapper from "./wrapper";
 
 type CapitalItemProps = {
   label: string;

@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ChartNext from "../components/ChartNext/Container";
+import ChartNext from "../templates/components/chart";
 import data from "./assets/data";
 
 export default {

@@ -1,2 +1,2 @@
 export * from "./category-link";
-export * from "./years-link";
+export { default as YearsLink } from "./years-link";

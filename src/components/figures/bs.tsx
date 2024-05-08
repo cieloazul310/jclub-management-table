@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { alpha } from "@mui/material/styles";
-import FigureWrapper from "./Wrapper";
+import FigureWrapper from "./wrapper";
 
 function BSFigure() {
   return (

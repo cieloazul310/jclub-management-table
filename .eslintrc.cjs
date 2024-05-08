@@ -3,7 +3,7 @@ module.exports = {
   globals: {
     __PATH_PREFIX__: true,
   },
-  extends: ["airbnb", "airbnb-typescript", "prettier"],
+  extends: ["airbnb", "airbnb-typescript", "prettier", "plugin:storybook/recommended"],
   parser: `@typescript-eslint/parser`,
   parserOptions: {
     ecmaFeatures: {

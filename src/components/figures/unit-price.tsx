@@ -2,7 +2,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useTheme, alpha } from "@mui/material/styles";
-import FigureWrapper from "./Wrapper";
+import FigureWrapper from "./wrapper";
 
 type UnitPriceContainerProps = {
   width: number;

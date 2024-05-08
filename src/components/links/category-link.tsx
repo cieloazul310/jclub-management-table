@@ -1,71 +1,39 @@
 import * as React from "react";
-import { navigate } from "gatsby";
-import NativeSelect from "@mui/material/NativeSelect";
-import NoSsr from "@mui/material/NoSsr";
-import Skeleton from "@mui/material/Skeleton";
-import { AppLinkButton, useIsMobile } from "@cieloazul310/gatsby-theme-aoi";
-import type { Club, Category } from "types";
+import type { Category } from "types";
 import { useClubsByCategory } from "@/utils";
-
-type CategoryLinkCoreProps = {
-  title: string;
-  clubs: Pick<Club, "id" | "short_name" | "href">[];
-};
-
-export function CategoryLinkCore({ title, clubs }: CategoryLinkCoreProps) {
-  const isMobile = useIsMobile();
-  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    navigate(event.target.value);
-  };
-  const core = React.useMemo(() => {
-    if (isMobile) {
-      return (
-        <NativeSelect value="" onChange={onChange}>
-          <option disabled value="">
-            {title}
-          </option>
-          {clubs.map(({ id, href, short_name }) => (
-            <option key={id} value={href}>
-              {short_name}
-            </option>
-          ))}
-        </NativeSelect>
-      );
-    }
-
-    return (
-      <>
-        {clubs.map((node, index) => (
-          <AppLinkButton
-            key={node.id ?? index}
-            href={node.href}
-            color="inherit"
-          >
-            {node.short_name}
-          </AppLinkButton>
-        ))}
-      </>
-    );
-  }, [isMobile, clubs]);
-
-  return (
-    <NoSsr fallback={<Skeleton variant="rounded" width={160} />}>{core}</NoSsr>
-  );
-}
+import LinksCore from "./links-core";
 
 export function J1Link() {
   const { j1 } = useClubsByCategory();
-  return <CategoryLinkCore title="J1クラブ経営情報" clubs={j1.nodes} />;
+  const items = j1.nodes.map(({ id, href, name, short_name }) => ({
+    id,
+    href,
+    label: name,
+    label_short: short_name,
+  }));
+  return <LinksCore title="J1クラブ経営情報" items={items} />;
 }
 
 export function J2Link() {
   const { j2 } = useClubsByCategory();
-  return <CategoryLinkCore title="J2クラブ経営情報" clubs={j2.nodes} />;
+  const items = j2.nodes.map(({ id, href, name, short_name }) => ({
+    id,
+    href,
+    label: name,
+    label_short: short_name,
+  }));
+  return <LinksCore title="J2クラブ経営情報" items={items} />;
 }
 
 export function J3Link() {
   const { j3 } = useClubsByCategory();
-  return <CategoryLinkCore title="J3クラブ経営情報" clubs={j3.nodes} />;
+  const items = j3.nodes.map(({ id, href, name, short_name }) => ({
+    id,
+    href,
+    label: name,
+    label_short: short_name,
+  }));
+  return <LinksCore title="J3クラブ経営情報" items={items} />;
 }
 
 export function CategoryLink({ category }: { category: Category }) {
