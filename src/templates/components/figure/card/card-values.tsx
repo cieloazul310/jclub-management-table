@@ -5,7 +5,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import { useAppState, useDispatch } from "@appState/AppStateContext";
 import type { General, PL, BS, Revenue, Expense, Attd, Mode } from "types";
 import { UpIcon, DownIcon } from "@/icons";
-import { val } from "@/utils";
+import val from "@/utils/val";
 
 type CardValueProps<T> = {
   label: string;

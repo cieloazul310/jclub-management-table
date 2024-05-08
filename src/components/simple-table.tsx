@@ -10,7 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import TableFooter from "@mui/material/TableFooter";
 import { useTheme } from "@mui/material/styles";
 import Diff from "./diff";
-import { val } from "@/utils";
+import val from "@/utils/val";
 
 type SimpleTableProps = {
   cols: string[];

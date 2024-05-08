@@ -8,10 +8,12 @@ import {
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
 import type { Year, AllDataFieldsFragment } from "types";
 import Layout from "@/layout";
-import { Seo, YearsLink, AdInSectionDividerOne } from "@/components";
+import Seo from "@/components/seo";
+import YearsLink from "@/components/links/years-link";
+import { AdInSectionDividerOne } from "@/components/ads";
 import YearSummary from "./summary";
 import Tab from "../components/tab";
-import FigureSection from "../components/Figure";
+import FigureSection from "../components/figure";
 
 export type YearPageData = {
   year: Pick<Year, "id" | "year" | "href" | "categories" | "stats">;

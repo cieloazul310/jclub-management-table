@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAppState } from "@appState/AppStateContext";
 import type { AllDataFieldsFragment } from "types";
-import { useStatistics } from "@/utils";
+import useStatistics from "@/utils/graphql-hooks/useStatistics";
 
 function useExtentByCategory(categories: string[]) {
   const { tab } = useAppState();

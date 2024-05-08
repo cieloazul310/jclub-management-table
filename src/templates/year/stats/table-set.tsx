@@ -4,8 +4,8 @@ import TableCell from "@mui/material/TableCell";
 import { alpha } from "@mui/material/styles";
 import type { Year, YearStats, StatsValues } from "types";
 import useHasJ3 from "./useHasJ3";
-import { Diff } from "@/components";
-import { valToOku } from "@/utils";
+import Diff from "@/components/diff";
+import valToOku from "@/utils/valToOku";
 
 type TableCellAverageProps = {
   statsValues: StatsValues;

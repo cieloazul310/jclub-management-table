@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Article } from "@cieloazul310/gatsby-theme-aoi";
-import { AdInFooter } from "@/components";
+import { AdInFooter } from "@/components/ads";
 import FooterLinks from "./FooterLinks";
 import Copyrights from "./Copyrights";
 

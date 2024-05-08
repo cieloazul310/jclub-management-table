@@ -12,7 +12,7 @@ import {
 } from "@cieloazul310/gatsby-theme-aoi";
 import type { MdxPostByYear } from "types";
 import Layout from "@/layout";
-import { Seo } from "@/components";
+import Seo from "@/components/seo";
 
 type ArchivePageData = {
   allMdxPostByYears: Pick<MdxPostByYear, "basePath" | "year">[];

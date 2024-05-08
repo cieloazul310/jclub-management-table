@@ -11,7 +11,8 @@ import Divider from "@mui/material/Divider";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import type { Club } from "types";
-import { useAllYears, useClubsByCategory } from "@/utils";
+import useClubsByCategory from "@/utils/graphql-hooks/useClubsByCategory";
+import useAllYears from "@/utils/graphql-hooks/useAllYears";
 
 type ClubListByCategoryProps = Pick<
   ItemFilterProps,

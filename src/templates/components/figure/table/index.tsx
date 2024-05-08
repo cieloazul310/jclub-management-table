@@ -5,7 +5,8 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import { Mode, AllDataFieldsFragment } from "types";
-import { useStateEdges, useTableId } from "@/utils";
+import { useStateEdges } from "@/utils/useStateEdges";
+import useTableId from "@/utils/useTableId";
 import TableHeadRow from "./head-row";
 import TableBodyRow from "./body-row";
 

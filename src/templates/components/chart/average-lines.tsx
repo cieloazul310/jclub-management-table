@@ -3,7 +3,9 @@ import { useTheme } from "@mui/material/styles";
 import { line as d3Line, Line, ScaleLinear } from "d3";
 import { useAppState } from "@appState/AppStateContext";
 import type { AllDataFieldsFragment, Statistics } from "types";
-import { j1color, j2color, j3color, useStatistics, useAllYears } from "@/utils";
+import { j1color, j2color, j3color } from "@/utils/categoryColors";
+import useStatistics from "@/utils/graphql-hooks/useStatistics";
+import useAllYears from "@/utils/graphql-hooks/useAllYears";
 
 function useStatisticsField() {
   const { tab } = useAppState();

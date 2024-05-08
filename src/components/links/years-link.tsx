@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useIsMobile } from "@cieloazul310/gatsby-theme-aoi";
-import { useAllYears } from "@/utils";
+import useAllYears from "@/utils/graphql-hooks/useAllYears";
 import LinksCore from "./links-core";
 
 function YearsLink() {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import type { Datum } from "types";
-import { j1color, j2color, j3color } from "@/utils";
+import { j1color, j2color, j3color } from "@/utils/categoryColors";
 
 function BarGradient() {
   const { palette } = useTheme();

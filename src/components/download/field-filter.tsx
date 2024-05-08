@@ -17,8 +17,8 @@ import {
   revenueFields,
   expenseFields,
   attdFields,
-  useDictionary,
-} from "@/utils";
+} from "@/utils/allFields";
+import useDictionary from "@/utils/graphql-hooks/useDictionary";
 
 type FieldTypeListProps = FieldFilterProps & {
   title: string;

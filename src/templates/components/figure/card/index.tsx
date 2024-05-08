@@ -5,7 +5,7 @@ import { Mousewheel, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useAppState } from "@appState/AppStateContext";
 import type { AllDataFieldsFragment, Mode } from "types";
-import { useStateEdges } from "@/utils";
+import { useStateEdges } from "@/utils/useStateEdges";
 import CardItem from "./card-item";
 import Handler from "./handler";
 

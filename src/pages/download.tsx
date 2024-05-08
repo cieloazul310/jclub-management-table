@@ -18,15 +18,14 @@ import type {
   AllDataFieldsFragment,
 } from "types";
 import Layout from "@/layout";
-import {
-  Seo,
-  ItemFilter,
-  FieldFilter,
-  Preview,
-  AttributionDoc,
-  AdInSectionDividerOne,
-} from "@/components";
-import { allFields, useDictionary } from "@/utils";
+import Seo from "@/components/seo";
+import ItemFilter from "@/components/download/item-filter";
+import FieldFilter from "@/components/download/field-filter";
+import Preview from "@/components/download/preview";
+import AttributionDoc from "@/components/article/attribution";
+import { AdInSectionDividerOne } from "@/components/ads";
+import { allFields } from "@/utils/allFields";
+import useDictionary from "@/utils/graphql-hooks/useDictionary";
 
 function getCategory(category: string | number | null) {
   return category === "J1" || category === "J2" || category === "J3"

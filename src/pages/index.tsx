@@ -11,17 +11,13 @@ import {
 } from "@cieloazul310/gatsby-theme-aoi";
 import type { MdxPostListFragment } from "types";
 import Layout from "@/layout";
-import {
-  Seo,
-  GridItemMenu,
-  PostList,
-  J1Link,
-  J2Link,
-  J3Link,
-  YearsLink,
-  AttributionDoc,
-  AdInSectionDividerOne,
-} from "@/components";
+import Seo from "@/components/seo";
+import GridItemMenu from "@/components/grid-item-menu";
+import PostList from "@/components/post-list";
+import { J1Link, J2Link, J3Link } from "@/components/links/category-link";
+import YearsLink from "@/components/links/years-link";
+import AttributionDoc from "@/components/article/attribution";
+import { AdInSectionDividerOne } from "@/components/ads";
 
 type IndexPageQueryData = {
   allMdxPost: {

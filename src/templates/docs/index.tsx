@@ -10,7 +10,8 @@ import {
   PanelLink,
   mdxComponents,
 } from "@cieloazul310/gatsby-theme-aoi";
-import { AdInSectionDividerOne, shortcodes } from "@/components";
+import shortcodes from "@/components/shortcodes";
+import { AdInSectionDividerOne } from "@/components/ads";
 import Layout from "@/layout";
 import DocsMenu from "./docs-menu";
 

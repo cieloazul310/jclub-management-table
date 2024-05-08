@@ -8,12 +8,10 @@ import {
 } from "@cieloazul310/gatsby-theme-aoi-blog-components";
 import type { Club, AllDataFieldsFragment, MdxPost } from "types";
 import Layout from "@/layout";
-import {
-  Seo,
-  PostList,
-  CategoryLink,
-  AdInSectionDividerOne,
-} from "@/components";
+import Seo from "@/components/seo";
+import PostList from "@/components/post-list";
+import { CategoryLink } from "@/components/links/category-link";
+import { AdInSectionDividerOne } from "@/components/ads";
 import Tab from "../components/tab";
 import FigureSection from "../components/figure";
 import ClubSummary from "./summary";

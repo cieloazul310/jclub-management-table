@@ -1,6 +1,6 @@
 import * as React from "react";
 import Typograhy from "@mui/material/Typography";
-import { useCategoryColor } from "@/utils";
+import useCategoryColor from "@/utils/useCategoryColor";
 
 function CategoryLabel({ category }: { category: string }) {
   const { color, contrastText } = useCategoryColor(category);

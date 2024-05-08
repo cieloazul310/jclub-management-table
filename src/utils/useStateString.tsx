@@ -1,6 +1,6 @@
 import { useAppState } from "@appState/AppStateContext";
 import type { SortableKeys } from "types";
-import { useDictionary } from "./graphql-hooks";
+import useDictionary from "./graphql-hooks/useDictionary";
 
 type SortStateString = {
   field: string | null | undefined;

@@ -9,7 +9,8 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import { csvFormat } from "d3";
 import { H4 } from "@cieloazul310/gatsby-theme-aoi";
 import type { DownloadDatum } from "types";
-import { useAllClubs, useAllYears } from "@/utils";
+import useAllClubs from "@/utils/graphql-hooks/useAllClubs";
+import useAllYears from "@/utils/graphql-hooks/useAllYears";
 
 type PreviewProps = {
   dataset: DownloadDatum[];

@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Category } from "types";
-import { useClubsByCategory } from "@/utils";
+import useClubsByCategory from "@/utils/graphql-hooks/useClubsByCategory";
 import LinksCore from "./links-core";
 
 export function J1Link() {

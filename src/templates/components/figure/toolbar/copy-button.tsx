@@ -4,7 +4,8 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Snackbar from "@mui/material/Snackbar";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
-import { useTableId, useCopy } from "@/utils";
+import useTableId from "@/utils/useTableId";
+import useCopy from "@/utils/useCopy";
 
 type CopyButtonProps = {
   disabled: boolean;

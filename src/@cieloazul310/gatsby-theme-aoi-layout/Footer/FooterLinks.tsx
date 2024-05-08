@@ -3,7 +3,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { AppLink } from "@cieloazul310/gatsby-theme-aoi";
 import type { Club } from "types";
-import { useClubsByCategory, useAllYears } from "@/utils";
+import useClubsByCategory from "@/utils/graphql-hooks/useClubsByCategory";
+import useAllYears from "@/utils/graphql-hooks/useAllYears";
 
 type CategoryLinksProps = {
   title: string;
