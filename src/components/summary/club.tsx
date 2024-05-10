@@ -34,10 +34,23 @@ type ClubSummaryProps = {
 };
 
 function ClubSummary({ nodes, club }: ClubSummaryProps) {
+  const {
+    name,
+    fullname,
+    company,
+    period,
+    category,
+    hometown,
+    relatedCompanies,
+    annotation,
+    website,
+    settlement,
+  } = club;
+
   return (
     <Section component="section">
       <Article maxWidth="md">
-        <H2>{club.name}</H2>
+        <H2>{name}</H2>
         {nodes.length > 2 && <Chart nodes={nodes} />}
         <Table>
           <TBody>
@@ -45,38 +58,38 @@ function ClubSummary({ nodes, club }: ClubSummaryProps) {
               <TableCell component="th" scope="row">
                 正式名称
               </TableCell>
-              <Td>{club.fullname}</Td>
+              <Td>{fullname}</Td>
             </Tr>
             <Tr>
               <TableCell component="th" scope="row">
                 法人名
               </TableCell>
-              <Td>{club.company}</Td>
+              <Td>{company}</Td>
             </Tr>
             <Tr>
               <TableCell component="th" scope="row">
                 決算期
               </TableCell>
-              <Td>{club.period}月期</Td>
+              <Td>{period}月期</Td>
             </Tr>
             <Tr>
               <TableCell component="th" scope="row">
                 所属カテゴリ
               </TableCell>
-              <Td>{club.category}</Td>
+              <Td>{category}</Td>
             </Tr>
             <Tr>
               <TableCell component="th" scope="row">
                 ホームタウン
               </TableCell>
-              <Td>{club.hometown}</Td>
+              <Td>{hometown}</Td>
             </Tr>
-            {club.relatedCompanies && (
+            {relatedCompanies && (
               <Tr>
                 <TableCell component="th" scope="row">
                   関連する法人
                 </TableCell>
-                <Td>{club.relatedCompanies.join("、")}</Td>
+                <Td>{relatedCompanies.join("、")}</Td>
               </Tr>
             )}
           </TBody>
@@ -85,18 +98,18 @@ function ClubSummary({ nodes, club }: ClubSummaryProps) {
               <Li>
                 2021年以前の「チーム人件費」はアカデミー指導者報酬、レディースチーム選手・指導者報酬を含む。2022年度以降はトップチームに限定した「トップチーム人件費」。
               </Li>
-              {club.annotation?.map((str) => <Li key={str}>{str}</Li>)}
+              {annotation?.map((str) => <Li key={str}>{str}</Li>)}
             </Ul>
           </caption>
         </Table>
         <Stack direction="row" gap={1}>
-          {club.website && (
-            <AppLinkButton href={club.website} color="inherit">
+          {website && (
+            <AppLinkButton href={website} color="inherit">
               公式サイト
             </AppLinkButton>
           )}
-          {club.settlement && (
-            <AppLinkButton href={club.settlement} color="inherit">
+          {settlement && (
+            <AppLinkButton href={settlement} color="inherit">
               経営情報
             </AppLinkButton>
           )}

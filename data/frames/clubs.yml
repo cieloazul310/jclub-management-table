@@ -283,7 +283,7 @@
   area: 宮城県
   period: 1
   website: https://www.vegalta.co.jp
-  settlement: https://www.vegalta.co.jp/club/company.html
+  settlement: https://www.vegalta.co.jp/club/financial-results.html
   relatedCompanies:
     - 株式会社ベガルタスポーツクラブ
 
@@ -545,8 +545,8 @@
   hometown: 鹿児島市
   area: 鹿児島県
   period: 1
-  website: https://www.kufc.co.jp
-  settlement: https://www.kufc.co.jp/club/mind/
+  website: https://kufc.co.jp
+  settlement: https://kufc.co.jp/club_mind/
   relatedCompanies:
     - 一般社団法人鹿児島プロスポーツプロジェクト
     - 株式会社KMP

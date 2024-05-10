@@ -21,6 +21,7 @@ module.exports = {
   },
   rules: {
     "react/jsx-props-no-spreading": "warn",
+    "@typescript-eslint/naming-convention": "off",
     "import/extensions": [
       "warn",
       "never",

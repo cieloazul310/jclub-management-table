@@ -45,60 +45,73 @@ function XLegend({ year, category, height, itemWidth }: XLegendProps) {
 }
 
 type BarProps<T> = {
-  node: T & General;
+  node: T & Pick<General, "category">;
   scale: ScaleLinear<number, number>;
   itemWidth: number;
   barWidth: number;
   barPadding: number;
 };
 
-function PLBar({ node, scale, itemWidth, barWidth, barPadding }: BarProps<PL>) {
-  const fill = useFill(node);
+function PLBar({
+  node,
+  scale,
+  itemWidth,
+  barWidth,
+  barPadding,
+}: BarProps<Pick<PL, "revenue">>) {
+  const { revenue, category } = node;
+  const fill = useFill({ category });
 
   return (
     <rect
       x={(itemWidth * barPadding) / 2}
-      y={scale(node.revenue)}
+      y={scale(revenue)}
       width={barWidth}
-      height={scale(0) - scale(node.revenue)}
+      height={scale(0) - scale(revenue)}
       fill={fill}
     />
   );
 }
 
-function BSBar({ node, scale, itemWidth, barWidth, barPadding }: BarProps<BS>) {
+function BSBar({
+  node,
+  scale,
+  itemWidth,
+  barWidth,
+  barPadding,
+}: BarProps<Pick<BS, "assets" | "liabilities" | "net_worth">>) {
   const { palette } = useTheme();
+  const { assets, liabilities, net_worth } = node;
   if (
-    typeof node.assets !== "number" ||
-    typeof node.liabilities !== "number" ||
-    typeof node.net_worth !== "number"
+    typeof assets !== "number" ||
+    typeof liabilities !== "number" ||
+    typeof net_worth !== "number"
   )
     return null;
+
   return (
     <>
       <rect
         x={(itemWidth * barPadding) / 2}
-        y={scale(node.assets)}
+        y={scale(assets)}
         width={barWidth / 2}
-        height={scale(0) - scale(node.assets)}
+        height={scale(0) - scale(assets)}
         fill={palette.grey[palette.mode === "light" ? 400 : 800]}
       />
       <rect
         x={itemWidth / 2}
-        y={scale(node.assets)}
+        y={scale(assets)}
         width={barWidth / 2}
-        height={scale(0) - scale(node.liabilities) - 1}
+        height={scale(0) - scale(liabilities) - 1}
         fill={palette.grey[palette.mode === "light" ? 300 : 700]}
       />
       <rect
         x={itemWidth / 2}
-        y={node.net_worth < 0 ? scale(0) : scale(node.net_worth)}
-        width={barWidth / (node.net_worth < 0 ? 4 : 2)}
-        height={
-          (node.net_worth < 0 ? -1 : 1) * (scale(0) - scale(node.net_worth))
-        }
+        y={net_worth < 0 ? scale(0) : scale(net_worth)}
+        width={barWidth / (net_worth < 0 ? 4 : 2)}
+        height={(net_worth < 0 ? -1 : 1) * (scale(0) - scale(net_worth))}
         fill={
-          node.net_worth < 0
+          net_worth < 0
             ? palette.error[palette.mode]
             : palette.success[palette.mode]
         }
@@ -113,7 +126,7 @@ function ExpenseBar({
   itemWidth,
   barWidth,
   barPadding,
-}: BarProps<Expense>) {
+}: BarProps<Pick<Expense, "expense" | "salary">>) {
   const { palette } = useTheme();
   const fill = useFill(node);
   const { expense, salary } = node;
@@ -147,14 +160,15 @@ function AttdBar({
   itemWidth,
   barWidth,
   barPadding,
-}: BarProps<Attd>) {
-  const fill = useFill(node);
+}: BarProps<Pick<Attd, "average_attd">>) {
+  const { average_attd, category } = node;
+  const fill = useFill({ category });
   return (
     <rect
       x={(itemWidth * barPadding) / 2}
-      y={scale(node.average_attd)}
+      y={scale(average_attd)}
       width={barWidth}
-      height={scale(0) - scale(node.average_attd)}
+      height={scale(0) - scale(average_attd)}
       fill={fill}
     />
   );
