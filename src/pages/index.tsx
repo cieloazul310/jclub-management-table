@@ -41,7 +41,7 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
         <Jumbotron maxWidth="md" bgcolor="primary.dark" height={40}>
           <AppLink href="/year/2023/" color="inherit">
             <Typography variant="h6" component="h3" color="inherit">
-              2023年度決算(先行発表版)を更新しました
+              2023年度決算(本発表版)を更新しました
             </Typography>
           </AppLink>
         </Jumbotron>
