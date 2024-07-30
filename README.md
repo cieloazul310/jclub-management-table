@@ -27,9 +27,10 @@ Jリーグが毎年公開している「Jクラブ個別経営情報開示資料
 - [2017年度(平成29年度)](https://www.jleague.jp/docs/aboutj/club-h29kaiji.pdf "2017年度(平成29年度) Jクラブ個別経営情報開示資料")
 - [2018年度(平成30年度)](https://www.jleague.jp/docs/aboutj/club-h30kaiji_3.pdf "2018年度(平成30年度) Jクラブ個別経営情報開示資料")
 - [2019年度(平成31年度)](https://www.jleague.jp/docs/aboutj/club-h31kaiji-1.pdf "2019年度(平成31年度) Jクラブ個別経営情報開示資料")
-- [2020年度(令和2年度)](https://aboutj.jleague.jp/corporate/wp-content/themes/j_corp/assets/pdf/club-r2kaiji_1_20210729.pdf "2020年度(令和2年度) Jクラブ個別経営情報開示資料")
-- [2021年度(令和3年度)](https://aboutj.jleague.jp/corporate/wp-content/themes/j_corp/assets/pdf/club-r3kaiji_1_20220728.pdf "2021年度(令和3年度) Jクラブ個別経営情報開示資料")
-- [2022年度(令和4年度)](https://aboutj.jleague.jp/corporate/wp-content/themes/j_corp/assets/pdf/club-r3kaiji_1_20230725.pdf "2022年度(令和4年度) Jクラブ個別経営情報開示資料")
+- [2020年度(令和2年度)](https://aboutj.jleague.jp/corporate/assets/pdf/club_info/j_kessan-2020.pdf "2020年度(令和2年度) Jクラブ個別経営情報開示資料")
+- [2021年度(令和3年度)](https://aboutj.jleague.jp/corporate/assets/pdf/club_info/j_kessan-2021.pdf "2021年度(令和3年度) Jクラブ個別経営情報開示資料")
+- [2022年度(令和4年度)](https://aboutj.jleague.jp/corporate/assets/pdf/club_info/j_kessan-2022.pdf "2022年度(令和4年度) Jクラブ個別経営情報開示資料")
+- [2023年度(令和5年度)](https://aboutj.jleague.jp/corporate/assets/pdf/club_info/j_kessan-2023.pdf "2022年度(令和4年度) Jクラブ個別経営情報開示資料")
 
 #### データの留意点
 
@@ -86,9 +87,12 @@ Jリーグのコーポレートサイトでは、報道資料である「クラ�
 - 2022-07-28 2021年度のデータに柏、湘南、磐田、及び関連する法人の営業収益を加えて更新
 - 2023-05-27 2022年度のデータを3月決算の柏、湘南、及び関連する法人の営業収益を除いた形で更新
 - 2023-07-25 2022年度のデータを完全版に更新
+- 2024-05-21 2023年度のデータを3月決算の柏、湘南、及び関連する法人の営業収益を除いた形で更新
+- 2024-05-26 ダウンロードページでJFL、地域リーグの経営情報が表示されないバグを修正
+- 2024-07-30 2023年度のデータを完全版に更新
 
 ### 制作
 
-@cieloazul310 [Twitter](https://twitter.com/cieloazul310 "@cieloazul310")  [Web](https://cieloazul310.github.io/ "水戸地図")
+@cieloazul310 [Twitter](https://twitter.com/cieloazul310 "@cieloazul310") | [Web](https://cieloazul310.github.io/ "水戸地図")
 
 データの欠損を見つけたらTwitter等で教えていただけるとありがたいです。

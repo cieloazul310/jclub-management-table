@@ -1,12 +1,8 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import {
-  Jumbotron,
-  Section,
-  Article,
-  Seo,
-} from "@cieloazul310/gatsby-theme-aoi";
+import { Jumbotron, Section, Article } from "@cieloazul310/gatsby-theme-aoi";
 import Layout from "@/layout";
+import Seo from "@/components/seo";
 import GridItemMenu from "@/components/grid-item-menu";
 
 function DocsPage() {
