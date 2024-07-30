@@ -3,13 +3,13 @@ import { graphql, type PageProps, type HeadProps } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import Container from "@mui/material/Container";
 import {
-  Seo,
   Jumbotron,
   Section,
   Article,
   PanelLink,
   mdxComponents,
 } from "@cieloazul310/gatsby-theme-aoi";
+import Seo from "@/components/seo";
 import shortcodes from "@/components/shortcodes";
 import { AdInSectionDividerOne } from "@/components/ads";
 import DocsMenu from "@/components/docs-menu";
