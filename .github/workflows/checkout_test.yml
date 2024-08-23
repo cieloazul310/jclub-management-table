@@ -83,7 +83,7 @@ jobs:
       - name: Move to content collection
         run: |
           rm -rf content
-          mv ${{ env.CLONED_PATH }}/content content
+          mv ${{ env.CLONED_PATH }}/src content
           tree content
       
       - name: Build test
