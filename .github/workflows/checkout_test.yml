@@ -54,7 +54,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: 20
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
 
@@ -83,10 +83,11 @@ jobs:
       - name: Move to content collection
         run: |
           rm -rf content
-          mv ${{ env.CLONED_PATH }}/content content
+          mv ${{ env.CLONED_PATH }}/src content
           tree content
       
       - name: Build test
         env:
           PREFIX_PATHS: 'true'
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build -- --verbose
+
