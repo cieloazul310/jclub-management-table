@@ -108,12 +108,13 @@ export function YearsLinks() {
 }
 
 function DrawerLinks() {
-  const { j1, j2, j3 } = useClubsByCategory();
+  const { j1, j2, j3, others } = useClubsByCategory();
   return (
     <List subheader={<ListSubheader>経営情報</ListSubheader>}>
       <CategoryLinks title="J1" clubs={j1.nodes} />
       <CategoryLinks title="J2" clubs={j2.nodes} />
       <CategoryLinks title="J3" clubs={j3.nodes} />
+      <CategoryLinks title="JFL・地域" clubs={others.nodes} />
       <YearsLinks />
     </List>
   );

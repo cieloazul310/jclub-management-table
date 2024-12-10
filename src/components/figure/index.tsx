@@ -1,6 +1,7 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import NoSsr from "@mui/material/NoSsr";
 import { useAppState } from "@appState/AppStateContext";
@@ -48,16 +49,30 @@ function FigureSection({ nodes, mode }: FigureSectionProps) {
             : undefined,
         }}
       >
-        <FigureToolbar mode={mode} />
-        <NoSsr fallback={<Fallback />}>
-          <Box flexGrow={1} overflow="auto" display="flex">
-            {listMode ? (
-              <FinancialCard nodes={nodes} mode={mode} />
-            ) : (
-              <FinancialTable nodes={nodes} mode={mode} />
-            )}
+        {nodes.length ? (
+          <>
+            <FigureToolbar mode={mode} />
+            <NoSsr fallback={<Fallback />}>
+              <Box flexGrow={1} overflow="auto" display="flex">
+                {listMode ? (
+                  <FinancialCard nodes={nodes} mode={mode} />
+                ) : (
+                  <FinancialTable nodes={nodes} mode={mode} />
+                )}
+              </Box>
+            </NoSsr>
+          </>
+        ) : (
+          <Box
+            width={1}
+            height="200px"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography>データはありません</Typography>
           </Box>
-        </NoSsr>
+        )}
       </Container>
     </section>
   );

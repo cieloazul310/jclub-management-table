@@ -62,7 +62,7 @@ function YearsLinks() {
 }
 
 function FooterLinks() {
-  const { j1, j2, j3 } = useClubsByCategory();
+  const { j1, j2, j3, others } = useClubsByCategory();
   return (
     <Grid container spacing={2} component="nav">
       <Grid item xs={12} sm={6} md={3}>
@@ -73,6 +73,9 @@ function FooterLinks() {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <CategoryLinks title="J3" clubs={j3.nodes} />
+      </Grid>
+      <Grid item xs={12} sm={6} md={3}>
+        <CategoryLinks title="JFL・地域" clubs={others.nodes} />
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <YearsLinks />

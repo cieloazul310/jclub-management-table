@@ -4,7 +4,7 @@ export type Mode = 'club' | 'year';
 export type Tab = 'pl' | 'bs' | 'revenue' | 'expense' | 'attd';
 export type MobileTab = 'summary' | 'figure' | 'article' | 'settings';
 
-export type Category = 'J1' | 'J2' | 'J3';
+export type Category = 'J1' | 'J2' | 'J3' | 'JFL';
 
 export type Club<T extends 'bare' | 'node' | 'browser' = 'browser'> = (T extends 'bare' ? Record<string, unknown> : Node) & {
   slug: string;
