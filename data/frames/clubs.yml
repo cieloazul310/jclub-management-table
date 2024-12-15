@@ -364,8 +364,8 @@
 
 - id: "5"
   slug: ardija
-  name: 大宮アルディージャ
-  fullname: 大宮アルディージャ
+  name: RB大宮アルディージャ
+  fullname: RB大宮アルディージャ
   short_name: 大宮
   company: RB大宮株式会社
   category: J2
@@ -400,6 +400,18 @@
   relatedCompanies:
     - 一般社団法人ヴァンフォーレスポーツクラブ
 
+- id: "48"
+  slug: kataller
+  name: カターレ富山
+  fullname: カターレ富山
+  short_name: 富山
+  company: 株式会社カターレ富山
+  category: J2
+  hometown: 富山市を中心とする全県
+  area: 富山県
+  period: 1
+  website: https://www.kataller.co.jp
+
 - id: "13"
   slug: jubilo
   name: ジュビロ磐田
@@ -425,18 +437,6 @@
   area: 静岡県
   period: 1
   website: https://myfc.co.jp
-
-- id: "48"
-  slug: kataller
-  name: カターレ富山
-  fullname: カターレ富山
-  short_name: 富山
-  company: 株式会社カターレ富山
-  category: J2
-  hometown: 富山市を中心とする全県
-  area: 富山県
-  period: 1
-  website: https://www.kataller.co.jp
 
 - id: "33"
   slug: renofa
