@@ -36,9 +36,21 @@ export function J3Link() {
   return <LinksCore title="J3クラブ経営情報" items={items} />;
 }
 
+export function OthersLink() {
+  const { others } = useClubsByCategory();
+  const items = others.nodes.map(({ id, href, name, short_name }) => ({
+    id,
+    href,
+    label: name,
+    label_short: short_name,
+  }));
+  return <LinksCore title="JFL・地域クラブ経営情報" items={items} />;
+}
+
 export function CategoryLink({ category }: { category: Category }) {
   if (category === "J1") return <J1Link />;
   if (category === "J2") return <J2Link />;
   if (category === "J3") return <J3Link />;
+  if (!["J1", "J2", "J3"].includes(category)) return <OthersLink />;
   return null;
 }

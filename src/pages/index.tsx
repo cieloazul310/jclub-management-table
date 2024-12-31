@@ -8,14 +8,18 @@ import {
   Article,
   Paragraph,
   useSiteMetadata,
-  AppLink,
 } from "@cieloazul310/gatsby-theme-aoi";
 import type { MdxPostListFragment } from "types";
 import Layout from "@/layout";
 import Seo from "@/components/seo";
 import GridItemMenu from "@/components/grid-item-menu";
 import PostList from "@/components/post-list";
-import { J1Link, J2Link, J3Link } from "@/components/links/category-link";
+import {
+  J1Link,
+  J2Link,
+  J3Link,
+  OthersLink,
+} from "@/components/links/category-link";
 import YearsLink from "@/components/links/years-link";
 import AttributionDoc from "@/components/article/attribution";
 import { AdInSectionDividerOne } from "@/components/ads";
@@ -70,6 +74,12 @@ function IndexPage({ data }: PageProps<IndexPageQueryData>) {
               <J3Link />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" component="h3" gutterBottom>
+                JFL・地域
+              </Typography>
+              <OthersLink />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
               <Typography variant="h6" component="h3" gutterBottom>
                 年度別
               </Typography>
